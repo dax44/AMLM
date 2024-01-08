@@ -29,6 +29,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - multi_target_models.qmd
     - references.qmd
 
 bibliography: references.bib
