@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -72,10 +92,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -153,10 +202,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#typy-modeli-z-wieloma-zmiennymi-wynikowymi" id="toc-typy-modeli-z-wieloma-zmiennymi-wynikowymi" class="nav-link active" data-scroll-target="#typy-modeli-z-wieloma-zmiennymi-wynikowymi"><span class="header-section-number">2.1</span> Typy modeli z wieloma zmiennymi wynikowymi</a></li>
+  <li><a href="#różnie-podejścia-do-modelowania-z-wieloma-wyjściami" id="toc-różnie-podejścia-do-modelowania-z-wieloma-wyjściami" class="nav-link" data-scroll-target="#różnie-podejścia-do-modelowania-z-wieloma-wyjściami"><span class="header-section-number">2.2</span> Różnie podejścia do modelowania z wieloma wyjściami</a>
+  <ul class="collapse">
+  <li><a href="#transformacja-problemu" id="toc-transformacja-problemu" class="nav-link" data-scroll-target="#transformacja-problemu"><span class="header-section-number">2.2.1</span> Transformacja problemu</a></li>
+  <li><a href="#adaptacja-algorytmu" id="toc-adaptacja-algorytmu" class="nav-link" data-scroll-target="#adaptacja-algorytmu"><span class="header-section-number">2.2.2</span> Adaptacja algorytmu</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -177,7 +237,137 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Modele z wieloma zmiennymi wynikowymi otwierają drzwi do głębokiego zrozumienia analizy statystycznej i uczenia maszynowego. Istotną motywacją dla zastosowania tych modeli jest potrzeba uwzględnienia jednoczesnego wpływu wielu czynników na zróżnicowane aspekty badanego zjawiska. W kontrze do tradycyjnych modeli, których celem jest prognozowanie jednej konkretnej zmiennej wynikowej, modele z wieloma zmiennymi pozwalają na kompleksową analizę systemów, w których wiele współzależnych zmiennych kształtuje końcowy rezultat.</p>
+<p>Te modele znajdują zastosowanie zwłaszcza w sytuacjach, w których badane zjawisko jest wielowymiarowe, a jednoczesne oddziaływanie wielu czynników jest istotne. W dziedzinach takich jak badania społeczne czy ekonomiczne, gdzie liczne zmienne wpływają na dane zjawisko, modele z wieloma zmiennymi pozwalają na bardziej holistyczne zrozumienie tych interakcji. Różnicą kluczową w porównaniu do modeli jednowymiarowych jest zdolność modeli z wieloma zmiennymi do równoczesnego uwzględniania wielu aspektów, co umożliwia bardziej kompleksowe oddanie struktury rzeczywistości. Wartość dodana tych modeli kryje się w ich zdolności do precyzyjnego modelowania bardziej złożonych relacji między zmiennymi, co staje się niezbędne w obliczu rosnącej ilości dostępnych danych oraz potrzeby dokładniejszego zrozumienia skomplikowanych struktur zjawisk.</p>
+<p>Jednym z przykładów wykorzystania modeli z wieloma zmiennymi na wyjściu może być prognozowanie wyników finansowych przedsiębiorstwa. W tym przypadku, zamiast koncentrować się wyłącznie na jednym wskaźniku, takim jak zysk netto, model z wieloma zmiennymi uwzględniałby różnorodne czynniki wpływające na kondycję finansową firmy. Wskaźniki takie jak przychody, koszty operacyjne, inwestycje kapitałowe, oraz czynniki makroekonomiczne mogą stanowić zbiór zmiennych wynikowych. Model taki pozwalałby na holistyczną analizę wpływu różnych czynników na zdolność przedsiębiorstwa do generowania zysku, dostarczając bardziej kompleksowych prognoz i lepszych narzędzi do podejmowania decyzji strategicznych.</p>
+<p>Stosowanie oddzielnych modeli dla każdej zmiennej wynikowej, zwłaszcza w przypadku złożonych systemów czy wielowymiarowych danych, może prowadzić do suboptymalnych rezultatów i utrudniać skuteczne modelowanie rzeczywistych zależności między zmiennymi. Taka strategia może nie uwzględniać skomplikowanych relacji między poszczególnymi zmiennymi, co prowadzi do niepełnego zrozumienia struktury danego zjawiska. Ponadto, prowadzi to do redundancji w procesie uczenia, gdzie modele nie wykorzystują informacji zawartej w innych zmiennych, co ogranicza ich zdolność do trafnej prognozy. Zastosowanie jednego modelu z wieloma zmiennymi wynikowymi pozwala na uwzględnienie wzajemnych interakcji między zmiennymi, co skutkuje bardziej kompleksowym i precyzyjnym modelem, zdolnym lepiej odzwierciedlić złożoność analizowanego systemu.</p>
+<p>W kontekście prognozowania wyników finansowych przedsiębiorstwa, użycie oddzielnych modeli dla każdej zmiennej wynikowej, takiej jak przychody, koszty operacyjne czy inwestycje kapitałowe, mogłoby prowadzić do ograniczonej perspektywy i niewłaściwej oceny sytuacji finansowej firmy. Oddzielne modele dla poszczególnych wskaźników mogą nie uwzględniać skomplikowanych wzajemnych relacji między tymi zmiennymi, co wprowadzałoby niedokładności w prognozach. Na przykład, wzrost kosztów operacyjnych może być związany z równoczesnym wzrostem przychodów, co niekoniecznie wynikałoby z oddzielnej analizy tych zmiennych. Korzystanie z jednego modelu uwzględniającego wszystkie te zmienne pozwala na bardziej holistyczną ocenę sytuacji finansowej, umożliwiając identyfikację ukrytych zależności i skomplikowanych interakcji między poszczególnymi aspektami działalności przedsiębiorstwa. Dzięki temu podejściu możliwe jest dostarczenie bardziej precyzyjnych prognoz, co jest kluczowe dla skutecznego zarządzania finansami i podejmowania strategicznych decyzji.</p>
+<section id="typy-modeli-z-wieloma-zmiennymi-wynikowymi" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="typy-modeli-z-wieloma-zmiennymi-wynikowymi"><span class="header-section-number">2.1</span> Typy modeli z wieloma zmiennymi wynikowymi</h2>
+<p>Wśród nadzorowanych modeli uczenia maszynowego z wieloma zmiennymi wynikowymi można wymienić zarówno te dedykowane do klasyfikacji, jak i regresji. Modele te są znane jako modele z wieloma wyjściami (klasyfikacyjne) lub modele z wieloma wyjściami (regresyjne), w zależności od rodzaju problemu, który rozwiązują.</p>
+<ol type="1">
+<li><p><strong>Modele z wieloma wyjściami (klasyfikacyjne)</strong></p>
+<p>W przypadku klasyfikacji, gdy mamy wiele kategorii (klas) jako zmienną wynikową, modele te są nazywane modelami z wieloma wyjściami. Przykłady obejmują algorytmy takie jak regresja logistyczna, metoda k najbliższych sąsiadów (k-NN) czy algorytmy drzew decyzyjnych, które zostały dostosowane do obsługi wielu klas.</p>
+<p>Przykładowe zadanie: Załóżmy, że mamy zbiór danych dotyczący różnych rodzajów owoców (np. jabłek, pomarańczy, bananów) i chcemy stworzyć model, który jednocześnie przewiduje gatunek owocu oraz kolor owocu. Mamy więc dwie zmienne wynikowe: gatunek (klasyfikacja wieloklasowa) i kolor (klasyfikacja wieloklasowa).</p></li>
+<li><p><strong>Modele z wieloma wyjściami (regresyjne).</strong></p>
+<p>W przypadku regresji, gdzie zmienną wynikową jest wektor wartości numerycznych, modele te są nazywane modelami z wieloma wyjściami. Przykłady obejmują algorytmy regresji liniowej lub nieliniowej, algorytmy oparte na drzewach decyzyjnych, czy też bardziej zaawansowane modele, takie jak sieci neuronowe.</p>
+<p>Przykładowe zadanie: Zakładamy, że mamy zbiór danych zawierający informacje o pracownikach, takie jak doświadczenie zawodowe, poziom wykształcenia, liczba godzin pracy tygodniowo itp. Chcemy stworzyć model, który jednocześnie przewiduje zarobki pracowników oraz ich poziom satysfakcji zawodowej.</p></li>
+<li><p><strong>Modele wielozadaniowe.</strong></p>
+<p>Modele wielozadaniowe to rodzaj nadzorowanego uczenia maszynowego, w którym model jest trenowany jednocześnie do rozwiązania kilku zadań. Te zadania mogą obejmować zarówno klasyfikację, jak i regresję. Dzięki wspólnemu trenowaniu modelu na wielu zadaniach, można uzyskać korzyści w postaci wspólnego wykorzystywania wiedzy między zadaniami.</p>
+<p>Przykładowe zadanie: Załóżmy, że mamy zbiór danych dotyczący zakupów klientów w sklepie internetowym. Dla każdego klienta mamy informacje o różnych aspektach zakupów, takich jak czas dostawy, łatwość obsługi strony, jakość produktów itp. Chcemy stworzyć model, który jednocześnie przewiduje dwie zmienne wynikowe: jakość obsługi klienta (skala jakościowa, np. “Niska”, “Średnia”, “Wysoka”) oraz całkowity wydatek klienta (zmienna ilościowa, np. kwota zakupów).</p></li>
+<li><p><strong>Modele hierarchiczne.</strong></p>
+<p>W niektórych przypadkach, szczególnie gdy mamy hierarchię zmiennych wynikowych, modele te mogą być budowane w sposób hierarchiczny. Przykładowo, w problemie klasyfikacji obrazów z hierarchią kategorii (na przykład rozpoznawanie gatunków zwierząt), model może być zaprojektowany do rozpoznawania zarówno ogólnych, jak i bardziej szczegółowych kategorii.</p></li>
+</ol>
+</section>
+<section id="różnie-podejścia-do-modelowania-z-wieloma-wyjściami" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="różnie-podejścia-do-modelowania-z-wieloma-wyjściami"><span class="header-section-number">2.2</span> Różnie podejścia do modelowania z wieloma wyjściami</h2>
+<p>Istnieją dwa ogólne podejścia do rozwiązywania problemów wieloetykietowych: transformacja problemu i adaptacja algorytmu. Transformacja problemu polega na manipulowaniu zbiorem danych w taki sposób, że problem wieloetykietowy staje się jednym lub kilkoma problemami jednoetykietowymi <span class="citation" data-cites="tawiahEmpiricalComparisonMultilabel2013">(<a href="references.html#ref-tawiahEmpiricalComparisonMultilabel2013" role="doc-biblioref">Tawiah i Sheng 2013</a>)</span>. Adaptacja algorytmu polega na tym, że sam algorytm jest w stanie poradzić sobie bezpośrednio z problemem wieloetykietowym. Okazuje się, że wiele, choć nie wszystkie, metody adaptacji algorytmów metod adaptacji algorytmów w rzeczywistości wykorzystuje transformację problemu <span class="citation" data-cites="tsoumakasMultilabelClassificationOverview2007">(<a href="references.html#ref-tsoumakasMultilabelClassificationOverview2007" role="doc-biblioref">Tsoumakas i Katakis 2007</a>)</span>.</p>
+<section id="transformacja-problemu" class="level3 page-columns page-full" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="transformacja-problemu"><span class="header-section-number">2.2.1</span> Transformacja problemu</h3>
+<p>Techniki te przewidują stworzenie indywidualnego modelu dla każdego celu, a następnie połączenie oddzielnych modeli w celu uzyskania ogólnej prognozy. Metody transformacji problemów okazały się lepsze od metod adaptacji algorytmów pod względem dokładności <span class="citation" data-cites="spyromitros-xioufisMultiTargetRegressionInput2016">(<a href="references.html#ref-spyromitros-xioufisMultiTargetRegressionInput2016" role="doc-biblioref">Spyromitros-Xioufis i in. 2016</a>)</span>. Co więcej, podstawowa zasada sprawia, że metody transformacji problemu są niezależne od algorytmu. W konsekwencji, można je łatwo dostosować do danego problemu poprzez zastosowanie odpowiednich bazowych metod uczących. Punkt ten ma również szczególne znaczenie dla modeli typu ensemble, które łączą oszacowania z wielu potencjalnie różnych algorytmów w ostateczną prognozę. Niedawno <span class="citation" data-cites="spyromitros-xioufisMultiTargetRegressionInput2016">Spyromitros-Xioufis i in. (<a href="references.html#ref-spyromitros-xioufisMultiTargetRegressionInput2016" role="doc-biblioref">2016</a>)</span> zaproponowali rozszerzenie znanych metod transformacji klasyfikacji wieloetykietowej, aby poradzić sobie z problemem regresji wielowynikowej i modelować zależności między celami. W szczególności wprowadzili oni dwa nowe podejścia do regresji wielocelowej, składanie regresorów wielocelowych i łańcuchy regresorów, inspirowane popularnymi i skutecznymi podejściami do klasyfikacji wieloznaczeniowej.</p>
+<p>Podstawową koncepcją w metodach transformacji problemów jest wykorzystanie poprzednich modeli do nowego przewidywania poprzez rozszerzoną przestrzeń cech <span class="citation" data-cites="borchaniSurveyMultioutputRegression2015">(<a href="references.html#ref-borchaniSurveyMultioutputRegression2015" role="doc-biblioref">Borchani i in. 2015</a>)</span>. <em>Stacked generalization</em> to podejście do meta-uczenia, które wykorzystuje dane wyjściowe wcześniej wyuczonych modeli do uczenia się nowego modelu. W związku z tym początkowe dane wyjściowe modelu są traktowane jako nowe cechy i są układane w stos do początkowego wektora cech przed ponownym uczeniem. W oryginalnym sformułowaniu przewidziano tylko dwuetapową procedurę, tj. początkowe modele wyuczone z początkowego wektora cech odpowiadają odpowiednio modelom i danym poziomu 0, a powiększony wektor cech i ponownie wyuczony model są określane odpowiednio jako dane poziomu 1 i generalizator. Jednakże, rozsądnie rzecz biorąc, ten proces układania pojedynczego celu (ang. <em>Single-target Stacking</em> - STS) może być również przeprowadzany w wielu iteracjach. Aby wdrożyć tę zasadę dla problemów z wieloma celami, w których kodowane są również możliwe korelacje między zmiennymi docelowymi, wprowadzono koncepcję układania wielu celów (ang. <em>Multi-target Stacking</em> - MTS) <span class="citation" data-cites="borchaniSurveyMultioutputRegression2015">(<a href="references.html#ref-borchaniSurveyMultioutputRegression2015" role="doc-biblioref">Borchani i in. 2015</a>)</span>. Analogicznie do STS, szkolenie modelu MTS można uznać za procedurę dwuetapową. W pierwszym etapie uczone są niezależne modele dla każdej zmiennej docelowej. Następnie uczone są meta-modele dla każdej zmiennej docelowej z rozszerzonymi wektorami cech, które zawierają początkowe wektory cech, a także oszacowania poziomu 0 pozostałych zmiennych docelowych. Podobne pomysły były również stosowane w kontekście modeli zespołowych, tj. uczenia się kilku modeli poziomu 0 dla każdej zmiennej docelowej, które są łączone w procedurze uogólniania poziomu 1 dla wielu zmiennych docelowych <span class="citation" data-cites="santanaImprovedPredictionSoil2020">(<a href="references.html#ref-santanaImprovedPredictionSoil2020" role="doc-biblioref">Santana i in. 2020</a>)</span>.</p>
+<section id="single-target-stacking" class="level4" data-number="2.2.1.1">
+<h4 data-number="2.2.1.1" class="anchored" data-anchor-id="single-target-stacking"><span class="header-section-number">2.2.1.1</span> Single-target stacking</h4>
+<p>Metoda ta jest stosowana przede wszystkim z zadaniach regresyjnych z wieloma wyjściami. Rozważmy zbiór danych <span class="math inline">\(D = \left\{\left(\mathbf{x}^{(1)}, \mathbf{y}^{(1)}\right), \ldots, \left(\mathbf{x}^{(N)}, \mathbf{y}^{(N)}\right)\right\}\)</span>, składający się z <span class="math inline">\(N\)</span> obserwacji, które są realizacjami zmiennych losowych <span class="math inline">\(X_1,\ldots,X_m, Y_1,\ldots,Y_d\)</span>. Zatem każde wejście do modelu jest charakteryzowane przez <span class="math inline">\(m\)</span> zmiennych <span class="math inline">\(\mathbf{x}{(l)}=\left(x_1^{(l)},\ldots, x_j^{(l)}, \ldots, x_m^{(l)} \right)\)</span> oraz <span class="math inline">\(d\)</span> odpowiadających im wyjść <span class="math inline">\(\mathbf{y}{(l)}=\left(y_1^{(l)},\ldots, y_i^{(l)}, \ldots, y_d^{(l)} \right)\)</span>, gdzie <span class="math inline">\(l\in\{1,\ldots,N\}, j\in\{1,\ldots,m\}, i\in\{1,\ldots,d\}\)</span>. Naszym celem w zadaniu regresyjnym (MTR - <em>Multi-target Regression</em>) jest nauczenie takiego modelu <span class="math inline">\(h\)</span>, który przekształca <span class="math inline">\(\mathbf{x}\)</span> w <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>W podejściu STS w pierwszym kroku budowanych jest <span class="math inline">\(d\)</span> niezależnych modeli przewidujących pojedyncze wyjście. Po tej czynności meta-model jest trenowany na zbiorze <span class="math inline">\(D_i'\)</span>, który jest wzbogaconym zbiorem <span class="math inline">\(D_i\)</span> o predykcje zmiennej <span class="math inline">\(Y_i\)</span>, czyli</p>
+<p><span class="math display">\[
+D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\mathbf{x}'^{(N)}, \mathbf{y}_i^{(N)}\right)\right\},
+\]</span></p>
+<p>gdzie <span class="math inline">\(\mathbf{x}'^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, \hat{y}_i^{(l)} \right)\)</span>. W zależności czy rozpatrujemy algorytm STS niekumulatywny, czy kumulatywny, drugi krok iteracji wygląda nieco inaczej:</p>
+<ul>
+<li><p>niekumulatywny</p>
+<p><span class="math display">\[
+\bar{D}_i''=\left\{\left(\mathbf{x}''^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\mathbf{x}''^{(N)}, \mathbf{y}_i^{(N)}\right)\right\},
+\]</span></p>
+<p>gdzie <span class="math inline">\(\mathbf{x}''^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, \hat{y}_i'^{(l)} \right)\)</span></p></li>
+<li><p>kumulatywny</p>
+<p><span class="math display">\[
+\bar{\bar{D}}_i''=\left\{\left(\mathbf{x}''^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\mathbf{x}''^{(N)}, \mathbf{y}_i^{(N)}\right)\right\},
+\]</span></p>
+<p>gdzie <span class="math inline">\(\mathbf{x}''^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, \hat{y}_i^{(l)},\hat{y}_i'^{(l)} \right)\)</span>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2024-01-9 o 18.38.32.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Single-target stacking</figcaption>
+</figure>
+</div>
+</section>
+<section id="multi-target-stacking" class="level4" data-number="2.2.1.2">
+<h4 data-number="2.2.1.2" class="anchored" data-anchor-id="multi-target-stacking"><span class="header-section-number">2.2.1.2</span> Multi-target stacking</h4>
+<p>W przeciwieństwie do STS, MTS został zaprojektowany do dzielenia się wiedzą w skorelowanych zmiennych docelowych w ramach procedury łączenia w stosy. Podobnie, najpierw uczone są modele pojedynczego celu. Następnie tworzony jest zestaw meta-modeli, które zawierają model dla każdej zmiennej docelowej <span class="math inline">\(Y_i,\)</span> <span class="math inline">\(i \in \{1, \ldots, d\}\)</span>. W ten sposób uwzględniane są szacunki dotyczące pozostałych zmiennych docelowych z pierwszego etapu, tj. model jest uczony z przekształconego zbioru</p>
+<p><span class="math display">\[
+D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\mathbf{x}'^{(N)}, \mathbf{y}_i^{(N)}\right)\right\},
+\]</span></p>
+<p>gdzie <span class="math inline">\(\mathbf{x}'^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, \hat{y}_1^{(l)},\ldots,\hat{y}_d^{(l)} \right)\)</span>. W metodzie MTS istnieją również dwa sposoby składania kolejnych iteracji. Przebiegają one w podobny sposób jak w przypadku STS.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2024-01-9 o 18.39.01.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Multi-target stacking</figcaption>
+</figure>
+</div>
+<p>Istnieje jeszcze trzecia metoda powszechnie stosowana do predykcji wielowyniowej zwana <em>Regressor Chains</em> lub <em>Classifier Chains</em> w zależności od celu zadania. Idę działania tej metody przedstawię na przykładzie modelu regresyjnego.</p>
+</section>
+<section id="regressor-chains" class="level4 page-columns page-full" data-number="2.2.1.3">
+<h4 data-number="2.2.1.3" class="anchored" data-anchor-id="regressor-chains"><span class="header-section-number">2.2.1.3</span> Regressor Chains</h4>
+<p>RC opierają się na idei dopasowywania modeli pojedynczego celu wzdłuż wybranej permutacji, tj. łańcucha. Najpierw losowana jest permutacja w odniesieniu do zmiennych docelowych. Proces ten można przeprowadzić w sposób losowy <span class="citation" data-cites="spyromitros-xioufisMultiTargetRegressionInput2016">(<a href="references.html#ref-spyromitros-xioufisMultiTargetRegressionInput2016" role="doc-biblioref">Spyromitros-Xioufis i in. 2016</a>)</span> lub uporządkowany <span class="citation" data-cites="melkiMultitargetSupportVector2017">(<a href="references.html#ref-melkiMultitargetSupportVector2017" role="doc-biblioref">Melki i in. 2017</a>)</span>. Wybrana permutacja jest wykorzystywana do zbudowania oddzielnego modelu regresji dla zmiennych docelowych zgodnie z kolejnością permutacji. Aby wykorzystać tę strukturę do MTR, rzeczywiste wartości zmiennych docelowych są dostarczane do kolejnych modeli podczas uczenia się wzdłuż łańcucha. Na podstawie pełnego łańcucha lub wybranego zestawu <span class="math inline">\(C = (Y_1,\ldots,Y_d)\)</span>, pierwszy model jest ograniczony do ustalenia predykcji dla <span class="math inline">\(Y_1\)</span>. Następnie, kolejno dla <span class="math inline">\(Y_i\)</span> uczone są modele na podstawie zbioru</p>
+<p><span class="math display">\[
+D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\mathbf{x}'^{(N)}, \mathbf{y}_i^{(N)}\right)\right\},
+\]</span></p>
+<p>gdzie <span class="math inline">\(\mathbf{x}'^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, y_1^{(l)},\ldots, y_{i-1}^{(l)} \right)\)</span>. Ten algorytm ma również dwie odmiany (niekumulatywną i kumulatywną) w zależności od kształtu kolejnych iteracji.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2024-01-9 o 19.10.54.png" class="img-fluid figure-img"></p>
+<figcaption>Regressor chains</figcaption>
+</figure>
+</div>
+<p>Ponieważ, jak można się spodziewać wyniki modelowania w znaczny sposób zależą od wylosowanej permutacji, to w metodzie zaproponowanej przez <span class="citation" data-cites="melkiMultitargetSupportVector2017">Melki i in. (<a href="references.html#ref-melkiMultitargetSupportVector2017" role="doc-biblioref">2017</a>)</span> aby uniknąć tego efektu buduje się <span class="math inline">\(k\)</span> modeli dla różnych permutacji i łączy się wyniki w podobny sposób jak w lasach losowych.</p>
 
+<div class="no-row-height column-margin column-container"><div class="">
+<p><img src="images/r_vs_python.png" class="img-fluid"></p>
+</div></div><div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adnotacja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Słowo komentarza jeśli chodzi o dostępność tych metod w językach programowania. Niestety wspomniane metody w R nie są zaimplementowane w sposób, który pozwalałby na bezpieczne używanie przygotowanych rozwiązań. Istnieje kilka wzmianek<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na ten temat. Twórcy dwóch głównych frameworków do uczenia maszynowego, czyli <code>mlr3</code> oraz <code>tidymodels</code> przygotowują implementacje tych metod. Dodatkowo istnieje rozwiązanie w wersji eksperymentalnej <code>mtr-toolkit</code>, które pozwala na wykonanie modelowania z wieloma wyjściami, którym można się posiłkować.</p>
+<p>Niestety w przypadku Python-a nie jest dużo lepiej. Wprawdzie w pakiecie <code>scikit-learn</code> istnieją implementacje pozwalające na predykcje wielowyjściowe w obu typach zadań poprzez <code>MultiOutputRegressor</code> i <code>MultiOutputClassifier</code>, ale dokonują one predykcji naiwnej poprzez złożenie w listę wyników pojedynczych modeli dla każdej zmiennej. Nieco lepiej sprawa wygląda w przypadku metod łańcuchowych, ponieważ zarówno dla klasyfikacji, jak i regresji są metody to realizujące (<code>ClassifierChain</code> i <code>RegressorChain</code>).</p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;na dzień dzisiejszy, czyli początek 2024 roku</p></div></section>
+</section>
+<section id="adaptacja-algorytmu" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="adaptacja-algorytmu"><span class="header-section-number">2.2.2</span> Adaptacja algorytmu</h3>
+<p>Niestety tej metody nie da się zastosować do każdego typu modelu.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-borchaniSurveyMultioutputRegression2015" class="csl-entry" role="listitem">
+Borchani, Hanen, Gherardo Varando, Concha Bielza, i Pedro Larrañaga. 2015. <span>„A Survey on Multi-Output Regression”</span>. <em>WIREs Data Mining and Knowledge Discovery</em> 5 (5): 216–33. <a href="https://doi.org/10.1002/widm.1157">https://doi.org/10.1002/widm.1157</a>.
+</div>
+<div id="ref-melkiMultitargetSupportVector2017" class="csl-entry" role="listitem">
+Melki, Gabriella, Alberto Cano, Vojislav Kecman, i Sebastián Ventura. 2017. <span>„Multi-Target Support Vector Regression via Correlation Regressor Chains”</span>. <em>Information Sciences</em> 415–416 (listopad): 53–69. <a href="https://doi.org/10.1016/j.ins.2017.06.017">https://doi.org/10.1016/j.ins.2017.06.017</a>.
+</div>
+<div id="ref-santanaImprovedPredictionSoil2020" class="csl-entry" role="listitem">
+Santana, Everton Jose, Felipe Rodrigues dos Santos, Saulo Martiello Mastelini, Fabio Luiz Melquiades, i Sylvio Barbon Jr. 2020. <span>„Improved Prediction of Soil Properties with Multi-Target Stacked Generalisation on <span>EDXRF</span> Spectra”</span>. <em>arXiv preprint arXiv:2002.04312</em>. <a href="https://arxiv.org/abs/2002.04312">https://arxiv.org/abs/2002.04312</a>.
+</div>
+<div id="ref-spyromitros-xioufisMultiTargetRegressionInput2016" class="csl-entry" role="listitem">
+Spyromitros-Xioufis, Eleftherios, Grigorios Tsoumakas, William Groves, i Ioannis Vlahavas. 2016. <span>„Multi-<span>Target Regression</span> via <span>Input Space Expansion</span>: <span>Treating Targets</span> as <span>Inputs</span>”</span>. <em>Machine Learning</em> 104 (1): 55–98. <a href="https://doi.org/10.1007/s10994-016-5546-z">https://doi.org/10.1007/s10994-016-5546-z</a>.
+</div>
+<div id="ref-tawiahEmpiricalComparisonMultilabel2013" class="csl-entry" role="listitem">
+Tawiah, Clifford, i Victor Sheng. 2013. <span>„Empirical Comparison of Multi-Label Classification Algorithms”</span>. W <em>Proceedings of the <span>AAAI Conference</span> on <span>Artificial Intelligence</span></em>, 27:1645–46.
+</div>
+<div id="ref-tsoumakasMultilabelClassificationOverview2007" class="csl-entry" role="listitem">
+Tsoumakas, Grigorios, i Ioannis Katakis. 2007. <span>„Multi-Label Classification: <span>An</span> Overview”</span>. <em>International Journal of Data Warehousing and Mining (IJDWM)</em> 3 (3): 1–13.
+</div>
+</div>
+</section>
+</section>
 
 
 </main> <!-- /main -->
@@ -727,7 +917,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
