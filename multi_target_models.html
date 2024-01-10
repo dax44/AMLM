@@ -335,29 +335,102 @@ Adnotacja
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Słowo komentarza jeśli chodzi o dostępność tych metod w językach programowania. Niestety wspomniane metody w R nie są zaimplementowane w sposób, który pozwalałby na bezpieczne używanie przygotowanych rozwiązań. Istnieje kilka wzmianek<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na ten temat. Twórcy dwóch głównych frameworków do uczenia maszynowego, czyli <code>mlr3</code> oraz <code>tidymodels</code> przygotowują implementacje tych metod. Dodatkowo istnieje rozwiązanie w wersji eksperymentalnej <code>mtr-toolkit</code>, które pozwala na wykonanie modelowania z wieloma wyjściami, którym można się posiłkować.</p>
+<p>Słowo komentarza jeśli chodzi o dostępność tych metod w językach programowania. Niestety wspomniane metody w R nie są zaimplementowane w sposób, który pozwalałby na bezpieczne używanie przygotowanych rozwiązań. Istnieje kilka wzmianek (na dzień dzisiejszy, czyli początek 2024 roku) na ten temat. Twórcy dwóch głównych frameworków do uczenia maszynowego, czyli <code>mlr3</code> oraz <code>tidymodels</code> przygotowują implementacje tych metod. Dodatkowo istnieje rozwiązanie w wersji eksperymentalnej <code>mtr-toolkit</code>, które pozwala na wykonanie modelowania z wieloma wyjściami, którym można się posiłkować.</p>
 <p>Niestety w przypadku Python-a nie jest dużo lepiej. Wprawdzie w pakiecie <code>scikit-learn</code> istnieją implementacje pozwalające na predykcje wielowyjściowe w obu typach zadań poprzez <code>MultiOutputRegressor</code> i <code>MultiOutputClassifier</code>, ale dokonują one predykcji naiwnej poprzez złożenie w listę wyników pojedynczych modeli dla każdej zmiennej. Nieco lepiej sprawa wygląda w przypadku metod łańcuchowych, ponieważ zarówno dla klasyfikacji, jak i regresji są metody to realizujące (<code>ClassifierChain</code> i <code>RegressorChain</code>).</p>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;na dzień dzisiejszy, czyli początek 2024 roku</p></div></section>
+</section>
 </section>
 <section id="adaptacja-algorytmu" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="adaptacja-algorytmu"><span class="header-section-number">2.2.2</span> Adaptacja algorytmu</h3>
-<p>Niestety tej metody nie da się zastosować do każdego typu modelu.</p>
+<p>Prostota podejścia transformacji problemu sprawia, że jest ono odpowiednie dla problemów, w których jego wady mają niewielki lub żaden wpływ - jednak dla złożonych problemów podejście adaptacji algorytmu może okazać się bardziej efektywne. Dodatkowo, dowody empiryczne sugerują, że uczenie się powiązanych zadań jednocześnie, a nie niezależnie, może poprawić wyniki predykcyjne <span class="citation" data-cites="evgeniou2004">(<a href="references.html#ref-evgeniou2004" role="doc-biblioref">Evgeniou i Pontil 2004</a>)</span>. Z drugiej strony, jeśli zadania są bardzo odmienne, wydajność predykcyjna może ucierpieć, gdy zadania są uczone razem, a nie niezależnie <span class="citation" data-cites="faddoulBoostingMultiTaskWeak2010">(<a href="references.html#ref-faddoulBoostingMultiTaskWeak2010" role="doc-biblioref">Faddoul i in. 2010</a>)</span>. W związku z tym możemy wyciągnąć następujące wnioski:</p>
+<ul>
+<li>jeśli zadania, których nasz predyktor ma się nauczyć, są powiązane, powinniśmy dążyć do znalezienia odpowiedniej metody adaptacji algorytmu;</li>
+<li>jeśli zadania, których chcemy się nauczyć, nie są powiązane, powinniśmy zamiast tego dążyć do znalezienia odpowiedniej metody transformacji problemu.</li>
+</ul>
+<p>Wreszcie, powinniśmy wziąć pod uwagę rozmiar problemu i zdać sobie sprawę, że gdy zadania są niepowiązane, istnieje potencjalny kompromis między efektywnością czasową a wydajnością predykcyjną przy wyborze metody transformacji problemu lub metody adaptacji algorytmu. W przypadku niepowiązanych ze sobą zadań, metody transformacji problemu mogą zwiększać skuteczność predykcyjną, ale zmniejszać wydajność czasową w przypadku dużych problemów i odwrotnie.</p>
+<p>Niestety tej metody nie da się zastosować do każdego typu modelu. Rodzina modeli, których adaptacja jest wykonana cały czas rośnie. Adaptacja modelu polega na przekształceniu go do postaci, w której da się wykonać predykcję dla wielu wyjść. Wśród modeli, których wersje <em>native</em> <em>multi-target</em> istnieją należy wymienić:</p>
+<ul>
+<li>regresja wieloraka <span class="citation" data-cites="izenmanReducedrankRegressionMultivariate1975">(<a href="references.html#ref-izenmanReducedrankRegressionMultivariate1975" role="doc-biblioref">Izenman 1975</a>)</span></li>
+<li>kNN</li>
+<li>drzewo decyzyjne <span class="citation" data-cites="struyfConstraintBasedInduction2006">(<a href="references.html#ref-struyfConstraintBasedInduction2006" role="doc-biblioref">Struyf i Džeroski 2006</a>)</span></li>
+<li>las losowy <span class="citation" data-cites="kocevTreeEnsemblesPredicting2013">(<a href="references.html#ref-kocevTreeEnsemblesPredicting2013" role="doc-biblioref">Kocev i in. 2013</a>)</span></li>
+<li>bagging <span class="citation" data-cites="kocevTreeEnsemblesPredicting2013">(<a href="references.html#ref-kocevTreeEnsemblesPredicting2013" role="doc-biblioref">Kocev i in. 2013</a>)</span></li>
+<li>gradient boosting <span class="citation" data-cites="zhangGBDTMOGradientBoosted2019 faddoulLearningMultipleTasks2012">(<a href="references.html#ref-zhangGBDTMOGradientBoosted2019" role="doc-biblioref">Zhang i Jung, b.d.</a>; <a href="references.html#ref-faddoulLearningMultipleTasks2012" role="doc-biblioref">Faddoul i in. 2012</a>)</span></li>
+<li>SVM <span class="citation" data-cites="xuTwinMultiClassClassification2013 vazquezMultiOutputSuppportVector2003">(<a href="references.html#ref-xuTwinMultiClassClassification2013" role="doc-biblioref">Xu, Guo, i Wang 2013</a>; <a href="references.html#ref-vazquezMultiOutputSuppportVector2003" role="doc-biblioref">Vazquez i Walter 2003</a>)</span></li>
+<li>no i oczywiście sieci neuronowe.</li>
+</ul>
+<p>Nie sposób przedstawić w jaki sposób wprowadzone zostały zmiany we wszystkich algorytmach. Skupię się jednak na pokazaniu adaptacji drzew decyzyjnych do predykcji wielu wyjść jednocześnie, ponieważ jest to meta-model modeli takich jak lasy losowe, bagging czy boosting.</p>
+<section id="adaptacja-klasyfikacyjnego-drzewa-decyzyjnego" class="level4" data-number="2.2.2.1">
+<h4 data-number="2.2.2.1" class="anchored" data-anchor-id="adaptacja-klasyfikacyjnego-drzewa-decyzyjnego"><span class="header-section-number">2.2.2.1</span> Adaptacja klasyfikacyjnego drzewa decyzyjnego</h4>
+<p><span class="citation" data-cites="faddoulLearningMultipleTasks2012">Faddoul i in. (<a href="references.html#ref-faddoulLearningMultipleTasks2012" role="doc-biblioref">2012</a>)</span> zaproponowali zmodyfikowaną wersję algorytmu drzewa decyzyjnego C4.5 <span class="citation" data-cites="quinlan1993">(<a href="references.html#ref-quinlan1993" role="doc-biblioref">Quinlan 1993</a>)</span>, która bezpośrednio obsługuje problemy klasyfikacji wielowyjściowej. Zmodyfikowana wersja (nazwana MT-DT) różni się od standardowej implementacji C4.5 w dwóch krytycznych aspektach: kryteriach podziału węzłów i procesie decyzyjnym. <span class="citation" data-cites="faddoulLearningMultipleTasks2012">Faddoul i in. (<a href="references.html#ref-faddoulLearningMultipleTasks2012" role="doc-biblioref">2012</a>)</span> proponują trzy różne podejścia do łączenia wielu miar przyrostu informacji w jedną miarę: wspólny przyrost informacji, suma nieważona i maksymalny przyrost informacji. Wspólny przyrost informacyjny jest definiowany przy użyciu konkatenacji wszystkich poszczególnych zadań, tj. względnej różnicy w entropii mierzonej we wszystkich zadaniach decyzyjnych. Autorzy pokazują, że nieważona suma (<a href="#eq-igu" class="quarto-xref">Równanie&nbsp;<span>2.1</span></a>) indywidualnych przyrostów informacyjnych wszystkich zadań jest równoważna wspólnemu przyrostowi informacyjnemu.</p>
+<p><span id="eq-igu"><span class="math display">\[
+IG_U=\sum_YIG_Y
+\tag{2.1}\]</span></span></p>
+<p>Maksymalny przyrost informacyjny, zgodnie z propozycją autorów jest definiowany po prostu jako maksymalny przyrost informacyjny wszystkich zadań:</p>
+<p><span id="eq-igm"><span class="math display">\[
+IG_M=\max_YIG_Y
+\tag{2.2}\]</span></span></p>
+<p>Badania eksperymentalne pokazały, że maksymalny przyrost informacyjny wykorzystany do budowania reguł podziału, charakteryzuje się wyższym poziomem dopasowania modeli, niż przy zastosowaniu <span class="math inline">\(IG_U\)</span> i <span class="math inline">\(IG_J\)</span>.</p>
+<p>W przypadku klasyfikacji z jedną etykietą, algorytm indukcji drzewa decyzyjnego (taki jak C4.5) rekurencyjnie dzieli węzły, dodając (zazwyczaj dwa) elementy potomne, aż możliwe jest utworzenie liścia takiego, że znaczna większość (lub nawet wszystkie) jego przykładowych instancji należy do tej samej klasy. W przypadku wielu wyjść, indukcja drzewa niekoniecznie jest tak prosta. Rozważmy problem klasyfikacji wielowyjściowej z dwoma wyjściami binarnymi <span class="math inline">\(\nu_1\)</span> i <span class="math inline">\(\nu_2\)</span>; możliwe jest, że po <span class="math inline">\(t\)</span> podziałach, węzeł zawiera tylko wartości pozytywne dla <span class="math inline">\(\nu_1\)</span>, ale mieszankę wartości pozytywnych i negatywnych dla <span class="math inline">\(\nu_2\)</span> - stąd, podczas konstruowania drzew decyzyjnych dla wielu jednoczesnych zadań, należy pamiętać, że proces decyzyjny dla pewnego zadania może wymagać krótszej ścieżki decyzyjnej niż inne zadania w ramach tego samego problemu wielowyjściowego. MT-DT radzi sobie z tym, sprawdzając w każdym węźle, czy możliwe jest utworzenie węzła terminalnego dla któregokolwiek z zadań - w powyższym przykładzie spowodowałoby to utworzenie drzewa, w którym wewnętrzny węzeł <span class="math inline">\(t_1\)</span> jest oznaczony jako węzeł zatrzymania dla <span class="math inline">\(\nu_1\)</span>, oznaczony klasą pozytywną. Ponieważ celem jest prognozowanie dla obu wyjść binarnych, <span class="math inline">\(t_1\)</span> nie jest węzłem liścia - zamiast tego rekurencyjne dzielenie jest kontynuowane od <span class="math inline">\(t_1\)</span>, aż do znalezienia węzła <span class="math inline">\(t_2\)</span> takiego, że <span class="math inline">\(t_2\)</span> jest wystarczająco czysty w odniesieniu do <span class="math inline">\(\nu_2\)</span>, aby można było utworzyć regułę klasyfikacji dla drugiego zadania binarnego. W tym momencie węzły decyzyjne (węzły wewnętrzne lub liście) zostały znalezione dla wszystkich wyników (<span class="math inline">\(\nu_1\)</span> i <span class="math inline">\(\nu_2\)</span>), a algorytm indukcji drzewa rekurencyjnego może zostać zakończony.</p>
+<p>Nic dziwnego, że klasyfikacja przy użyciu już zbudowanego modelu MT-DT przebiega według tej samej formuły, co jego indukcja - podczas przechodzenia przez drzewo każdy węzeł jest sprawdzany w celu ustalenia, czy można podjąć decyzję dla któregokolwiek z aktualnie nierozstrzygniętych zadań. W przykładzie <span class="math inline">\(\nu_1\)</span>, <span class="math inline">\(\nu_2\)</span>, klasyfikacja zostanie dokonana dla <span class="math inline">\(\nu_1\)</span> w węźle <span class="math inline">\(t_1\)</span>, ponieważ jest on oznaczony jako węzeł zatrzymania dla <span class="math inline">\(\nu_1\)</span>; następnie przejście jest kontynuowane do momentu napotkania <span class="math inline">\(t_2\)</span> i klasyfikacja może zostać dokonana dla <span class="math inline">\(\nu_2\)</span>. W tym momencie wszystkie wyjścia zostały sklasyfikowane, a przechodzenie może się zakończyć, zwracając dwie wartości w <span class="math inline">\(t_1\)</span> i <span class="math inline">\(t_2\)</span> jako klasyfikacje odpowiednio dla <span class="math inline">\(\nu_1\)</span> i <span class="math inline">\(\nu_2\)</span>.</p>
+</section>
+<section id="adaptacja-regresyjnego-drzewa-decyzyjnego" class="level4" data-number="2.2.2.2">
+<h4 data-number="2.2.2.2" class="anchored" data-anchor-id="adaptacja-regresyjnego-drzewa-decyzyjnego"><span class="header-section-number">2.2.2.2</span> Adaptacja regresyjnego drzewa decyzyjnego</h4>
+<p><span class="citation" data-cites="segalTreeStructuredMethodsLongitudinal1992">Segal (<a href="references.html#ref-segalTreeStructuredMethodsLongitudinal1992" role="doc-biblioref">1992</a>)</span> zaproponował rozwiązanie dla drzew regresyjnych o wielu wyjściach (MRT), które są w stanie przewidywać wyniki dla wielu powiązanych zadań regresyjnych; te wielowyjściowe drzewa regresyjne są oparte na funkcji podziału najmniejszych kwadratów zaproponowanej w ramach CART <span class="citation" data-cites="breiman2017">(<a href="references.html#ref-breiman2017" role="doc-biblioref">Breiman i in. 2017</a>)</span>. W przypadku drzewa regresyjnego o jednej odpowiedzi celem jest minimalizacja następującej funkcji celu:</p>
+<p><span class="math display">\[
+\phi(t) = SS(t)-SS(t_L)-SS(t_R)
+\]</span></p>
+<p>gdzie <span class="math inline">\(SS(t)\)</span> jest zdefiniowana następująco</p>
+<p><span class="math display">\[
+SS(t) = \sum_{i\in t}(y_i-\bar{y}(t))^2.
+\]</span></p>
+<p><span class="citation" data-cites="segalTreeStructuredMethodsLongitudinal1992">Segal (<a href="references.html#ref-segalTreeStructuredMethodsLongitudinal1992" role="doc-biblioref">1992</a>)</span> dodał ważenie macierzą kowariancji do błędu kwadratowego, co prowadzi algorytm drzewa do tworzenia węzłów potomnych, które reprezentują jednorodne klastry w odniesieniu do zestawu odpowiedzi wyjściowych:</p>
+<p><span class="math display">\[
+SS(t) = \sum_{i\in t}(y_i-\bar{y}(t))'V^{-1}(t)(y_i-\bar{y}(t)),
+\]</span></p>
+<p>gdzie <span class="math inline">\(V(t)\)</span> oznacza macierz kowariancji w węźle <span class="math inline">\(t\)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-borchaniSurveyMultioutputRegression2015" class="csl-entry" role="listitem">
 Borchani, Hanen, Gherardo Varando, Concha Bielza, i Pedro Larrañaga. 2015. <span>„A Survey on Multi-Output Regression”</span>. <em>WIREs Data Mining and Knowledge Discovery</em> 5 (5): 216–33. <a href="https://doi.org/10.1002/widm.1157">https://doi.org/10.1002/widm.1157</a>.
 </div>
+<div id="ref-breiman2017" class="csl-entry" role="listitem">
+Breiman, Leo, J. H. Friedman, Richard A. Olshen, i Charles J. Stone. 2017. <em>Classification and Regression Trees.</em> Routledge. <a href="http://search.ebscohost.com/login.aspx?direct=true&amp;db=edsebk&amp;AN=1619230&amp;lang=pl&amp;site=eds-live&amp;scope=site">http://search.ebscohost.com/login.aspx?direct=true&amp;db=edsebk&amp;AN=1619230&amp;lang=pl&amp;site=eds-live&amp;scope=site</a>.
+</div>
+<div id="ref-evgeniou2004" class="csl-entry" role="listitem">
+Evgeniou, Theodoros, i Massimiliano Pontil. 2004. <span>„Regularized multi–task learning”</span>. <em>Proceedings of the tenth ACM SIGKDD international conference on Knowledge discovery and data mining</em>, sierpień. <a href="https://doi.org/10.1145/1014052.1014067">https://doi.org/10.1145/1014052.1014067</a>.
+</div>
+<div id="ref-faddoulLearningMultipleTasks2012" class="csl-entry" role="listitem">
+Faddoul, Jean Baptiste, Boris Chidlovskii, Rémi Gilleron, i Fabien Torre. 2012. <span>„Learning multiple tasks with boosted decision trees”</span>. W <em>Proceedings of the 2012th European Conference on Machine Learning and Knowledge Discovery in Databases - Volume Part I</em>, 681–96. ECMLPKDD’12. Springer-Verlag.
+</div>
+<div id="ref-faddoulBoostingMultiTaskWeak2010" class="csl-entry" role="listitem">
+Faddoul, Jean Baptiste, Boris Chidlovskii, Fabien Torre, i Remi Gilleron. 2010. <span>„Boosting Multi-Task Weak Learners with Applications to Textual and Social Data”</span>. W <em>2010 Ninth International Conference on Machine Learning and Applications</em>, 367–72. IEEE. <a href="https://doi.org/10.1109/ICMLA.2010.61">https://doi.org/10.1109/ICMLA.2010.61</a>.
+</div>
+<div id="ref-izenmanReducedrankRegressionMultivariate1975" class="csl-entry" role="listitem">
+Izenman, Alan Julian. 1975. <span>„Reduced-rank regression for the multivariate linear model”</span>. <em>Journal of multivariate analysis</em> 5 (2): 248–64.
+</div>
+<div id="ref-kocevTreeEnsemblesPredicting2013" class="csl-entry" role="listitem">
+Kocev, Dragi, Celine Vens, Jan Struyf, i Sašo Džeroski. 2013. <span>„Tree ensembles for predicting structured outputs”</span>. <em>Pattern Recognition</em> 46 (3): 817–33. <a href="https://doi.org/10.1016/j.patcog.2012.09.023">https://doi.org/10.1016/j.patcog.2012.09.023</a>.
+</div>
 <div id="ref-melkiMultitargetSupportVector2017" class="csl-entry" role="listitem">
 Melki, Gabriella, Alberto Cano, Vojislav Kecman, i Sebastián Ventura. 2017. <span>„Multi-Target Support Vector Regression via Correlation Regressor Chains”</span>. <em>Information Sciences</em> 415–416 (listopad): 53–69. <a href="https://doi.org/10.1016/j.ins.2017.06.017">https://doi.org/10.1016/j.ins.2017.06.017</a>.
+</div>
+<div id="ref-quinlan1993" class="csl-entry" role="listitem">
+Quinlan, J Ross. 1993. <em>C4. 5: Programs for Machine Learning</em>. Morgan Kaufmann.
 </div>
 <div id="ref-santanaImprovedPredictionSoil2020" class="csl-entry" role="listitem">
 Santana, Everton Jose, Felipe Rodrigues dos Santos, Saulo Martiello Mastelini, Fabio Luiz Melquiades, i Sylvio Barbon Jr. 2020. <span>„Improved Prediction of Soil Properties with Multi-Target Stacked Generalisation on <span>EDXRF</span> Spectra”</span>. <em>arXiv preprint arXiv:2002.04312</em>. <a href="https://arxiv.org/abs/2002.04312">https://arxiv.org/abs/2002.04312</a>.
 </div>
+<div id="ref-segalTreeStructuredMethodsLongitudinal1992" class="csl-entry" role="listitem">
+Segal, Mark Robert. 1992. <span>„Tree-Structured Methods for Longitudinal Data”</span>. <em>Journal of the American Statistical Association</em> 87 (418): 407–18. <a href="https://doi.org/10.2307/2290271">https://doi.org/10.2307/2290271</a>.
+</div>
 <div id="ref-spyromitros-xioufisMultiTargetRegressionInput2016" class="csl-entry" role="listitem">
 Spyromitros-Xioufis, Eleftherios, Grigorios Tsoumakas, William Groves, i Ioannis Vlahavas. 2016. <span>„Multi-<span>Target Regression</span> via <span>Input Space Expansion</span>: <span>Treating Targets</span> as <span>Inputs</span>”</span>. <em>Machine Learning</em> 104 (1): 55–98. <a href="https://doi.org/10.1007/s10994-016-5546-z">https://doi.org/10.1007/s10994-016-5546-z</a>.
+</div>
+<div id="ref-struyfConstraintBasedInduction2006" class="csl-entry" role="listitem">
+Struyf, Jan, i Sašo Džeroski. 2006. <span>„Constraint Based Induction of Multi-objective Regression Trees”</span>. W <em>Knowledge Discovery in Inductive Databases</em>, zredagowane przez Francesco Bonchi i Jean-François Boulicaut, 222–33. Lecture Notes w Computer Science. Springer. <a href="https://doi.org/10.1007/11733492_13">https://doi.org/10.1007/11733492_13</a>.
 </div>
 <div id="ref-tawiahEmpiricalComparisonMultilabel2013" class="csl-entry" role="listitem">
 Tawiah, Clifford, i Victor Sheng. 2013. <span>„Empirical Comparison of Multi-Label Classification Algorithms”</span>. W <em>Proceedings of the <span>AAAI Conference</span> on <span>Artificial Intelligence</span></em>, 27:1645–46.
@@ -365,10 +438,19 @@ Tawiah, Clifford, i Victor Sheng. 2013. <span>„Empirical Comparison of Multi-L
 <div id="ref-tsoumakasMultilabelClassificationOverview2007" class="csl-entry" role="listitem">
 Tsoumakas, Grigorios, i Ioannis Katakis. 2007. <span>„Multi-Label Classification: <span>An</span> Overview”</span>. <em>International Journal of Data Warehousing and Mining (IJDWM)</em> 3 (3): 1–13.
 </div>
+<div id="ref-vazquezMultiOutputSuppportVector2003" class="csl-entry" role="listitem">
+Vazquez, Emmanuel, i Eric Walter. 2003. <span>„Multi-Output Suppport Vector Regression”</span>. <em>IFAC Proceedings Volumes</em>, 13th IFAC Symposium on System Identification (SYSID 2003), Rotterdam, The Netherlands, 27-29 August, 2003, 36 (16): 1783–88. <a href="https://doi.org/10.1016/S1474-6670(17)35018-8">https://doi.org/10.1016/S1474-6670(17)35018-8</a>.
+</div>
+<div id="ref-xuTwinMultiClassClassification2013" class="csl-entry" role="listitem">
+Xu, Yitian, Rui Guo, i Laisheng Wang. 2013. <span>„A Twin Multi-Class Classification Support Vector Machine”</span>. <em>Cognitive Computation</em> 5 (4): 580–88. <a href="https://doi.org/10.1007/s12559-012-9179-7">https://doi.org/10.1007/s12559-012-9179-7</a>.
+</div>
+<div id="ref-zhangGBDTMOGradientBoosted2019" class="csl-entry" role="listitem">
+Zhang, Zhendong, i Cheolkon Jung. b.d. <span>„GBDT-MO: Gradient Boosted Decision Trees for Multiple Outputs”</span>. <a href="https://doi.org/10.48550/arXiv.1909.04373">https://doi.org/10.48550/arXiv.1909.04373</a>.
+</div>
 </div>
 </section>
 </section>
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
