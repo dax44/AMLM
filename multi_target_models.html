@@ -335,7 +335,7 @@ Adnotacja
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Słowo komentarza jeśli chodzi o dostępność tych metod w językach programowania. Niestety wspomniane metody w R nie są zaimplementowane w sposób, który pozwalałby na bezpieczne używanie przygotowanych rozwiązań. Istnieje kilka wzmianek (na dzień dzisiejszy, czyli początek 2024 roku) na ten temat. Twórcy dwóch głównych frameworków do uczenia maszynowego, czyli <code>mlr3</code> oraz <code>tidymodels</code> przygotowują implementacje tych metod. Dodatkowo istnieje rozwiązanie w wersji eksperymentalnej <code>mtr-toolkit</code>, które pozwala na wykonanie modelowania z wieloma wyjściami, którym można się posiłkować.</p>
+<p>Słowo komentarza jeśli chodzi o dostępność tych metod w językach programowania. Niestety wspomniane metody w R nie są zaimplementowane w sposób, który pozwalałby na bezpieczne używanie przygotowanych rozwiązań. Istnieje kilka wzmianek (na dzień dzisiejszy, czyli początek 2024 roku) na ten temat. Twórcy dwóch głównych frameworków do uczenia maszynowego, czyli <code>mlr3</code> oraz <code>tidymodels</code> przygotowują implementacje tych metod. Dodatkowo istnieje rozwiązanie w wersji eksperymentalnej <code>mtr-toolkit</code>, które pozwala na wykonanie modelowania z wieloma wyjściami, którym można się posiłkować. Na potrzeby klasyfikacji istnieje również pakiet <code>mldr</code> i <code>ultim</code>, które pozwalają na uczenie modeli klasyfikacyjnymi z wieloma wyjściami.</p>
 <p>Niestety w przypadku Python-a nie jest dużo lepiej. Wprawdzie w pakiecie <code>scikit-learn</code> istnieją implementacje pozwalające na predykcje wielowyjściowe w obu typach zadań poprzez <code>MultiOutputRegressor</code> i <code>MultiOutputClassifier</code>, ale dokonują one predykcji naiwnej poprzez złożenie w listę wyników pojedynczych modeli dla każdej zmiennej. Nieco lepiej sprawa wygląda w przypadku metod łańcuchowych, ponieważ zarówno dla klasyfikacji, jak i regresji są metody to realizujące (<code>ClassifierChain</code> i <code>RegressorChain</code>).</p>
 </div>
 </div>
@@ -390,6 +390,44 @@ SS(t) = \sum_{i\in t}(y_i-\bar{y}(t))^2.
 SS(t) = \sum_{i\in t}(y_i-\bar{y}(t))'V^{-1}(t)(y_i-\bar{y}(t)),
 \]</span></p>
 <p>gdzie <span class="math inline">\(V(t)\)</span> oznacza macierz kowariancji w węźle <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="adaptacja-drzew-decyzyjnych-do-realizacji-obu-zadań" class="level4" data-number="2.2.2.3">
+<h4 data-number="2.2.2.3" class="anchored" data-anchor-id="adaptacja-drzew-decyzyjnych-do-realizacji-obu-zadań"><span class="header-section-number">2.2.2.3</span> Adaptacja drzew decyzyjnych do realizacji obu zadań</h4>
+<p>Jak wspomniano wcześniej, jedną z kluczowych motywacji do podejmowania prób rozwiązywania problemów rozpoznawania wzorców z wieloma wyjściami przy użyciu metod adaptacji algorytmów jest oczekiwanie, że pojedynczy model wytrenowany na zestawie powiązanych zadań wykaże poprawę wydajności predykcyjnej w porównaniu do zestawu indywidualnych modeli, z których każdy został wytrenowany na pojedynczym zadaniu. Rodzi to pytanie: co jeśli problem wielowynikowy zawiera zarówno zadania klasyfikacji, jak i regresji? Jeśli zadania są niepowiązane, rozwiązanie takiego wspólnego problemu klasyfikacyjno-regresyjnego nie musi być trudniejsze niż szkolenie zestawu klasyfikatorów i regresorów dla poszczególnych zadań; jeśli jednak zadania są powiązane, oczekujemy, że metoda adaptacji algorytmu zapewni lepsze wyniki pod względem wydajności predykcyjnej.</p>
+<p><span class="citation" data-cites="glockerJointClassificationRegressionForests2012">Glocker i in. (<a href="references.html#ref-glockerJointClassificationRegressionForests2012" role="doc-biblioref">2012</a>)</span> zaproponował algorytm indukcji drzewa, który jednocześnie rozwiązuje jedno zadanie klasyfikacji i jedno zadanie regresji. Podobnie jak MT-DT i MRT, wspólne drzewo klasyfikacyjno-regresyjne (JCRT) rozwiązuje wiele jednoczesnych zadań predykcji poprzez modyfikację funkcji podziału węzła w kroku indukcyjnym i oznaczenie węzłów końcowych odpowiednimi wartościami dla każdego zadania. Ze względu na charakter wspólnych problemów klasyfikacyjno-regresyjnych, zmodyfikowana funkcja podziału jest wymagana do jednoczesnego uwzględnienia błędu zarówno części klasyfikacyjnej, jak i regresyjnej. Funkcja podziału zaproponowana przez <span class="citation" data-cites="glockerJointClassificationRegressionForests2012">Glocker i in. (<a href="references.html#ref-glockerJointClassificationRegressionForests2012" role="doc-biblioref">2012</a>)</span> wykorzystuje funkcję entropii składającą się z trzech części:</p>
+<ul>
+<li>po pierwsze, entropia Shannona jest obliczana dla części klasyfikacji;</li>
+<li>po drugie, ważona entropia różnicowa jest obliczana dla części regresji;</li>
+<li>po trzecie, ze względu na fakt, że entropia Shannona i entropia różnicowa istnieją w różnych zakresach, stosuje się krok normalizacji w celu połączenia dwóch entropii. Entropia Shannona jest obliczana tak, jak opisano wcześniej:</li>
+</ul>
+<p><span class="math display">\[
+H_c(t) = \sum_{c\in C}p(c|x)\log p(c|x).
+\]</span></p>
+<p>Miara entropii różniczkowej stosowana przez <span class="citation" data-cites="glockerJointClassificationRegressionForests2012">Glocker i in. (<a href="references.html#ref-glockerJointClassificationRegressionForests2012" role="doc-biblioref">2012</a>)</span> dla regresyjnej części problemu jest obliczana w podobny sposób, z dwiema kluczowymi różnicami:</p>
+<ul>
+<li>zamiast sumowania prawdopodobieństw wartości nominalnych, entropia jest definiowana przez różniczkę funkcji prawdopodobieństwa wyjścia o wartości rzeczywistej;</li>
+<li>dodatkowo funkcja prawdopodobieństwa jest ważona w klasach:</li>
+</ul>
+<p><span class="math display">\[
+H_{r|c}(t) = \sum_{c\in C}p(c|x)\int_{r\in \mathbb{R}^n}-p(r|c,x)\log p(r|c,x)dr.
+\]</span></p>
+<p>Następnie dokonywana jest normalizacja ze względu na oba zadania, gdzie punktem odniesienie jest entropia w korzeniu:</p>
+<p><span class="math display">\[
+H(t) = \frac12\left(\frac{H_c(t)}{H_c(t_0)}+\frac{H_{r|c}(t)}{H_{r|c}(t_0)}\right).
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adnotacja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jedyne implementacje, które znalazłem dla obu języków programowania (R i Python) dotyczyły lasów losowych. W R pakiet nazywa się <code>randomForestSRC</code>, a w Pythonie <code>morfist</code>. Pozwalają one zarówno na wykonywanie wielowyjściowych zadań klasyfikacyjnych i regresyjnych, jak również zadań mieszanych.</p>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -407,6 +445,9 @@ Faddoul, Jean Baptiste, Boris Chidlovskii, Rémi Gilleron, i Fabien Torre. 2012.
 </div>
 <div id="ref-faddoulBoostingMultiTaskWeak2010" class="csl-entry" role="listitem">
 Faddoul, Jean Baptiste, Boris Chidlovskii, Fabien Torre, i Remi Gilleron. 2010. <span>„Boosting Multi-Task Weak Learners with Applications to Textual and Social Data”</span>. W <em>2010 Ninth International Conference on Machine Learning and Applications</em>, 367–72. IEEE. <a href="https://doi.org/10.1109/ICMLA.2010.61">https://doi.org/10.1109/ICMLA.2010.61</a>.
+</div>
+<div id="ref-glockerJointClassificationRegressionForests2012" class="csl-entry" role="listitem">
+Glocker, Ben, Olivier Pauly, Ender Konukoglu, i Antonio Criminisi. 2012. <span>„Joint Classification-Regression Forests for Spatially Structured Multi-object Segmentation”</span>. W <em>Computer Vision – ECCV 2012</em>, zredagowane przez Andrew Fitzgibbon, Svetlana Lazebnik, Pietro Perona, Yoichi Sato, i Cordelia Schmid, 7575:870–81. Springer Berlin Heidelberg. <a href="http://link.springer.com/10.1007/978-3-642-33765-9_62">http://link.springer.com/10.1007/978-3-642-33765-9_62</a>.
 </div>
 <div id="ref-izenmanReducedrankRegressionMultivariate1975" class="csl-entry" role="listitem">
 Izenman, Alan Julian. 1975. <span>„Reduced-rank regression for the multivariate linear model”</span>. <em>Journal of multivariate analysis</em> 5 (2): 248–64.
