@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="przykład-1" class="level2 page-columns page-full" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="przykład-1"><span class="header-section-number">4.1</span> Przykład 1</h2>
 <p>Rozwiązanie przykładu z poprzedniego rozdziału można dokonać z dużo lepszą precyzją wykorzystując sieci neuronowe. W tym przykładzie po raz kolejny wygenerujemy dane do uczenia<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, a następnie wytrenujemy sieć (dosyć płytką) MLP.</p>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;te same co z przykładu regresyjnego z poprzedniego wykładu</p></div><div id="892f1ce2" class="cell" data-execution_count="2">
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;te same co z przykładu regresyjnego z poprzedniego wykładu</p></div><div id="d46ab9d3" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="5530ed08" class="cell" data-execution_count="3">
+<div id="5563d2a1" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generowanie danych do zadania</span></span>
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Model będzie bardzo prosty, składający się z tylko jednej warstwy ukrytej.</p>
-<div id="378ff23a" class="cell" data-execution_count="4">
+<div id="32abf743" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_model(n_inputs, n_outputs, n_neurons):</span>
@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>W tym przykładzie chciałem również pokazać jak wykonywać trenowanie sieci z użyciem sprawdzianu krzyżowego, który pomoże nam ustalić optymalną liczę neuronów w warstwie ukrytej.</p>
-<div id="fd007695" class="cell" data-execution_count="5">
+<div id="fc6c90a2" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ocena dopasowania modelu z wykorzystaniem CV</span></span>
@@ -301,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="71558da5" class="cell" data-execution_count="6">
+<div id="23841740" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
@@ -310,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  results.append(np.mean(evaluate_model(X_train, y_train, i)))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="9279d7fb" class="cell" data-execution_count="7">
+<div id="cde59c77" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> np.load(<span class="st">"./data/mlp_eval.npz"</span>)</span>
@@ -325,24 +325,25 @@ Dla 50 neuronów MAE: 3779</code></pre>
 </div>
 </div>
 <p>Najlepszy rezultat osiągamy dla 50 neuronów i taki parametr dobierzemy w ostatecznym modelu.</p>
-<div id="45d7855a" class="cell" data-execution_count="8">
+<div id="6ac4b8e1" class="cell" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_callbacks <span class="op">=</span> [</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    EarlyStopping(patience<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> get_model(X_train.shape[<span class="dv">1</span>], y_train.shape[<span class="dv">1</span>], <span class="dv">50</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, y_train, </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                    verbose<span class="op">=</span><span class="dv">0</span>, epochs<span class="op">=</span><span class="dv">1000</span>, </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                    validation_split<span class="op">=</span><span class="fl">0.2</span>, callbacks<span class="op">=</span>my_callbacks)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>keras.utils.set_random_seed(<span class="dv">44</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>my_callbacks <span class="op">=</span> [</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    EarlyStopping(patience<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> get_model(X_train.shape[<span class="dv">1</span>], y_train.shape[<span class="dv">1</span>], <span class="dv">50</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, y_train, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                    verbose<span class="op">=</span><span class="dv">0</span>, epochs<span class="op">=</span><span class="dv">1000</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                    validation_split<span class="op">=</span><span class="fl">0.2</span>, callbacks<span class="op">=</span>my_callbacks)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Metal device set to: Apple M1</code></pre>
 </div>
 </div>
 <p>Proces uczenia przebiegał prawidłowo i osiągnięto niski poziom funkcji straty.</p>
-<div id="63a2beb2" class="cell" data-execution_count="9">
+<div id="24aa0f42" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>])</span>
@@ -350,7 +351,7 @@ Dla 50 neuronów MAE: 3779</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'model loss'</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'loss'</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'epoch'</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'train'</span>, <span class="st">'validation'</span>], loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'train'</span>, <span class="st">'validation'</span>], loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
@@ -362,7 +363,7 @@ Dla 50 neuronów MAE: 3779</code></pre>
 </div>
 </div>
 <p>Wyniki dopasowania znacznie przekraczają wyniki uzyskane metodami z poprzedniego rozdziału.</p>
-<div id="92efde65" class="cell" data-execution_count="10">
+<div id="517086bb" class="cell" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
@@ -373,14 +374,14 @@ Dla 50 neuronów MAE: 3779</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>R2 on test sample: 1.00
-RMSE on test sample: 5.1</code></pre>
+RMSE on test sample: 4.5</code></pre>
 </div>
 </div>
 </section>
 <section id="przykład-2" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="przykład-2"><span class="header-section-number">4.2</span> Przykład 2</h2>
 <p>W tym przykładzie jeszcze raz rozpatrzymy zadanie klasyfikacyjne z wieloma wyjściami z poprzedniego rozdziału. Przeprowadzimy czynności <em>preprocessingu</em> podobne jak w poprzednim rozdziale, dodając jeszcze standaryzację, która dla sieci neuronowych jest bardzo ważna.</p>
-<div id="8482c3bb" class="cell" data-execution_count="11">
+<div id="b6768562" class="cell" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -407,13 +408,13 @@ RMSE on test sample: 5.1</code></pre>
 </details>
 </div>
 <p>Następnie przygotujemy model sieci neuronowej, która pozwoli na właściwe klasyfikacje obiektów.</p>
-<div id="8848f3bf" class="cell" data-execution_count="12">
+<div id="f4850c2b" class="cell" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">15</span>, input_dim<span class="op">=</span>X_train.shape[<span class="dv">1</span>]))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model.add(ReLU())</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model.add(Dropout(<span class="fl">0.2</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model.add(Dropout(<span class="fl">0.1</span>))</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(y_train.shape[<span class="dv">1</span>], activation<span class="op">=</span><span class="st">'sigmoid'</span>))</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> keras.optimizers.Nadam(<span class="fl">0.001</span>)</span>
@@ -440,208 +441,27 @@ Non-trainable params: 0
 _________________________________________________________________</code></pre>
 </div>
 </div>
-<div id="3b9fc7d9" class="cell" data-execution_count="13">
+<div id="5ddc788c" class="cell" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_callbacks <span class="op">=</span> [</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    EarlyStopping(patience<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">1000</span>,  validation_split<span class="op">=</span><span class="fl">0.4</span>, verbose<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>callbacks<span class="op">=</span>my_callbacks)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>keras.utils.set_random_seed(<span class="dv">44</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>my_callbacks <span class="op">=</span> [</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    EarlyStopping(patience<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">1000</span>,  validation_split<span class="op">=</span><span class="fl">0.4</span>, verbose<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>callbacks<span class="op">=</span>my_callbacks)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Epoch 1/1000
- 1/12 [=&gt;............................] - ETA: 20s - loss: 0.7379 5/12 [===========&gt;..................] - ETA: 0s - loss: 0.7970 10/12 [========================&gt;.....] - ETA: 0s - loss: 0.776812/12 [==============================] - ETA: 0s - loss: 0.778012/12 [==============================] - 2s 60ms/step - loss: 0.7780 - val_loss: 0.7309
-Epoch 2/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.7156 5/12 [===========&gt;..................] - ETA: 0s - loss: 0.757110/12 [========================&gt;.....] - ETA: 0s - loss: 0.741212/12 [==============================] - 0s 16ms/step - loss: 0.7343 - val_loss: 0.6912
-Epoch 3/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.7013 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.681611/12 [==========================&gt;...] - ETA: 0s - loss: 0.676012/12 [==============================] - 0s 14ms/step - loss: 0.6764 - val_loss: 0.6594
-Epoch 4/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.6821 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.655111/12 [==========================&gt;...] - ETA: 0s - loss: 0.655612/12 [==============================] - 0s 14ms/step - loss: 0.6498 - val_loss: 0.6347
-Epoch 5/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.6335 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.637211/12 [==========================&gt;...] - ETA: 0s - loss: 0.630012/12 [==============================] - 0s 14ms/step - loss: 0.6276 - val_loss: 0.6154
-Epoch 6/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5903 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.602911/12 [==========================&gt;...] - ETA: 0s - loss: 0.606412/12 [==============================] - 0s 14ms/step - loss: 0.6021 - val_loss: 0.6002
-Epoch 7/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5759 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.600711/12 [==========================&gt;...] - ETA: 0s - loss: 0.590712/12 [==============================] - 0s 14ms/step - loss: 0.5887 - val_loss: 0.5887
-Epoch 8/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.6046 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.585011/12 [==========================&gt;...] - ETA: 0s - loss: 0.586912/12 [==============================] - 0s 14ms/step - loss: 0.5850 - val_loss: 0.5795
-Epoch 9/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5990 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.580811/12 [==========================&gt;...] - ETA: 0s - loss: 0.572812/12 [==============================] - 0s 14ms/step - loss: 0.5718 - val_loss: 0.5715
-Epoch 10/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5631 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.545611/12 [==========================&gt;...] - ETA: 0s - loss: 0.552112/12 [==============================] - 0s 14ms/step - loss: 0.5510 - val_loss: 0.5647
-Epoch 11/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5435 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.559211/12 [==========================&gt;...] - ETA: 0s - loss: 0.547812/12 [==============================] - 0s 14ms/step - loss: 0.5482 - val_loss: 0.5592
-Epoch 12/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5536 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.544111/12 [==========================&gt;...] - ETA: 0s - loss: 0.541812/12 [==============================] - 0s 14ms/step - loss: 0.5432 - val_loss: 0.5544
-Epoch 13/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5750 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.536911/12 [==========================&gt;...] - ETA: 0s - loss: 0.543712/12 [==============================] - 0s 14ms/step - loss: 0.5454 - val_loss: 0.5503
-Epoch 14/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5451 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.540211/12 [==========================&gt;...] - ETA: 0s - loss: 0.538612/12 [==============================] - 0s 14ms/step - loss: 0.5391 - val_loss: 0.5466
-Epoch 15/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4837 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.534111/12 [==========================&gt;...] - ETA: 0s - loss: 0.528312/12 [==============================] - 0s 14ms/step - loss: 0.5292 - val_loss: 0.5436
-Epoch 16/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5668 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.539111/12 [==========================&gt;...] - ETA: 0s - loss: 0.537512/12 [==============================] - 0s 15ms/step - loss: 0.5345 - val_loss: 0.5405
-Epoch 17/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5110 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.516911/12 [==========================&gt;...] - ETA: 0s - loss: 0.534812/12 [==============================] - 0s 14ms/step - loss: 0.5317 - val_loss: 0.5377
-Epoch 18/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5282 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.547311/12 [==========================&gt;...] - ETA: 0s - loss: 0.534912/12 [==============================] - 0s 14ms/step - loss: 0.5292 - val_loss: 0.5352
-Epoch 19/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4950 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.526711/12 [==========================&gt;...] - ETA: 0s - loss: 0.519712/12 [==============================] - 0s 15ms/step - loss: 0.5194 - val_loss: 0.5329
-Epoch 20/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5193 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.529111/12 [==========================&gt;...] - ETA: 0s - loss: 0.523912/12 [==============================] - 0s 14ms/step - loss: 0.5226 - val_loss: 0.5314
-Epoch 21/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5733 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.530211/12 [==========================&gt;...] - ETA: 0s - loss: 0.522712/12 [==============================] - 0s 14ms/step - loss: 0.5197 - val_loss: 0.5296
-Epoch 22/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5432 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.511811/12 [==========================&gt;...] - ETA: 0s - loss: 0.511012/12 [==============================] - 0s 14ms/step - loss: 0.5103 - val_loss: 0.5279
-Epoch 23/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5075 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.516211/12 [==========================&gt;...] - ETA: 0s - loss: 0.511412/12 [==============================] - 0s 14ms/step - loss: 0.5139 - val_loss: 0.5267
-Epoch 24/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5231 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.500511/12 [==========================&gt;...] - ETA: 0s - loss: 0.506912/12 [==============================] - 0s 14ms/step - loss: 0.5112 - val_loss: 0.5257
-Epoch 25/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5170 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.504511/12 [==========================&gt;...] - ETA: 0s - loss: 0.508712/12 [==============================] - 0s 14ms/step - loss: 0.5084 - val_loss: 0.5244
-Epoch 26/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4575 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.506611/12 [==========================&gt;...] - ETA: 0s - loss: 0.504312/12 [==============================] - 0s 14ms/step - loss: 0.5017 - val_loss: 0.5232
-Epoch 27/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5069 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.503811/12 [==========================&gt;...] - ETA: 0s - loss: 0.507212/12 [==============================] - 0s 14ms/step - loss: 0.5097 - val_loss: 0.5222
-Epoch 28/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5287 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.513811/12 [==========================&gt;...] - ETA: 0s - loss: 0.507512/12 [==============================] - 0s 14ms/step - loss: 0.5077 - val_loss: 0.5213
-Epoch 29/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4866 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.484611/12 [==========================&gt;...] - ETA: 0s - loss: 0.496312/12 [==============================] - 0s 14ms/step - loss: 0.4988 - val_loss: 0.5204
-Epoch 30/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4713 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.496811/12 [==========================&gt;...] - ETA: 0s - loss: 0.508812/12 [==============================] - 0s 14ms/step - loss: 0.5038 - val_loss: 0.5198
-Epoch 31/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4479 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.508611/12 [==========================&gt;...] - ETA: 0s - loss: 0.500912/12 [==============================] - 0s 14ms/step - loss: 0.5047 - val_loss: 0.5193
-Epoch 32/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4664 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.505611/12 [==========================&gt;...] - ETA: 0s - loss: 0.497012/12 [==============================] - 0s 14ms/step - loss: 0.4993 - val_loss: 0.5186
-Epoch 33/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4699 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.493511/12 [==========================&gt;...] - ETA: 0s - loss: 0.491312/12 [==============================] - 0s 14ms/step - loss: 0.4906 - val_loss: 0.5178
-Epoch 34/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5224 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.503711/12 [==========================&gt;...] - ETA: 0s - loss: 0.502312/12 [==============================] - 0s 15ms/step - loss: 0.4993 - val_loss: 0.5168
-Epoch 35/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4994 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.493611/12 [==========================&gt;...] - ETA: 0s - loss: 0.491612/12 [==============================] - 0s 14ms/step - loss: 0.4942 - val_loss: 0.5162
-Epoch 36/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4814 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.481411/12 [==========================&gt;...] - ETA: 0s - loss: 0.492412/12 [==============================] - 0s 14ms/step - loss: 0.4925 - val_loss: 0.5156
-Epoch 37/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4778 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.470611/12 [==========================&gt;...] - ETA: 0s - loss: 0.484812/12 [==============================] - 0s 14ms/step - loss: 0.4898 - val_loss: 0.5149
-Epoch 38/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4625 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.479311/12 [==========================&gt;...] - ETA: 0s - loss: 0.489612/12 [==============================] - 0s 14ms/step - loss: 0.4883 - val_loss: 0.5145
-Epoch 39/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5018 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.497911/12 [==========================&gt;...] - ETA: 0s - loss: 0.494012/12 [==============================] - 0s 14ms/step - loss: 0.4933 - val_loss: 0.5139
-Epoch 40/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5194 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.500811/12 [==========================&gt;...] - ETA: 0s - loss: 0.491612/12 [==============================] - 0s 14ms/step - loss: 0.4927 - val_loss: 0.5134
-Epoch 41/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4682 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.481211/12 [==========================&gt;...] - ETA: 0s - loss: 0.483012/12 [==============================] - 0s 14ms/step - loss: 0.4817 - val_loss: 0.5126
-Epoch 42/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5112 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.482511/12 [==========================&gt;...] - ETA: 0s - loss: 0.482312/12 [==============================] - 0s 14ms/step - loss: 0.4880 - val_loss: 0.5121
-Epoch 43/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4846 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.490911/12 [==========================&gt;...] - ETA: 0s - loss: 0.478512/12 [==============================] - 0s 14ms/step - loss: 0.4861 - val_loss: 0.5116
-Epoch 44/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4405 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.477511/12 [==========================&gt;...] - ETA: 0s - loss: 0.480812/12 [==============================] - 0s 14ms/step - loss: 0.4816 - val_loss: 0.5111
-Epoch 45/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4553 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.471811/12 [==========================&gt;...] - ETA: 0s - loss: 0.484012/12 [==============================] - 0s 14ms/step - loss: 0.4880 - val_loss: 0.5107
-Epoch 46/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.3993 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.466311/12 [==========================&gt;...] - ETA: 0s - loss: 0.476512/12 [==============================] - 0s 14ms/step - loss: 0.4767 - val_loss: 0.5103
-Epoch 47/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4539 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.471011/12 [==========================&gt;...] - ETA: 0s - loss: 0.479412/12 [==============================] - 0s 14ms/step - loss: 0.4834 - val_loss: 0.5103
-Epoch 48/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4980 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.477011/12 [==========================&gt;...] - ETA: 0s - loss: 0.478912/12 [==============================] - 0s 14ms/step - loss: 0.4824 - val_loss: 0.5099
-Epoch 49/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4817 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.481111/12 [==========================&gt;...] - ETA: 0s - loss: 0.473412/12 [==============================] - 0s 14ms/step - loss: 0.4760 - val_loss: 0.5095
-Epoch 50/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4907 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.485511/12 [==========================&gt;...] - ETA: 0s - loss: 0.480312/12 [==============================] - 0s 14ms/step - loss: 0.4794 - val_loss: 0.5090
-Epoch 51/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4992 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.484411/12 [==========================&gt;...] - ETA: 0s - loss: 0.476812/12 [==============================] - 0s 14ms/step - loss: 0.4792 - val_loss: 0.5087
-Epoch 52/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4982 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.465511/12 [==========================&gt;...] - ETA: 0s - loss: 0.473112/12 [==============================] - 0s 14ms/step - loss: 0.4749 - val_loss: 0.5083
-Epoch 53/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4884 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.473511/12 [==========================&gt;...] - ETA: 0s - loss: 0.482512/12 [==============================] - 0s 14ms/step - loss: 0.4812 - val_loss: 0.5079
-Epoch 54/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4617 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.462611/12 [==========================&gt;...] - ETA: 0s - loss: 0.474012/12 [==============================] - 0s 14ms/step - loss: 0.4747 - val_loss: 0.5076
-Epoch 55/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5205 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.486611/12 [==========================&gt;...] - ETA: 0s - loss: 0.475112/12 [==============================] - 0s 14ms/step - loss: 0.4736 - val_loss: 0.5073
-Epoch 56/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4294 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.489411/12 [==========================&gt;...] - ETA: 0s - loss: 0.472812/12 [==============================] - 0s 14ms/step - loss: 0.4754 - val_loss: 0.5069
-Epoch 57/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4254 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.482711/12 [==========================&gt;...] - ETA: 0s - loss: 0.473212/12 [==============================] - 0s 14ms/step - loss: 0.4708 - val_loss: 0.5068
-Epoch 58/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4760 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.464211/12 [==========================&gt;...] - ETA: 0s - loss: 0.473612/12 [==============================] - 0s 14ms/step - loss: 0.4765 - val_loss: 0.5067
-Epoch 59/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4315 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.472711/12 [==========================&gt;...] - ETA: 0s - loss: 0.477712/12 [==============================] - 0s 15ms/step - loss: 0.4784 - val_loss: 0.5067
-Epoch 60/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4478 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.464511/12 [==========================&gt;...] - ETA: 0s - loss: 0.474012/12 [==============================] - 0s 14ms/step - loss: 0.4711 - val_loss: 0.5070
-Epoch 61/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4228 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.469311/12 [==========================&gt;...] - ETA: 0s - loss: 0.463012/12 [==============================] - 0s 14ms/step - loss: 0.4675 - val_loss: 0.5066
-Epoch 62/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4196 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.454411/12 [==========================&gt;...] - ETA: 0s - loss: 0.470412/12 [==============================] - 0s 15ms/step - loss: 0.4690 - val_loss: 0.5061
-Epoch 63/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5487 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.476111/12 [==========================&gt;...] - ETA: 0s - loss: 0.472812/12 [==============================] - 0s 14ms/step - loss: 0.4722 - val_loss: 0.5062
-Epoch 64/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4270 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.461711/12 [==========================&gt;...] - ETA: 0s - loss: 0.469312/12 [==============================] - 0s 14ms/step - loss: 0.4745 - val_loss: 0.5064
-Epoch 65/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4821 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.477211/12 [==========================&gt;...] - ETA: 0s - loss: 0.467612/12 [==============================] - 0s 14ms/step - loss: 0.4697 - val_loss: 0.5062
-Epoch 66/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5521 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.485411/12 [==========================&gt;...] - ETA: 0s - loss: 0.465812/12 [==============================] - 0s 14ms/step - loss: 0.4681 - val_loss: 0.5061
-Epoch 67/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4874 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.478111/12 [==========================&gt;...] - ETA: 0s - loss: 0.469912/12 [==============================] - 0s 14ms/step - loss: 0.4706 - val_loss: 0.5062
-Epoch 68/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4986 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.463611/12 [==========================&gt;...] - ETA: 0s - loss: 0.463512/12 [==============================] - 0s 14ms/step - loss: 0.4670 - val_loss: 0.5067
-Epoch 69/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4416 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.451511/12 [==========================&gt;...] - ETA: 0s - loss: 0.465812/12 [==============================] - 0s 14ms/step - loss: 0.4683 - val_loss: 0.5066
-Epoch 70/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4828 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.461111/12 [==========================&gt;...] - ETA: 0s - loss: 0.470212/12 [==============================] - 0s 14ms/step - loss: 0.4697 - val_loss: 0.5064
-Epoch 71/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4562 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.483111/12 [==========================&gt;...] - ETA: 0s - loss: 0.468712/12 [==============================] - 0s 14ms/step - loss: 0.4665 - val_loss: 0.5062
-Epoch 72/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4557 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.459411/12 [==========================&gt;...] - ETA: 0s - loss: 0.466812/12 [==============================] - 0s 14ms/step - loss: 0.4699 - val_loss: 0.5061
-Epoch 73/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.3911 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.469511/12 [==========================&gt;...] - ETA: 0s - loss: 0.466012/12 [==============================] - 0s 14ms/step - loss: 0.4655 - val_loss: 0.5060
-Epoch 74/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4155 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.460511/12 [==========================&gt;...] - ETA: 0s - loss: 0.473412/12 [==============================] - 0s 14ms/step - loss: 0.4714 - val_loss: 0.5061
-Epoch 75/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5306 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.476811/12 [==========================&gt;...] - ETA: 0s - loss: 0.473712/12 [==============================] - 0s 14ms/step - loss: 0.4688 - val_loss: 0.5065
-Epoch 76/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4074 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.449211/12 [==========================&gt;...] - ETA: 0s - loss: 0.463612/12 [==============================] - 0s 14ms/step - loss: 0.4646 - val_loss: 0.5063
-Epoch 77/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4487 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.474611/12 [==========================&gt;...] - ETA: 0s - loss: 0.463812/12 [==============================] - 0s 14ms/step - loss: 0.4649 - val_loss: 0.5062
-Epoch 78/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4848 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.477511/12 [==========================&gt;...] - ETA: 0s - loss: 0.458812/12 [==============================] - 0s 14ms/step - loss: 0.4633 - val_loss: 0.5060
-Epoch 79/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4825 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.461011/12 [==========================&gt;...] - ETA: 0s - loss: 0.464312/12 [==============================] - 0s 14ms/step - loss: 0.4653 - val_loss: 0.5060
-Epoch 80/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4529 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.458611/12 [==========================&gt;...] - ETA: 0s - loss: 0.462712/12 [==============================] - 0s 14ms/step - loss: 0.4602 - val_loss: 0.5057
-Epoch 81/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4433 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.461511/12 [==========================&gt;...] - ETA: 0s - loss: 0.464512/12 [==============================] - 0s 14ms/step - loss: 0.4621 - val_loss: 0.5059
-Epoch 82/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4350 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.469411/12 [==========================&gt;...] - ETA: 0s - loss: 0.466312/12 [==============================] - 0s 14ms/step - loss: 0.4644 - val_loss: 0.5061
-Epoch 83/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4153 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.453011/12 [==========================&gt;...] - ETA: 0s - loss: 0.462112/12 [==============================] - 0s 14ms/step - loss: 0.4608 - val_loss: 0.5063
-Epoch 84/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.3970 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.459911/12 [==========================&gt;...] - ETA: 0s - loss: 0.461512/12 [==============================] - 0s 14ms/step - loss: 0.4600 - val_loss: 0.5065
-Epoch 85/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4605 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.464411/12 [==========================&gt;...] - ETA: 0s - loss: 0.458712/12 [==============================] - 0s 14ms/step - loss: 0.4619 - val_loss: 0.5066
-Epoch 86/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5031 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.477311/12 [==========================&gt;...] - ETA: 0s - loss: 0.462612/12 [==============================] - 0s 14ms/step - loss: 0.4633 - val_loss: 0.5066
-Epoch 87/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4935 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.457211/12 [==========================&gt;...] - ETA: 0s - loss: 0.459212/12 [==============================] - 0s 15ms/step - loss: 0.4593 - val_loss: 0.5064
-Epoch 88/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.5105 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.476711/12 [==========================&gt;...] - ETA: 0s - loss: 0.462512/12 [==============================] - 0s 14ms/step - loss: 0.4596 - val_loss: 0.5065
-Epoch 89/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4389 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.473511/12 [==========================&gt;...] - ETA: 0s - loss: 0.465712/12 [==============================] - 0s 14ms/step - loss: 0.4618 - val_loss: 0.5065
-Epoch 90/1000
- 1/12 [=&gt;............................] - ETA: 0s - loss: 0.4063 6/12 [==============&gt;...............] - ETA: 0s - loss: 0.454811/12 [==========================&gt;...] - ETA: 0s - loss: 0.461112/12 [==============================] - 0s 14ms/step - loss: 0.4626 - val_loss: 0.5066</code></pre>
 </div>
-</div>
-<div id="5aea1322" class="cell" data-execution_count="14">
+<div id="1f800281" class="cell" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>])</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>])</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'model loss'</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'loss'</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'epoch'</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'train'</span>, <span class="st">'validation'</span>], loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>])</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>])</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'model loss'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'loss'</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'epoch'</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'train'</span>, <span class="st">'validation'</span>], loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -651,17 +471,17 @@ Epoch 90/1000
 </div>
 </div>
 </div>
-<div id="9f55b219" class="cell" data-execution_count="15">
+<div id="0839edef" class="cell" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>y_class <span class="op">=</span> y_pred.<span class="bu">round</span>()</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> accuracy_score(y_test, y_class)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ACC on test sample: </span><span class="sc">{</span>acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>y_class <span class="op">=</span> y_pred.<span class="bu">round</span>()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> accuracy_score(y_test, y_class)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ACC on test sample: </span><span class="sc">{</span>acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>ACC on test sample: 0.183</code></pre>
+<pre><code>ACC on test sample: 0.190</code></pre>
 </div>
 </div>
 <section id="podsumowanie" class="level3" data-number="4.2.1">
