@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Zaawansowane metody uczenia maszynowego - 3&nbsp; Realizacja zadań predykcyjnych z wieloma wyjściami</title>
+<title>Zaawansowane metody uczenia maszynowego - 3&nbsp; Przykłady - metody klasyczne</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./examples2.html" rel="next">
 <link href="./multi_target_models.html" rel="prev">
 <link href="./images/cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Realizacja zadań predykcyjnych z wieloma wyjściami</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Przykłady - metody klasyczne</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -181,7 +181,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./examples.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Realizacja zadań predykcyjnych z wieloma wyjściami</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Przykłady - metody klasyczne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -206,15 +212,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#niezależne-lasy-losowe" id="toc-niezależne-lasy-losowe" class="nav-link" data-scroll-target="#niezależne-lasy-losowe"><span class="header-section-number">3.2.1</span> Niezależne lasy losowe</a></li>
   <li><a href="#regressor-chains-rf" id="toc-regressor-chains-rf" class="nav-link" data-scroll-target="#regressor-chains-rf"><span class="header-section-number">3.2.2</span> Regressor Chains RF</a></li>
   <li><a href="#adaptacja-modelu-rf" id="toc-adaptacja-modelu-rf" class="nav-link" data-scroll-target="#adaptacja-modelu-rf"><span class="header-section-number">3.2.3</span> Adaptacja modelu RF</a></li>
+  <li><a href="#podsumowanie" id="toc-podsumowanie" class="nav-link" data-scroll-target="#podsumowanie"><span class="header-section-number">3.2.4</span> Podsumowanie</a></li>
   </ul></li>
-  <li><a href="#podsumowanie" id="toc-podsumowanie" class="nav-link" data-scroll-target="#podsumowanie"><span class="header-section-number">3.3</span> Podsumowanie</a></li>
-  <li><a href="#przykład-2" id="toc-przykład-2" class="nav-link" data-scroll-target="#przykład-2"><span class="header-section-number">3.4</span> Przykład 2</a>
+  <li><a href="#przykład-2" id="toc-przykład-2" class="nav-link" data-scroll-target="#przykład-2"><span class="header-section-number">3.3</span> Przykład 2</a>
   <ul class="collapse">
-  <li><a href="#niezależne-lasy-losowe-1" id="toc-niezależne-lasy-losowe-1" class="nav-link" data-scroll-target="#niezależne-lasy-losowe-1"><span class="header-section-number">3.4.1</span> Niezależne lasy losowe</a></li>
-  <li><a href="#classifier-chains" id="toc-classifier-chains" class="nav-link" data-scroll-target="#classifier-chains"><span class="header-section-number">3.4.2</span> Classifier Chains</a></li>
-  <li><a href="#adaptacja-modelu-rf-1" id="toc-adaptacja-modelu-rf-1" class="nav-link" data-scroll-target="#adaptacja-modelu-rf-1"><span class="header-section-number">3.4.3</span> Adaptacja modelu RF</a></li>
+  <li><a href="#niezależne-lasy-losowe-1" id="toc-niezależne-lasy-losowe-1" class="nav-link" data-scroll-target="#niezależne-lasy-losowe-1"><span class="header-section-number">3.3.1</span> Niezależne lasy losowe</a></li>
+  <li><a href="#classifier-chains" id="toc-classifier-chains" class="nav-link" data-scroll-target="#classifier-chains"><span class="header-section-number">3.3.2</span> Classifier Chains</a></li>
+  <li><a href="#adaptacja-modelu-rf-1" id="toc-adaptacja-modelu-rf-1" class="nav-link" data-scroll-target="#adaptacja-modelu-rf-1"><span class="header-section-number">3.3.3</span> Adaptacja modelu RF</a></li>
+  <li><a href="#podsumowanie-1" id="toc-podsumowanie-1" class="nav-link" data-scroll-target="#podsumowanie-1"><span class="header-section-number">3.3.4</span> Podsumowanie</a></li>
   </ul></li>
-  <li><a href="#podsumowanie-1" id="toc-podsumowanie-1" class="nav-link" data-scroll-target="#podsumowanie-1"><span class="header-section-number">3.5</span> Podsumowanie</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
     </div>
@@ -223,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Realizacja zadań predykcyjnych z wieloma wyjściami</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Przykłady - metody klasyczne</span></h1>
 </div>
 
 
@@ -247,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="exm-1" class="theorem example page-columns page-full">
 <p><span class="theorem-title"><strong>Przykład 3.1</strong></span> Dane do zadania wygenerujemy za pomocą funkcji <code>make_regression()</code> z pakietu <code>sklern.dataset</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Wygenerujemy 700 obserwacji z 10 predyktorami i 3 zmiennymi zależnymi.</p>
 <div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;Nie znam R-owego odpowiednika</p></div></div>
-<div id="89416253" class="cell" data-execution_count="1">
+<div id="c37d4d07" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -257,14 +263,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_regression</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="381d8a05" class="cell" data-execution_count="2">
+<div id="018d0fc3" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generowanie danych do zadania</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_regression(n_samples<span class="op">=</span><span class="dv">700</span>, n_features<span class="op">=</span><span class="dv">10</span>, n_informative <span class="op">=</span> <span class="dv">8</span>, n_targets<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="c214a27a" class="cell" data-execution_count="3">
+<div id="75fe9cea" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># łączenie ich w ramki danych</span></span>
@@ -386,11 +392,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="86492213" class="cell" data-execution_count="4">
+<div id="85c13a36" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_X_boxplot <span class="op">=</span> pd.melt(X_df)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data <span class="op">=</span> df_X_boxplot, x <span class="op">=</span> <span class="st">"variable"</span>, y <span class="op">=</span> <span class="st">"value"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data <span class="op">=</span> df_X_boxplot, x <span class="op">=</span> <span class="st">"variable"</span>, y <span class="op">=</span> <span class="st">"value"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -400,11 +407,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="978cb289" class="cell" data-execution_count="5">
+<div id="482047e1" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_y_boxplot <span class="op">=</span> pd.melt(y_df)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data <span class="op">=</span> df_y_boxplot, x <span class="op">=</span> <span class="st">"variable"</span>, y <span class="op">=</span> <span class="st">"value"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data <span class="op">=</span> df_y_boxplot, x <span class="op">=</span> <span class="st">"variable"</span>, y <span class="op">=</span> <span class="st">"value"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -415,14 +423,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Zarówno zmienne X, jak i y mają zbliżone rozkłady.</p>
-<div id="698c121b" class="cell" data-execution_count="6">
+<div id="c5c8621f" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"white"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.PairGrid(y_df, diag_sharey<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>g.map_upper(sns.scatterplot, s<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>g.map_lower(sns.kdeplot)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>g.map_diag(sns.histplot)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>g.map_diag(sns.histplot)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -433,7 +442,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Jak widać z powyższego wykresu zmienne <code>y1,y2,y3</code> wykazują pewne wzajemne zależności, dlatego budowa oddzielnych modeli dla każdej ze zmiennych powinna dawać gorsze predykcje niż modele wiążące wszystkie zmiennej w jednym modelu. Można też zauważyć, że rozkłady są zbliżone do normalnego.</p>
-<div id="0f998b73" class="cell" data-execution_count="7">
+<div id="46f1a5a8" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cor <span class="op">=</span> df.corr()</span>
@@ -441,7 +450,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cor, </span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span>cor.columns.values,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            yticklabels<span class="op">=</span>cor.columns.values,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            annot <span class="op">=</span> <span class="va">True</span>, fmt <span class="op">=</span> <span class="st">'.2f'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            annot <span class="op">=</span> <span class="va">True</span>, fmt <span class="op">=</span> <span class="st">'.2f'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -465,7 +475,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="niezależne-lasy-losowe" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="niezależne-lasy-losowe"><span class="header-section-number">3.2.1</span> Niezależne lasy losowe</h3>
 <p>Funkcja <code>MultiOutputRegressor</code> nałożona na model lasu losowego takie rozwiązanie tworzy.</p>
-<div id="6bc9ce61" class="cell" data-execution_count="8">
+<div id="732bf60d" class="cell" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -477,18 +487,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.3</span>, random_state <span class="op">=</span> <span class="dv">4</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="319a27a6" class="cell" data-execution_count="9">
+<div id="ce7eb626" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rf_meta <span class="op">=</span> RandomForestRegressor()</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rf_meta <span class="op">=</span> RandomForestRegressor(random_state<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rf_indep <span class="op">=</span> MultiOutputRegressor(rf_meta)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rf_indep)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>MultiOutputRegressor(estimator=RandomForestRegressor())</code></pre>
+<pre><code>MultiOutputRegressor(estimator=RandomForestRegressor(random_state=4))</code></pre>
 </div>
 </div>
-<div id="ce66018f" class="cell" data-execution_count="10">
+<div id="77e57e9f" class="cell" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rf_indep.fit(X_train, y_train)</span>
@@ -500,24 +510,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'RMSE on test samples: </span><span class="sc">{</span>rmse_indep<span class="sc">:.1f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>R2 on test samples: 0.81
-RMSE on test samples: 72.5</code></pre>
+<pre><code>R2 on test samples: 0.82
+RMSE on test samples: 71.0</code></pre>
 </div>
 </div>
 </section>
 <section id="regressor-chains-rf" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="regressor-chains-rf"><span class="header-section-number">3.2.2</span> Regressor Chains RF</h3>
-<div id="393f3b98" class="cell" data-execution_count="11">
+<div id="c1a419a5" class="cell" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rf_chains <span class="op">=</span> RegressorChain(rf_meta)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rf_chains)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>RegressorChain(base_estimator=RandomForestRegressor())</code></pre>
+<pre><code>RegressorChain(base_estimator=RandomForestRegressor(random_state=4))</code></pre>
 </div>
 </div>
-<div id="c487b832" class="cell" data-execution_count="12">
+<div id="026ff3af" class="cell" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rf_chains.fit(X_train, y_train)</span>
@@ -529,23 +539,23 @@ RMSE on test samples: 72.5</code></pre>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'RMSE on test samples: </span><span class="sc">{</span>rmse_chains<span class="sc">:.1f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>R2 on test samples: 0.79
-RMSE on test samples: 75.2</code></pre>
+<pre><code>R2 on test samples: 0.80
+RMSE on test samples: 72.3</code></pre>
 </div>
 </div>
 </section>
 <section id="adaptacja-modelu-rf" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="adaptacja-modelu-rf"><span class="header-section-number">3.2.3</span> Adaptacja modelu RF</h3>
-<div id="afe12f52" class="cell" data-execution_count="13">
+<div id="436fcca9" class="cell" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rf_meta)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>RandomForestRegressor()</code></pre>
+<pre><code>RandomForestRegressor(random_state=4)</code></pre>
 </div>
 </div>
-<div id="9d259e9d" class="cell" data-execution_count="14">
+<div id="ee7ce05b" class="cell" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rf_meta.fit(X_train, y_train)</span>
@@ -557,26 +567,26 @@ RMSE on test samples: 75.2</code></pre>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'RMSE on test samples: </span><span class="sc">{</span>rmse_meta<span class="sc">:.1f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>R2 on test samples: 0.76
-RMSE on test samples: 80.8</code></pre>
+<pre><code>R2 on test samples: 0.77
+RMSE on test samples: 77.9</code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="podsumowanie" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="podsumowanie"><span class="header-section-number">3.3</span> Podsumowanie</h2>
+<section id="podsumowanie" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="podsumowanie"><span class="header-section-number">3.2.4</span> Podsumowanie</h3>
 <p>Biorąc pod uwagę miary dopasowania najlepiej poradził sobie z tym zadaniem model składający się z trzech niezależnych modeli RF, potem model RF w wersji <em>Regressor Chains</em>, a najgorzej (o dziwo) radzi sobie z predykcją model korzystający adaptacji drzew decyzyjnych do wersji wielowyjściowej.</p>
 </section>
-<section id="przykład-2" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="przykład-2"><span class="header-section-number">3.4</span> Przykład 2</h2>
+</section>
+<section id="przykład-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="przykład-2"><span class="header-section-number">3.3</span> Przykład 2</h2>
 <p>Tym razem sformułujemy problem z wieloma wyjściami ale klasyfikacyjny i również dopasujemy trzy wersje modelu lasu losowego:</p>
 <ul>
 <li>lasy losowe dla każdej zmiennej y niezależnie;</li>
 <li>model lasu losowego z wykorzystaniem reguły <em>Classifier Chains</em> jako transformacji modelu</li>
 <li>las losowy dla wszystkich zmiennych wynikowych jednocześnie (adaptacja modelu).</li>
 </ul>
-<p>Analizowany problem będzie prawdziwy i będzie dotyczył klasyfikacji enzymów na podstawie cech charakterystycznych substratów. Pierwszych 30 zmiennych stanowi zmienne objaśniające, a 6 pozostałych zmienne kodujące przynależność do danej grupy enzymów.</p>
-<div id="aec6e8ca" class="cell" data-execution_count="15">
+<p>Analizowany problem będzie prawdziwy i będzie dotyczył klasyfikacji enzymów na podstawie cech charakterystycznych substratów. Pierwszych 31 zmiennych stanowi zmienne objaśniające, a 6 pozostałych zmienne kodujące przynależność do danej grupy enzymów.</p>
+<div id="2066715b" class="cell" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> pd.read_csv(<span class="st">"data/original.csv"</span>, index_col <span class="op">=</span> <span class="st">"id"</span>)</span>
@@ -765,7 +775,7 @@ RMSE on test samples: 80.8</code></pre>
 </div>
 </div>
 </div>
-<div id="d4d2dbb9" class="cell" data-execution_count="16">
+<div id="806a1c3f" class="cell" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dt.info()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -818,7 +828,7 @@ memory usage: 308.5+ KB</code></pre>
 </div>
 </div>
 <p>Sprawdzimy na ile niezbalansowane są poszczególne klasy wynikowe.</p>
-<div id="c0f28e1e" class="cell" data-execution_count="17">
+<div id="fa8f9d23" class="cell" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dt_deps <span class="op">=</span> dt.loc[:,<span class="st">'EC1'</span>:<span class="st">'EC6'</span>]</span>
@@ -835,7 +845,7 @@ memory usage: 308.5+ KB</code></pre>
 </div>
 </div>
 <p>Niestety nie wszystkie klasy występują jednakowo często i może pojawić się zjawisko, że kombinacja enzymów będzie występowała bardzo rzadko (np. raz). Jak widać z poniższej tabeli faktycznie tak się dzieje. To nie pozwala przeprowadzić uczenia. Dlatego musimy połączyć pewne klasy enzymów aby uniemożliwić taką sytuację.</p>
-<div id="dceeaa9a" class="cell" data-execution_count="18">
+<div id="b85cc290" class="cell" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dt.loc[:,<span class="st">'EC1'</span>:<span class="st">'EC6'</span>].value_counts()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -898,7 +908,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>Usuniemy zatem takie kombinacje, które występują bardzo rzadko w danych.</p>
-<div id="ec2a3ac0" class="cell" data-execution_count="19">
+<div id="11ed5d35" class="cell" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>combinations <span class="op">=</span> dt.loc[:,<span class="st">'EC1'</span>:<span class="st">'EC6'</span>].value_counts().index.to_numpy()</span>
@@ -914,8 +924,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> dt.iloc[idx,:]</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Dodatkowo w tym przykładzie skorzystamy z biblioteki <code>ATOM</code>, która usprawnia pewne czynności w uczeniu maszynowym, a opiera się a funkcja pakietu <code>scikit-learn</code>.</p>
-<div id="39a6e084" class="cell" data-execution_count="20">
+<div id="bf9293b2" class="cell" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
@@ -925,12 +934,12 @@ Name: count, dtype: int64</code></pre>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.3</span>, random_state <span class="op">=</span> <span class="dv">44</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="niezależne-lasy-losowe-1" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="niezależne-lasy-losowe-1"><span class="header-section-number">3.4.1</span> Niezależne lasy losowe</h3>
-<div id="d63de025" class="cell" data-execution_count="21">
+<section id="niezależne-lasy-losowe-1" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="niezależne-lasy-losowe-1"><span class="header-section-number">3.3.1</span> Niezależne lasy losowe</h3>
+<div id="bb2ddf6d" class="cell" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rf_meta <span class="op">=</span> RandomForestClassifier()</span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rf_meta <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>rf_indep <span class="op">=</span> MultiOutputClassifier(rf_meta)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rf_indep)</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -938,17 +947,17 @@ Name: count, dtype: int64</code></pre>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>acc_indep<span class="op">=</span> rf_indep.score(X_test, y_test)</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>pred_indep <span class="op">=</span> rf_indep.predict(X_test)</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>acc_indep<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>acc_indep<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>MultiOutputClassifier(estimator=RandomForestClassifier())
-Accuracy on test samples: 0.19</code></pre>
+<pre><code>MultiOutputClassifier(estimator=RandomForestClassifier(random_state=4))
+Accuracy on test samples: 0.172</code></pre>
 </div>
 </div>
 </section>
-<section id="classifier-chains" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="classifier-chains"><span class="header-section-number">3.4.2</span> Classifier Chains</h3>
-<div id="70b01c53" class="cell" data-execution_count="22">
+<section id="classifier-chains" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="classifier-chains"><span class="header-section-number">3.3.2</span> Classifier Chains</h3>
+<div id="3d37149c" class="cell" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>rf_chains <span class="op">=</span> ClassifierChain(rf_meta)</span>
@@ -958,36 +967,36 @@ Accuracy on test samples: 0.19</code></pre>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>acc_chains<span class="op">=</span> rf_chains.score(X_test, y_test)</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>pred_chains <span class="op">=</span> rf_chains.predict(X_test)</span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>acc_chains<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>acc_chains<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>ClassifierChain(base_estimator=RandomForestClassifier())
-Accuracy on test samples: 0.21</code></pre>
+<pre><code>ClassifierChain(base_estimator=RandomForestClassifier(random_state=4))
+Accuracy on test samples: 0.187</code></pre>
 </div>
 </div>
 </section>
-<section id="adaptacja-modelu-rf-1" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="adaptacja-modelu-rf-1"><span class="header-section-number">3.4.3</span> Adaptacja modelu RF</h3>
-<div id="f61bffa4" class="cell" data-execution_count="23">
+<section id="adaptacja-modelu-rf-1" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="adaptacja-modelu-rf-1"><span class="header-section-number">3.3.3</span> Adaptacja modelu RF</h3>
+<div id="806bda11" class="cell" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rf_meta.fit(X_train, y_train)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>acc_meta<span class="op">=</span> rf_meta.score(X_test, y_test)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>pred_meta <span class="op">=</span> rf_meta.predict(X_test)</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>r2_meta<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Accuracy on test samples: </span><span class="sc">{</span>acc_meta<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy on test samples: 0.76</code></pre>
+<pre><code>Accuracy on test samples: 0.190</code></pre>
 </div>
 </div>
 </section>
+<section id="podsumowanie-1" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="podsumowanie-1"><span class="header-section-number">3.3.4</span> Podsumowanie</h3>
+<p>Również i tym razem nie widać wyraźnych różnic pomiędzy jakością dopasowania modeli. Model adaptowanego lasu losowego poradził sobie z zadanie najlepiej (19% poprawności trafień), Classifier Chains dał 18,7%, a niezależne lasy losowe 17,2%.</p>
+
+
 </section>
-<section id="podsumowanie-1" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="podsumowanie-1"><span class="header-section-number">3.5</span> Podsumowanie</h2>
-<p>Tym razem widać wyraźne różnice pomiędzy jakością dopasowania. Model adaptowanego lasu losowego poradził sobie z zadanie najlepiej (77% poprawności trafień), Classifier Chains dał tylko 19%, a niezależne lasy losowe 18%.</p>
-
-
 </section>
 
 
@@ -1525,8 +1534,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="Literatura">
-        <span class="nav-page-text">Literatura</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./examples2.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>Przykłady NN</span>">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
