@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.537">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Zaawansowane metody uczenia maszynowego - 5&nbsp; Rodzaje szeregów czasowych</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./examples2.html" rel="prev">
+<link href="./images/cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rnn.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Zaawansowane metody uczenia maszynowego</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/AMLM/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wstęp</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Wprowadzenie</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi_target_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modele z wieloma wyjściami</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Przykłady - metody klasyczne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rnn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Literatura</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+<li>
+<a href="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" id="toc-zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="nav-link active" data-scroll-target="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych"><span class="header-section-number">5.1</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</a>
+  <ul class="collapse">
+<li><a href="#model-bazowy" id="toc-model-bazowy" class="nav-link" data-scroll-target="#model-bazowy"><span class="header-section-number">5.1.1</span> Model bazowy</a></li>
+  <li><a href="#prosty-model-sieci-g%C4%99stej" id="toc-prosty-model-sieci-gęstej" class="nav-link" data-scroll-target="#prosty-model-sieci-g%C4%99stej"><span class="header-section-number">5.1.2</span> Prosty model sieci gęstej</a></li>
+  <li><a href="#model-oparty-o-konwolucje-1d" id="toc-model-oparty-o-konwolucje-1d" class="nav-link" data-scroll-target="#model-oparty-o-konwolucje-1d"><span class="header-section-number">5.1.3</span> Model oparty o konwolucje 1D</a></li>
+  <li><a href="#model-lstm" id="toc-model-lstm" class="nav-link" data-scroll-target="#model-lstm"><span class="header-section-number">5.1.4</span> Model LSTM</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sieci-rekurencyjne" id="toc-sieci-rekurencyjne" class="nav-link" data-scroll-target="#sieci-rekurencyjne"><span class="header-section-number">6</span> Sieci rekurencyjne</a>
+  <ul class="collapse">
+<li><a href="#rnn" id="toc-rnn" class="nav-link" data-scroll-target="#rnn"><span class="header-section-number">6.1</span> RNN</a></li>
+  <li><a href="#lstm-i-gru" id="toc-lstm-i-gru" class="nav-link" data-scroll-target="#lstm-i-gru"><span class="header-section-number">6.2</span> LSTM i GRU</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Szereg czasowy może być dowolnym zestawem danych uzyskanym poprzez pomiary w regularnych odstępach czasu, jak np. dzienna cena akcji, godzinowe zużycie energii elektrycznej w mieście lub tygodniowa sprzedaż w sklepie. Szeregi czasowe są obecne wszędzie, niezależnie od tego, czy patrzymy na zjawiska naturalne (takie jak aktywność sejsmiczna, ewolucja populacji ryb w rzece czy pogoda w danym miejscu), czy na wzorce aktywności ludzkiej (takie jak odwiedzający stronę internetową, PKB kraju czy transakcje kartami kredytowymi). W przeciwieństwie do typów danych, z którymi mieliśmy do tej pory do czynienia, praca z szeregami czasowymi wymaga zrozumienia dynamiki systemu - jego cykli okresowych, trendów w czasie, regularnego reżimu i nagłych skoków.</p>
+<p>Zdecydowanie najbardziej powszechnym zadaniem związanym z szeregami czasowymi jest prognozowanie: przewidywanie, co stanie się w następnej serii; prognozowanie zużycia energii elektrycznej z kilkugodzinnym wyprzedzeniem, aby można było przewidzieć popyt; prognozowanie przychodów z kilkumiesięcznym wyprzedzeniem, aby można było zaplanować budżet; prognozowanie pogody z kilkudniowym wyprzedzeniem, aby można było zaplanować wyjazd. Prognozowanie jest tym, na czym skupia się ten rozdział. Ale w rzeczywistości istnieje wiele innych rzeczy, które można zrobić z szeregami czasowymi:</p>
+<ul>
+<li>klasyfikacja - przypisanie jednej lub więcej etykiet kategorycznych do szeregu czasowego. Na przykład, biorąc pod uwagę szereg czasowy aktywności osoby odwiedzającej stronę internetową, należy sklasyfikować, czy osoba ta jest botem czy człowiekiem.</li>
+<li>wykrywanie zdarzeń - identyfikacja wystąpienia określonego, oczekiwanego zdarzenia w ciągłym strumieniu danych. Szczególnie użytecznym zastosowaniem jest “wykrywanie słów kluczy”, gdzie model monitoruje strumień audio i wykrywa wypowiedzi takie jak “OK, Google” lub “Hej, Alexa”.</li>
+<li>wykrywanie anomalii - wykrywanie wszelkich nietypowych zdarzeń w ciągłym strumieniu danych. Nietypowa aktywność w sieci firmowej, które może być rozpoznane jako atak. Nietypowe odczyty na linii produkcyjnej, po to, aby człowiek się temu przyjrzał. Wykrywanie anomalii odbywa się zazwyczaj poprzez uczenie bez nadzoru, ponieważ często nie wiadomo, jakiego rodzaju anomalii się szuka, więc nie można trenować na konkretnych przykładach anomalii.</li>
+</ul>
+<p>Podczas pracy z szeregami czasowymi, spotkamy się z szeroką gamą technik reprezentacji danych specyficznych dla danej dziedziny. Na przykład, transformata Fouriera, która polega na wyrażeniu serii wartości w kategoriach superpozycji fal o różnych częstotliwościach. Transformata Fouriera może być bardzo cenna podczas wstępnego przetwarzania wszelkich danych, które charakteryzują się przede wszystkim cyklami i oscylacjami (jak dźwięk, drgania ramy wieżowca czy fale mózgowe). W kontekście głębokiego uczenia, analiza Fouriera (lub powiązana analiza częstotliwości Mel) i inne reprezentacje specyficzne dla danej domeny mogą być przydatne jako forma inżynierii cech, sposób na przygotowanie danych przed trenowaniem modelu na nich, aby ułatwić pracę modelu.</p>
+<p>Możemy wyróżnić trzy rodzaje zadań z wykorzystaniem szeregów czasowych:</p>
+<ul>
+<li>jednowymiarowe szeregi czasowe (ang. <em>univariate time series</em>) - problem sekwencyjny, w którym na podstawie historycznych wartości szeregu czasowego przewidujemy przyszłe wartości. Przykładowo na podstawie temperatur z kilku poprzednich dni, chcemy przewidywać temperaturę jutrzejszą.</li>
+<li>wielowymiarowe szeregi czasowe (ang. <em>multivariate time series</em>) - problem sekwencyjny, w którym na podstawie historycznych wartości kilku zmiennych (w tym historycznych danych na temat zmiennej wyjściowej) przewidujemy przyszłe wartości pewnej zmiennej wyjściowej. Przykładowo jeśli chcemy przewidywać zanieczyszczenie powietrza<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na podstawie wcześniejszych odczytów zanieczyszczenia oraz wcześniejszych informacji o sile i kierunku wiatru, temperaturze, punkcie rosy itp.</li>
+<li>wieloetapowe szeregi czasowe (ang. <em>multistage time series</em>) - problem sekwencyjny, w którym na postawie historycznych wartości szeregu czasowego przewidujemy kilka (więcej niż jedną) wartość przyszłą tego szeregu czasowego. Przykładowo jeśli na podstawie historycznych wielkości opadów chcemy przewidzieć wielkość opadów w najbliższych trzech dniach.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;wyrażone w jednostkach pm2.5</p></div><p>Oprócz wspomnianego podziału rodzajów zadań z wykorzystaniem szeregów czasowych, możemy je również podzielić na typy zadań ze względu na postać wejść i wyjść z modelu sieci neuronowej:</p>
+<ul>
+<li>jeden do jednego - gdy istnieje jedno wejście i jedno wyjście. Typowym przykładem problemu sekwencji jeden do jednego jest przypadek, gdy mamy obraz i chcemy przewidzieć jedną etykietę dla tego obrazu.</li>
+<li>wiele do jednego - problemach sekwencyjnych wiele do jednego, mamy sekwencję danych jako wejście i musimy przewidzieć pojedyncze wyjście. Klasyfikacja tekstu jest doskonałym przykładem problemów sekwencji <em>many-to-one</em>, gdzie mamy sekwencję wejściową słów i chcemy przewidzieć pojedynczy tag wyjściowy.</li>
+<li>jeden do wielu - w problemach sekwencji jeden do wielu, mamy pojedyncze wejście i sekwencję wyjść. Typowym przykładem jest obraz i odpowiadający mu opis sceny.</li>
+<li>wiele do wielu - problemy sekwencji wiele do wielu obejmują sekwencję wejść i sekwencję wyjść. Na przykład, ceny akcji z 7 dni jako dane wejściowe i ceny akcji z kolejnych 7 dni jako dane wyjściowe. Chatboty są również przykładem problemów sekwencji wiele do wielu, gdzie sekwencja tekstowa jest wejściem, a inna sekwencja tekstowa jest wyjściem.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<figcaption>Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe</figcaption></figure>
+</div>
+<section id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych">
+<span class="header-section-number">5.1</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</h2>
+<p>W tym podrozdziale omówimy trzy zaawansowane techniki poprawy wydajności i siły generalizacji rekurencyjnych sieci neuronowych. Zademonstrujemy wszystkie trzy koncepcje na problemie prognozowania pogody, gdzie mamy dostęp do szeregu obserwacji pochodzących z czujników zainstalowanych na dachu budynku, takich jak temperatura, ciśnienie powietrza i wilgotność, które użyjemy do przewidywania, jaka będzie temperatura 24 godziny po ostatniej obserwacji w bazie danych. Jest to dość trudny problem, który ilustruje wiele typowych trudności napotykanych podczas pracy z szeregami czasowymi.</p>
+<p>Omówimy następujące techniki:</p>
+<ul>
+<li>
+<em>Recurrent dropout</em> - to specyficzny, wbudowany sposób użycia <em>dropoutu</em> do walki z nadmiernym dopasowaniem w warstwach rekurencyjnych.</li>
+<li>Składanie warstw rekurencyjnych - zwiększa to moc reprezentacyjną sieci (kosztem większego obciążenia obliczeniowego).</li>
+<li>Dwukierunkowe warstwy rekurencyjne - prezentują one tę samą informację sieci rekurencyjnej na różne sposoby, zwiększając dokładność i łagodząc problemy związane z zapominaniem.</li>
+</ul>
+<div id="exm-1" class="theorem example">
+<p><span class="theorem-title"><strong>Przykład 5.1</strong></span> W analizowanym zestawie danych 14 różnych wielkości (takich jak temperatura powietrza, ciśnienie atmosferyczne, wilgotność, kierunek wiatru i tak dalej) było rejestrowanych co 10 minut, przez kilka lat. Oryginalne dane sięgają 2003 roku, ale ten przykład jest ograniczony do danych z lat 2009-2016.</p>
+<p>Na początek pobierzemy dane z serwera <a href="https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip" class="uri">https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip</a> i rozpakujemy.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span></span>
+<span> <span class="st">"https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
+<span>          files <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">full_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"jena_climate_2009_2016.csv"</span><span class="op">)</span></span>
+<span><span class="va">full_df</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 420,451 × 15
+   `Date Time`         `p (mbar)` `T (degC)` `Tpot (K)` `Tdew (degC)` `rh (%)`
+   &lt;chr&gt;                    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+ 1 01.01.2009 00:10:00       997.      -8.02       265.         -8.9      93.3
+ 2 01.01.2009 00:20:00       997.      -8.41       265.         -9.28     93.4
+ 3 01.01.2009 00:30:00       997.      -8.51       265.         -9.31     93.9
+ 4 01.01.2009 00:40:00       997.      -8.31       265.         -9.07     94.2
+ 5 01.01.2009 00:50:00       997.      -8.27       265.         -9.04     94.1
+ 6 01.01.2009 01:00:00       996.      -8.05       265.         -8.78     94.4
+ 7 01.01.2009 01:10:00       996.      -7.62       266.         -8.3      94.8
+ 8 01.01.2009 01:20:00       996.      -7.62       266.         -8.36     94.4
+ 9 01.01.2009 01:30:00       996.      -7.91       266.         -8.73     93.8
+10 01.01.2009 01:40:00       997.      -8.43       265.         -9.34     93.1
+# ℹ 420,441 more rows
+# ℹ 9 more variables: `VPmax (mbar)` &lt;dbl&gt;, `VPact (mbar)` &lt;dbl&gt;,
+#   `VPdef (mbar)` &lt;dbl&gt;, `sh (g/kg)` &lt;dbl&gt;, `H2OC (mmol/mol)` &lt;dbl&gt;,
+#   `rho (g/m**3)` &lt;dbl&gt;, `wv (m/s)` &lt;dbl&gt;, `max. wv (m/s)` &lt;dbl&gt;,
+#   `wd (deg)` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Choć nie jest to konieczne w tym zadaniu, to przekształcimy datę (będącą pierwsza kolumną w zestawie danych) z typu <code>character</code> do typu <code>DateTime</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">full_df</span><span class="op">$</span><span class="va">`Date Time`</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span>tz <span class="op">=</span> <span class="st">"Etc/GMT+1"</span>, format <span class="op">=</span> <span class="st">"%d.%m.%Y %H:%M:%S"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Zwróć uwagę, że przekazujemy <code>tz = "Etc/GMT+1"</code> zamiast <code>tz = "Europe/Berlin"</code>, ponieważ znaczniki czasu w zbiorze danych nie dostosowują się do czasu letniego środkowoeuropejskiego (znanego również jako czas letni), ale zawsze są według czasu środkowoeuropejskiego.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Wskazówka
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Powyżej po raz pierwszy użyliśmy potoku przypisania <code>x %&lt;&gt;% fn()</code>, który jest skrótem od <code>x &lt;- x %&gt;% fn()</code>. Jest to przydatne, ponieważ pozwala pisać bardziej czytelny kod i uniknąć wielokrotnego powtarzania tej samej nazwy zmiennej. Przypisanie jest udostępniane przez wywołanie <code><a href="https://tensorflow.rstudio.com/">library(keras)</a></code>.</p>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">`T (degC)`</span> <span class="op">~</span> <span class="va">`Date Time`</span>, data <span class="op">=</span> <span class="va">full_df</span>, pch <span class="op">=</span> <span class="fl">20</span>, cex <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-szereg1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;5.1: Przebieg szeregu czasowego temperatury
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-szereg1" class="quarto-xref">Rysunek&nbsp;<span>5.1</span></a> przedstawia wykres temperatury (w stopniach Celsjusza) w czasie. Na tym wykresie wyraźnie widać roczną okresowość temperatury - dane obejmują 8 lat.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">`T (degC)`</span> <span class="op">~</span> <span class="va">`Date Time`</span>, data <span class="op">=</span> <span class="va">full_df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1440</span>, <span class="op">]</span>, type <span class="op">=</span> <span class="st">'l'</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-szereg2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-szereg2" class="quarto-xref">Rysunek&nbsp;<span>5.2</span></a> przedstawia węższy wykres danych temperatury z pierwszych 10 dni. Ponieważ dane są rejestrowane co 10 minut, otrzymujemy 24 × 6 = 144 punkty danych dziennie. Zauważ też, że ten 10-dniowy okres musi pochodzić z dość zimnego zimowego miesiąca. Gdybyś próbował przewidzieć średnią temperaturę na następny miesiąc biorąc pod uwagę kilka miesięcy danych z przeszłości, problem byłby łatwy, ze względu na okresowość danych w skali roku. Ale patrząc na dane w skali dni, temperatura wygląda o wiele bardziej chaotycznie. Czy ten szereg czasowy jest przewidywalny w skali dziennej? Przekonajmy się.</p>
+<p>We wszystkich naszych eksperymentach wykorzystamy pierwsze 50% danych do szkolenia, kolejne 25% do walidacji, a ostatnie 25% do testowania. Podczas pracy z danymi szeregów czasowych ważne jest, aby używać danych walidacyjnych i testowych, które są nowsze niż dane treningowe, ponieważ próbujemy przewidzieć przyszłość na podstawie przeszłości, a nie odwrotnie, a podziały walidacyjne / testowe powinny to odzwierciedlać.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">num_train_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span> <span class="op">*</span> <span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="va">num_val_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="va">num_test_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span> <span class="op">-</span> <span class="va">num_train_samples</span> <span class="op">-</span> <span class="va">num_val_samples</span></span>
+<span></span>
+<span><span class="va">train_df</span> <span class="op">&lt;-</span> <span class="va">full_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">num_train_samples</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">val_df</span> <span class="op">&lt;-</span> <span class="va">full_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">train_df</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>,</span>
+<span>                      length.out <span class="op">=</span> <span class="va">num_val_samples</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">test_df</span> <span class="op">&lt;-</span> <span class="va">full_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span>,</span>
+<span>                       length.out <span class="op">=</span> <span class="va">num_test_samples</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"num_train_samples:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">train_df</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>num_train_samples: 210226 </code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"num_val_samples:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">val_df</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>num_val_samples: 105113 </code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"num_test_samples:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">test_df</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>num_test_samples: 105112 </code></pre>
+</div>
+</div>
+<p>Dokładne sformułowanie problemu będzie następujące: biorąc pod uwagę dane obejmujące poprzednie pięć dni i próbkowane raz na godzinę, czy możemy przewidzieć temperaturę w ciągu 24 godzin?</p>
+<p>Po pierwsze, wstępnie przetworzymy dane do formatu, który może przyjąć sieć neuronowa. Dane są już numeryczne, więc nie trzeba ich wektoryzować. Jednak każdy szereg czasowy w danych ma inną skalę (np. ciśnienie atmosferyczne, mierzone w mbar, wynosi około 1000, podczas gdy H2OC, mierzone w milimolach na mol, wynosi około 3). Znormalizujemy każdą serię czasową (kolumnę) niezależnie, tak aby wszystkie przyjmowały małe wartości w podobnej skali. Użyjemy pierwszych 210 226 kroków czasowych jako danych treningowych, więc obliczymy średnią i odchylenie standardowe tylko dla tej części danych.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">input_data_colnames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Date Time"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">normalization_values</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/zip_lists.html">zip_lists</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">train_df</span><span class="op">[</span><span class="va">input_data_colnames</span><span class="op">]</span>, <span class="va">mean</span><span class="op">)</span>,</span>
+<span>            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">train_df</span><span class="op">[</span><span class="va">input_data_colnames</span><span class="op">]</span>, <span class="va">sd</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">normalization_values</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>List of 14
+ $ p (mbar)       :List of 2
+  ..$ mean: num 989
+  ..$ sd  : num 8.51
+ $ T (degC)       :List of 2
+  ..$ mean: num 8.83
+  ..$ sd  : num 8.77
+ $ Tpot (K)       :List of 2
+  ..$ mean: num 283
+  ..$ sd  : num 8.87
+ $ Tdew (degC)    :List of 2
+  ..$ mean: num 4.31
+  ..$ sd  : num 7.08
+ $ rh (%)         :List of 2
+  ..$ mean: num 75.9
+  ..$ sd  : num 16.6
+ $ VPmax (mbar)   :List of 2
+  ..$ mean: num 13.1
+  ..$ sd  : num 7.6
+ $ VPact (mbar)   :List of 2
+  ..$ mean: num 9.19
+  ..$ sd  : num 4.15
+ $ VPdef (mbar)   :List of 2
+  ..$ mean: num 3.95
+  ..$ sd  : num 4.77
+ $ sh (g/kg)      :List of 2
+  ..$ mean: num 5.81
+  ..$ sd  : num 2.63
+ $ H2OC (mmol/mol):List of 2
+  ..$ mean: num 9.3
+  ..$ sd  : num 4.2
+ $ rho (g/m**3)   :List of 2
+  ..$ mean: num 1218
+  ..$ sd  : num 42
+ $ wv (m/s)       :List of 2
+  ..$ mean: num 2.15
+  ..$ sd  : num 1.53
+ $ max. wv (m/s)  :List of 2
+  ..$ mean: num 3.56
+  ..$ sd  : num 2.32
+ $ wd (deg)       :List of 2
+  ..$ mean: num 176
+  ..$ sd  : num 85.9</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">normalize_input_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">normalize</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">center</span>, <span class="va">scale</span><span class="op">)</span></span>
+<span>    <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">center</span><span class="op">)</span> <span class="op">/</span> <span class="va">scale</span></span>
+<span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">col_nm</span> <span class="kw">in</span> <span class="va">input_data_colnames</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">col_nv</span> <span class="op">&lt;-</span> <span class="va">normalization_values</span><span class="op">[[</span><span class="va">col_nm</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="va">df</span><span class="op">[[</span><span class="va">col_nm</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/normalize.html">normalize</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">col_nv</span><span class="op">$</span><span class="va">mean</span>, <span class="va">col_nv</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">df</span></span>
+<span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Następnie stwórzmy obiekt TF Dataset, który zawiera partie danych z ostatnich pięciu dni wraz z temperaturą docelową 24 godziny w przyszłości. Ponieważ próbki w zestawie danych są wysoce nadmiarowe (próbka N i próbka N + 1 będą miały większość wspólnych kroków czasowych), marnotrawstwem byłoby jawne przydzielanie pamięci dla każdej próbki. Zamiast tego będziemy generować próbki w locie, zachowując w pamięci tylko oryginalne tablice danych i nic więcej.</p>
+<p>Moglibyśmy z łatwością napisać funkcję w R, aby to zrobić, ale istnieje wbudowane narzędzie w <code>keras</code>, które właśnie to robi - (<code><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array()</a></code>) - więc możemy zaoszczędzić sobie trochę pracy, korzystając z niego. Ogólnie rzecz biorąc, można go używać do wszelkiego rodzaju zadań związanych z prognozowaniem szeregów czasowych.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adnotacja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aby zrozumieć działanie funkcji <code><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array()</a></code>, przyjrzyjmy się prostemu przykładowi. Ogólna idea polega na dostarczeniu tablicy danych szeregów czasowych (argument dane), a funkcja <code><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array()</a></code> daje okna wyodrębnione z oryginalnych szeregów czasowych (nazwiemy je “sekwencjami”).</p>
+<p>Na przykład, jeśli użyjesz <code>data = [0 1 2 3 4 5 6]</code> i <code>sequence_length = 3</code>, wówczas <code><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array()</a></code> wygeneruje następujące próbki: <code>[0 1 2], [1 2 3] , [2 3 4], [3 4 5], [4 5 6]</code>.</p>
+<p>Do funkcji <code>timeseries_dataset_ from_array()</code> można również przekazać argument <code>targets</code> (tablicę). Pierwszy wpis w tablicy <code>targets</code> powinien odpowiadać pożądanemu celowi dla pierwszej sekwencji, która zostanie wygenerowana z tablicy <code>data</code>. Tak więc, jeśli wykonujemy prognozowanie szeregów czasowych, <code>targets</code> powinny być tą samą tablicą co <code>data</code>, przesuniętą o pewną wartość.</p>
+<p>Na przykład, z <code>data = [0 1 2 3 4 5 6 ...]</code> i <code>sequence_length = 3</code>, można utworzyć zestaw danych do przewidywania następnego kroku w serii, przekazując <code>targets = [3 4 5 6 ...]</code>. Przykładowo:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">int_sequence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">dummy_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">int_sequence</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  targets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">int_sequence</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  sequence_length <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  batch_size <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/tfdatasets">tfdatasets</a></span><span class="op">)</span></span>
+<span><span class="va">dummy_dataset_iterator</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/as_array_iterator.html">as_array_iterator</a></span><span class="op">(</span><span class="va">dummy_dataset</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">repeat</span> <span class="op">{</span></span>
+<span>  <span class="va">batch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/iterate.html">iter_next</a></span><span class="op">(</span><span class="va">dummy_dataset_iterator</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">batch</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw">break</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">targets</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span> <span class="va">batch</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">r</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"input: [ %s ]  target: %s\n"</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">inputs</span><span class="op">[</span><span class="va">r</span>, <span class="op">]</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span>, <span class="va">targets</span><span class="op">[</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strrep.html">strrep</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="fl">27</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>input: [ 1 2 3 ]  target: 4
+input: [ 2 3 4 ]  target: 5
+--------------------------- 
+input: [ 3 4 5 ]  target: 6
+input: [ 4 5 6 ]  target: 7
+--------------------------- 
+input: [ 5 6 7 ]  target: 8
+--------------------------- </code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Użyjemy funkcji <code><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array()</a></code>, aby utworzyć trzy zestawy danych: jeden do szkolenia, jeden do walidacji i jeden do testowania. Użyjemy następujących wartości parametrów:</p>
+<ul>
+<li>
+<code>sampling_rate = 6</code> - obserwacje będą próbkowane z częstotliwością jednego punktu danych na godzinę (zachowamy tylko jeden punkt danych z 6).</li>
+<li>
+<code>sequence_length = 120</code> - obserwacje będą sięgać pięciu dni wstecz (120 godzin).</li>
+<li>
+<code>delay = sampling_rate * (sequence_length + 24 - 1)</code> - celem dla sekwencji będzie temperatura 24 godziny po zakończeniu sekwencji.</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sampling_rate</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
+<span><span class="va">sequence_length</span> <span class="op">&lt;-</span> <span class="fl">120</span></span>
+<span><span class="va">delay</span> <span class="op">&lt;-</span> <span class="va">sampling_rate</span> <span class="op">*</span> <span class="op">(</span><span class="va">sequence_length</span> <span class="op">+</span> <span class="fl">24</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">batch_size</span> <span class="op">&lt;-</span> <span class="fl">256</span></span>
+<span></span>
+<span><span class="va">df_to_inputs_and_targets</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">inputs</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="va">input_data_colnames</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">normalize_input_data</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">targets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">as.array</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`T (degC)`</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="op">-</span><span class="va">delay</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">targets</span>, <span class="op">-</span><span class="va">delay</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">make_dataset</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">targets</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span> <span class="fu">df_to_inputs_and_targets</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/timeseries_dataset_from_array.html">timeseries_dataset_from_array</a></span><span class="op">(</span></span>
+<span>    <span class="va">inputs</span>, <span class="va">targets</span>,</span>
+<span>    sampling_rate <span class="op">=</span> <span class="va">sampling_rate</span>,</span>
+<span>    sequence_length <span class="op">=</span> <span class="va">sequence_length</span>,</span>
+<span>    shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    batch_size <span class="op">=</span> <span class="va">batch_size</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">train_dataset</span> <span class="op">&lt;-</span> <span class="fu">make_dataset</span><span class="op">(</span><span class="va">train_df</span><span class="op">)</span></span>
+<span><span class="va">val_dataset</span> <span class="op">&lt;-</span> <span class="fu">make_dataset</span><span class="op">(</span><span class="va">val_df</span><span class="op">)</span></span>
+<span><span class="va">test_dataset</span> <span class="op">&lt;-</span> <span class="fu">make_dataset</span><span class="op">(</span><span class="va">test_df</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Każdy zestaw danych daje partie jako parę <code>(samples, targets)</code>, gdzie <code>samples</code> to partia 256 próbek, z których każda zawiera 120 kolejnych godzin danych wejściowych, a <code>targets</code> to odpowiednia tablica 256 temperatur docelowych. Należy pamiętać, że próbki są losowo tasowane, więc dwie kolejne sekwencje w partii (takie jak <code>sample[1, ]</code> i <code>sample[2, ]</code>) niekoniecznie są czasowo blisko siebie.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">samples</span>, <span class="va">targets</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/iterate.html">iter_next</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/iterate.html">as_iterator</a></span><span class="op">(</span><span class="va">train_dataset</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"samples shape: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">samples</span><span class="op">$</span><span class="va">shape</span><span class="op">)</span>, <span class="st">"\n"</span>,</span>
+<span>    <span class="st">"targets shape: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">targets</span><span class="op">$</span><span class="va">shape</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>samples shape: (256, 120, 14)
+targets shape: (256)</code></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ważne
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Zanim zaczniemy wykorzystywać modele uczenia głębokiego typu <em>black-box</em> w rozwiązywaniu problemu przewidywania temperatury, wypróbujmy proste, zdroworozsądkowe podejście. Posłuży ono jako sprawdzian poprawności i ustanowi punkt odniesienia, który będziemy musieli pokonać, aby zademonstrować przydatność bardziej zaawansowanych modeli uczenia maszynowego. Takie zdroworozsądkowe podstawy mogą być przydatne, gdy zabieramy się do nowego problemu, dla którego nie ma (jeszcze) znanego rozwiązania. Klasycznym przykładem są niezrównoważone zadania klasyfikacyjne, w których niektóre klasy występują znacznie częściej niż inne. Jeśli zbiór danych zawiera 90% przypadków klasy A i 10% przypadków klasy B, wówczas zdroworozsądkowym podejściem do zadania klasyfikacji jest zawsze przewidywanie “A”, gdy prezentowana jest nowa próbka. Taki klasyfikator jest ogólnie dokładny w 90%, a zatem każde podejście oparte na uczeniu powinno pokonać ten 90% wynik, aby wykazać przydatność. Czasami takie elementarne wartości bazowe mogą okazać się zaskakująco trudne do pokonania.</p>
+</div>
+</div>
+<section id="model-bazowy" class="level3" data-number="5.1.1"><h3 data-number="5.1.1" class="anchored" data-anchor-id="model-bazowy">
+<span class="header-section-number">5.1.1</span> Model bazowy</h3>
+<p>W tym przypadku można bezpiecznie założyć, że szereg czasowy temperatury jest ciągły (temperatury jutro będą prawdopodobnie zbliżone do temperatur dzisiaj), a także okresowy z okresem dziennym. Dlatego zdroworozsądkowym podejściem jest zawsze przewidywanie, że temperatura za 24 godziny będzie równa temperaturze w obecnej chwili. Oceńmy to podejście, korzystając z metryki średniego błędu bezwzględnego (MAE).</p>
+<p>Zamiast oceniać wszystko w R stosując funkcje <code>for, as_ array_iterator()</code> i <code><a href="https://rstudio.github.io/reticulate/reference/iterate.html">iter_next()</a></code>, możemy to równie łatwo zrobić za pomocą transformacji TF Dataset. Najpierw wywołujemy <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_unbatch.html">dataset_unbatch()</a></code>, aby każdy element zbioru danych stał się pojedynczym przypadkiem <code>(sample, target)</code>. Następnie używamy funkcji <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map()</a></code>, aby obliczyć błąd bezwzględny dla każdej pary <code>(sample, target)</code>, a następnie <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_reduce.html">dataset_reduce()</a></code>, aby zgromadzić całkowity błąd i całkowitą liczbę widzianych próbek.</p>
+<p>Przypomnijmy, że funkcje przekazywane do <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map()</a></code> i <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_reduce.html">dataset_reduce()</a></code> będą wywoływane z tensorami symoblicznymi. Wycinanie tensora z liczbą ujemną, taką jak <code>samples[-1, ]</code>, wybiera ostatni wyraz wzdłuż tej osi, tak jakbyśmy napisali <code>samples[nrow(samples), ]</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evaluate_naive_method</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>  <span class="va">unnormalize_temperature</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">nv</span> <span class="op">&lt;-</span> <span class="va">normalization_values</span><span class="op">$</span><span class="va">`T (degC)`</span></span>
+<span>    <span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">nv</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span> <span class="op">+</span> <span class="va">nv</span><span class="op">$</span><span class="va">mean</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">temp_col_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="st">"T (degC)"</span>, <span class="va">input_data_colnames</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">reduction</span> <span class="op">&lt;-</span> <span class="va">dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_unbatch.html">dataset_unbatch</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">samples</span>, <span class="va">target</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">last_temp_in_input</span> <span class="op">&lt;-</span> <span class="va">samples</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>, <span class="va">temp_col_idx</span><span class="op">]</span></span>
+<span>      <span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu">unnormalize_temperature</span><span class="op">(</span><span class="va">last_temp_in_input</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">pred</span> <span class="op">-</span> <span class="va">target</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_reduce.html">dataset_reduce</a></span><span class="op">(</span></span>
+<span>      initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>total_samples_seen <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>                           total_abs_error <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>      reduce_func <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">state</span>, <span class="va">element</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">state</span><span class="op">$</span><span class="va">total_samples_seen</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="fu">`+`</span><span class="op">(</span><span class="fl">1L</span><span class="op">)</span></span>
+<span>        <span class="va">state</span><span class="op">$</span><span class="va">total_abs_error</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="fu">`+`</span><span class="op">(</span><span class="va">element</span><span class="op">)</span></span>
+<span>        <span class="va">state</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">as.numeric</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">mae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">reduction</span>,</span>
+<span>              <span class="va">total_abs_error</span> <span class="op">/</span> <span class="va">total_samples_seen</span><span class="op">)</span></span>
+<span>  <span class="va">mae</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Validation MAE: %.2f"</span>, <span class="fu">evaluate_naive_method</span><span class="op">(</span><span class="va">val_dataset</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "Validation MAE: 2.43"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu">evaluate_naive_method</span><span class="op">(</span><span class="va">test_dataset</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 2.62"</code></pre>
+</div>
+</div>
+<p>Zdroworozsądkowy punkt odniesienia osiąga MAE na zbiorze walidacyjnym na poziomie 2,43 stopnia Celsjusza i MAE na testowym na poziomie 2,62 stopnia Celsjusza. Jeśli więc zawsze zakładamy, że temperatura w ciągu 24 godzin w przyszłości będzie taka sama jak obecnie, będziesz się mylił średnio o około dwa i pół stopnia. Prognoza nie jest zła ale z pewnością da się ją poprawić.</p>
+<p>W ten sam sposób, w jaki warto ustalić zdroworozsądkowy model bazowy przed użyciem uczenia maszynowego, warto wypróbować również proste modele uczenia maszynowego (takie jak małe, gęsto połączone sieci) przed przejściem do bardziej skomplikownych i kosztownych obliczeniowo modeli, takich jak RNN. Jest to najlepszy sposób na upewnienie się, że jakakolwiek dalsza złożoność problemu jest uzasadniona i przynosi realne korzyści.</p>
+</section><section id="prosty-model-sieci-gęstej" class="level3" data-number="5.1.2"><h3 data-number="5.1.2" class="anchored" data-anchor-id="prosty-model-sieci-gęstej">
+<span class="header-section-number">5.1.2</span> Prosty model sieci gęstej</h3>
+<p>Poniższy kod pokazuje w pełni połączony model, który rozpoczyna się od spłaszczenia danych, a następnie przepuszcza je przez dwie warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code>. Zwróćmy uwagę na brak funkcji aktywacji w ostatniej warstwie <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code>, co jest typowe dla problemu regresji. Używamy błędu średniokwadratowego (MSE) jako funkcji straty, a nie MAE, ponieważ w przeciwieństwie do MAE, jest on różniczkowalny wokół zera, co jest użyteczną właściwością dla spadku gradientu. MAE będziemy również monitorować, dodając go jako metrykę w funkcji <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ncol_input_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">input_data_colnames</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_flatten.html">layer_flatten</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">16</span>, activation<span class="op">=</span><span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>          loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>          metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">model</span>, <span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">history</span>, <span class="st">"models/jena_dense_history.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_dataset</span>,</span>
+<span>      epochs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>      validation_data <span class="op">=</span> <span class="va">val_dataset</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 9ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 6.21"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_dense_history.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span>, metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Niektóre wartości funkcji straty na zbiorze walidacyjnym są zbliżone do modelu bazowego ale nie można powiedzieć, że model ten jest lepszy od bazowego. To pokazuje zaletę posiadania modelu odniesienia, bo okazuje się, że nie jest łatwo go “pokonać”. Zdrowy rozsądek zawiera wiele cennych informacji, do których model uczenia maszynowego nie ma dostępu. Jest to dość istotne ograniczenie uczenia maszynowego w ogóle: o ile algorytm uczenia nie jest zakodowany na sztywno, by szukać konkretnego rodzaju prostego modelu, może on czasem nie znaleźć prostego rozwiązania problemu. Właśnie dlatego wykorzystanie dobrej inżynierii cech i odpowiednich założeń dotyczących architektury ma zasadnicze znaczenie. Powinniśmy dokładnie powiedzieć modelowi, czego powinien szukać.</p>
+</section><section id="model-oparty-o-konwolucje-1d" class="level3" data-number="5.1.3"><h3 data-number="5.1.3" class="anchored" data-anchor-id="model-oparty-o-konwolucje-1d">
+<span class="header-section-number">5.1.3</span> Model oparty o konwolucje 1D</h3>
+<p>Mówiąc o wykorzystaniu odpowiednich założeń co do architektury, być może model konwolucyjny będzie działać poprawnie. Sieć konwolucyjna 1D mogłaby ponownie wykorzystywać te same reprezentacje w różnych dniach, podobnie jak przestrzenna sieć konwolucyjna może ponownie wykorzystywać te same reprezentacje w różnych lokalizacjach na obrazie. Znamy już warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_2d.html">layer_conv_2d()</a></code> i <code><a href="https://rdrr.io/pkg/keras/man/layer_separable_conv_2d.html">layer_separable_conv_2d()</a></code>, które widzą dane wejściowe przez małe okna (filtry), które przesuwają się po siatkach 2D. Istnieją również wersje 1D, a nawet 3D tych warstw: <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d()</a></code>, <code>layer_separable_ conv_1d()</code> i <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_3d.html">layer_conv_3d()</a></code>. Warstwa <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d()</a></code> opiera się na oknach 1D, które przesuwają się po sekwencjach wejściowych, natomiast warstwa <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_3d.html">layer_conv_3d()</a></code> opiera się na sześciennych oknach, które przesuwają się po woluminach wejściowych.</p>
+<p>W ten sposób można budować sieci konwolucyjne 1D, ściśle analogiczne do sieci 2D. Świetnie nadają się do wszelkich danych sekwencyjnych, które są zgodne z założeniem niezmienności translacji (co oznacza, że jeśli przesuniesz okno po sekwencji, zawartość okna powinna mieć te same właściwości niezależnie od położenia okna).</p>
+<p>Wypróbujmy sieć 1D na naszym problemie prognozowania temperatury. Wybierzemy początkową długość okna wynoszącą 24, tak abyśmy patrzyli na 24 godziny danych na raz (jeden cykl). Gdy zmniejszymy próbkowanie sekwencji (poprzez warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_max_pooling_1d.html">layer_max_pooling_1d()</a></code>), odpowiednio zmniejszymy rozmiar okna:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">24</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_max_pooling_1d.html">layer_max_pooling_1d</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">12</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_max_pooling_1d.html">layer_max_pooling_1d</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_global_average_pooling_1d.html">layer_global_average_pooling_1d</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span></span>
+<span>  <span class="va">train_dataset</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">model</span>, filepath <span class="op">=</span> <span class="st">"models/jena_conv1D.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">history</span>, file <span class="op">=</span> <span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_conv1D.keras"</span><span class="op">)</span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 4s - loss: 18.9587 - mae: 3.4415 - 4s/epoch - 11ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 3.44"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Jak się okazuje, model ten wypada jeszcze gorzej niż model gęsto połączony, osiągając jedynie testowy MAE na poziomie 3,4 stopnia, daleko od zdroworozsądkowej wartości bazowej. Co poszło nie tak? Dwie rzeczy:</p>
+<ul>
+<li>Po pierwsze, dane pogodowe nie do końca spełniają założenie o niezmienności translacji. Chociaż dane te charakteryzują się cyklami dobowymi, dane z poranka mają inne właściwości niż dane z wieczora lub ze środka nocy. Dane pogodowe są translacyjnie niezmienne tylko w bardzo określonej skali czasowej.</li>
+<li>Po drugie, kolejność w naszych danych ma duże znaczenie. Niedawna przeszłość jest znacznie bardziej pouczająca dla przewidywania temperatury następnego dnia niż dane sprzed pięciu dni. Sieć konwekcyjna 1D nie jest w stanie wykorzystać tego faktu. W szczególności nasze warstwy łączenia maksymalnego i średniego globalnego w dużej mierze niszczą informacje o kolejności.</li>
+</ul></section><section id="model-lstm" class="level3" data-number="5.1.4"><h3 data-number="5.1.4" class="anchored" data-anchor-id="model-lstm">
+<span class="header-section-number">5.1.4</span> Model LSTM</h3>
+<p>Ani w pełni połączone podejście, ani podejście konwolucyjne nie poradziły sobie dobrze z zadanie, ale nie oznacza to, że uczenie maszynowe nie ma zastosowania do tego problemu. Sieć gęsto połączona najpierw spłaszczyła szereg czasowy, co usunęło pojęcie czasu z danych wejściowych. Podejście konwolucyjne traktowało każdy segment danych w ten sam sposób, nawet stosując łączenie, które niszczyło informacje o kolejności. Zamiast tego spójrzmy na dane jako na to, czym są - sekwencją, w której liczy się przyczynowość i kolejność. W tym celu użyjemy sieci LSTM.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span></span>
+<span>  <span class="va">train_dataset</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">model</span>, filepath <span class="op">=</span> <span class="st">"models/jena_lstm.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">history</span>, file <span class="op">=</span> <span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_lstm.keras"</span><span class="op">)</span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 11ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 2.64"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Dalej nie udało się pokonać modelu bazowego, ale jesteśmy już bardzo blisko. Można się też zastanawiąc dlaczego model LSTM wypadł znacznie lepiej niż model gęsto połączony lub Conv1D? I jak możemy dalej udoskonalać ten model? Aby odpowiedzieć na to pytanie, przyjrzyjmy się bliżej rekurencyjnym sieciom neuronowym.</p>
+</section></section><section id="sieci-rekurencyjne" class="level1 page-columns page-full" data-number="6"><h1 data-number="6">
+<span class="header-section-number">6</span> Sieci rekurencyjne</h1>
+<p>Główną cechą wszystkich sieci neuronowych, które do tej pory widzieliśmy, takich jak sieci gęsto połączone i sieci splotowe, jest to, że nie mają one pamięci. Każde pokazane im wejście jest przetwarzane niezależnie, bez zachowania stanu pomiędzy wejściami. W takich sieciach, aby przetworzyć sekwencję czasową, musisz pokazać sieci całą sekwencję na raz: czyli zamienić ją w pojedynczy punkt danych. Takie sieci nazywane są sieciami typu <em>feedforward</em>.</p>
+<p>Przetwarzając szeregi czasowe chcielibyśmy przetwarzać je w sekwencji następstw zdarzeń jakie możemy zaobserwować w danych. Biologiczna inteligencja przetwarza informacje przyrostowo, utrzymując wewnętrzny model tego, co przetwarza, zbudowany na podstawie informacji z przeszłości i stale aktualizowany w miarę napływu nowych informacji.</p>
+<p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="#fig-rnn1" class="quarto-xref">Rysunek&nbsp;<span>6.1</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
+<div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;6.1: Zasada działania sieci RNN
+</figcaption></figure>
+</div>
+<p><code>keras</code> ma również swoją implementację tego rodzaju sieci poprzez <code><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn()</a></code>. Przyjmuje on dane wejściowe o kształcie <code>(batch_size, timesteps, input_features)</code>. Podobnie jak wszystkie warstwy rekurencyjne w <code>keras,</code> <code>layer_simple_rnn</code> może być uruchomiona w dwóch różnych trybach: może zwrócić albo pełne sekwencje kolejnych wyjść dla każdego kroku czasowego (tensor 3D o kształcie <code>(batch_size, timesteps, output_features)</code>) lub tylko ostatnie wyjście dla każdej sekwencji wejściowej (tensor 2D o kształcie <code>(batch_size, output_features)</code>). Te dwa tryby są kontrolowane przez argument <code>return_sequences</code>.</p>
+<section id="rnn" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="rnn">
+<span class="header-section-number">6.1</span> RNN</h2>
+<p>Rekurencyjne sieci neuronowe (ang. <em>Recurrent Neural Network</em>) są bardzo często używanym typem sztucznych sieci neuronowych w rozwiązywaniu zadań, w których wartości pewnych cech są obserwowane w następstwie czasowym. RNN są specjalnym typem sieci, które pozwalają na przechowywanie informacji “na później” w celu wykorzystania ich przewidywaniu przyszłych wartości. W dalszej części tego rozdziału zostaną one szczegółowo omówione. Rozdział ten jednak zaczniemy od przybliżenie z jakimi typami szeregów czasowych możemy mieć do czynienia i w jaki sposób możemy używać do nich sieci rekurencyjnych.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="fl">10000</span>, output_dim <span class="op">=</span> <span class="fl">32</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span><span class="op">)</span> <span class="co"># retunr only last state</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>lub</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="fl">10000</span>, output_dim <span class="op">=</span> <span class="fl">32</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># returns the full state sequence</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Czasami przydatne jest ułożenie kilku warstw rekurencyjnych jedna po drugiej w celu zwiększenia mocy reprezentacyjnej sieci. W takiej konfiguracji musisz pamiętać wszystkie warstwy pośrednie, aby zwrócić pełne sekwencje:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="fl">10000</span>, output_dim <span class="op">=</span> <span class="fl">32</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="lstm-i-gru" class="level2 page-columns page-full" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="lstm-i-gru">
+<span class="header-section-number">6.2</span> LSTM i GRU</h2>
+<p>Proste RNN to nie jedyne warstwy rekurencyjne dostępne w <code>keras</code>. Są jeszcze dwie inne: <code>layer_lstm</code> i <code>layer_gru</code>. W praktyce zawsze będziemy używać jednej z nich, ponieważ <code>layer_simple_rnn</code> jest zbyt prosta, aby była naprawdę użyteczna. Jednym z głównych problemów z <code>layer_simple_rnn</code> jest to, że chociaż teoretycznie powinna ona być w stanie zachować w czasie <span class="math inline">\(t\)</span> informacje o wejściach widzianych wiele kroków czasowych wcześniej, w praktyce takie długoterminowe zależności są niemożliwe do nauczenia. Wynika to z problemu znikającego gradientu, efektu podobnego do tego, który obserwuje się w sieciach nierekursywnych (<em>feedforward networks</em>), które mają wiele warstw: w miarę dodawania warstw do sieci, sieć w końcu staje się nie do wytrenowania. Teoretyczne przyczyny tego efektu były badane przez <span class="citation" data-cites="bengio1994">Bengio, Simard, i Frasconi (<a href="references.html#ref-bengio1994" role="doc-biblioref">1994</a>)</span> we wczesnych latach 90-tych. Warstwy LSTM i GRU zostały zaprojektowane w celu rozwiązania tego problemu.</p>
+<p>Weźmy pod uwagę warstwę LSTM. Leżący u podstaw algorytmu <em>Long Short-Term Memory</em> (LSTM) kod został opracowany przez <span class="citation" data-cites="hochreiterLongShortTermMemory1997">Hochreiter i Schmidhuber (<a href="references.html#ref-hochreiterLongShortTermMemory1997" role="doc-biblioref">1997</a>)</span> był on zwieńczeniem ich badań nad problemem znikającego gradientu.</p>
+<p>Ta warstwa jest wariantem <code>layer_simple_rnn</code>, wzbogaconym o sposób na przenoszenie informacji przez wiele kroków czasowych. Wyobraź sobie taśmę transportową biegnącą równolegle do sekwencji, którą przetwarzasz. Informacja z sekwencji może wskoczyć na taśmę w dowolnym punkcie, zostać przetransportowana do późniejszego kroku czasowego i wyskoczyć z niej, nienaruszona, kiedy jej potrzebujesz. To jest zasadniczo to, co robi LSTM: zapisuje informacje na później, zapobiegając w ten sposób stopniowemu znikaniu starszych sygnałów podczas przetwarzania.</p>
+<div id="fig-lstm1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;6.2: Schemat sieci LSTM
+</figcaption></figure>
+</div>
+<p>Typowa jednostka LSTM składa się z komórki (ang. <em>cell</em>), bramki wejściowej (ang. <em>input gate</em>), bramki wyjściowej (ang. <em>output gate</em>) i bramki zapomnienia (ang. <em>forget gate</em>). Komórka zapamiętuje wartości w dowolnych odstępach czasu, a trzy bramki regulują przepływ informacji do i z komórki. Bramki zapominania decydują o tym, jakie informacje z poprzedniego stanu należy odrzucić, przypisując poprzedniemu stanowi, w porównaniu z bieżącym wejściem, wartość z przedziału od 0 do 1. Wartość 1 oznacza zachowanie informacji, a wartość 0 - jej odrzucenie. Bramki wejściowe decydują, które kawałki nowej informacji zapisać w bieżącym stanie, używając tego samego systemu co bramki zapomnienia. Bramki wyjściowe kontrolują, które fragmenty informacji z bieżącego stanu należy wypisać, przypisując im wartość od 0 do 1, biorąc pod uwagę stan poprzedni i bieżący. Selektywne wyprowadzanie odpowiednich informacji z bieżącego stanu pozwala sieci LSTM zachować użyteczne, długoterminowe zależności, pozwalające na dokonywanie przewidywań, zarówno w bieżących, jak i przyszłych krokach czasowych.</p>
+<p>Wróćmy do modelu opartego na LSTM, którego używaliśmy w przykładzie przewidywania temperatury. Jeśli spojrzymy na krzywe uczenia, oczywiste jest, że model szybko ulega przeuczeniu (funkcje straty zaczynają się znacznie różnić po kilku epokach), mimo że jest dość prosty. Znamy już klasyczną technikę przeciwdziałania temu zjawisku. <em>Dropout</em>, który losowo zeruje jednostki wejściowe warstwy, aby przerwać przypadkowe korelacje w danych treningowych, na które narażona jest warstwa. Jednak to, jak prawidłowo stosować <em>dropout</em> w sieciach rekurencyjnych, nie jest trywialnym pytaniem.</p>
+<p>Sprawdzono, że zastosowanie <em>dropout</em> przed warstwą rekurencyjną raczej utrudnia uczenie się niż pomaga w regularyzacji. W 2016 roku Yarin Gal, w ramach swojej pracy doktorskiej na temat głębokiego uczenia bayesowskiego, określił właściwy sposób stosowania <em>dropoutu</em> w sieci rekurencyjnej: ta sama maska <em>dropoutu</em> (ten sam wzór porzuconych jednostek) powinna być stosowana w każdym kroku czasowym, zamiast stosowania maski <em>dropoutu</em>, która zmienia się losowo z kroku na krok czasowy. Co więcej, aby uregulować reprezentacje utworzone przez rekurencyjne bramki warstw, takich jak <code><a href="https://rdrr.io/pkg/keras/man/layer_gru.html">layer_gru()</a></code> i <code><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm()</a></code>, do wewnętrznych rekurencyjnych aktywacji warstwy należy zastosować czasowo stałą maskę <em>dropout</em> (rekurencyjną maskę porzucania). Używanie tej samej maski porzucania w każdym kroku czasowym pozwala sieci na prawidłową propagację błędu uczenia się w czasie; czasowo losowa maska porzucania zakłóciłaby ten sygnał błędu i byłaby szkodliwa dla procesu uczenia się.</p>
+<p>Yarin Gal przeprowadził swoje badania przy użyciu <code>keras</code> i pomógł zaimplementować ten mechanizm bezpośrednio w warstwach rekurencyjnych <code>keras</code>. Każda warstwa rekurencyjna w <code>keras</code> ma dwa argumenty związane z <em>dropout</em>: <code>dropout</code>, zmienna określająca współczynnik porzucenia dla jednostek wejściowych warstwy, oraz <code>recurrent_dropout</code>, określająca współczynnik porzucenia dla jednostek rekurencyjnych. Dodajmy rekurencyjne porzucanie do funkcji <code><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm()</a></code> naszego przykładu LSTM i zobaczmy, jak wpływa to na overfitting.</p>
+<p>Dzięki dropoutowi nie będziemy musieli tak bardzo polegać na rozmiarze sieci do regularyzacji, więc użyjemy warstwy LSTM z dwukrotnie większą liczbą jednostek, co powinno, miejmy nadzieję, być bardziej wyraziste (bez <em>dropoutu</em> ta sieć od razu zaczęłaby się przeuczać<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>). Ponieważ sieci regularyzowane z dropoutem zawsze potrzebują znacznie więcej czasu, aby osiągnąć zbieżność, będziemy trenować model przez pięć razy więcej epok.</p>
+<div class="no-row-height column-margin column-container"><p><sup>2</sup>&nbsp;możesz sam spróbować</p></div><div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span><span class="fl">32</span>, recurrent_dropout <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dropout.html">layer_dropout</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span></span>
+<span>  <span class="va">train_dataset</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bengio1994" class="csl-entry" role="listitem">
+Bengio, Y., P. Simard, i P. Frasconi. 1994. <span>„Learning long-term dependencies with gradient descent is difficult”</span>. <em>IEEE Transactions on Neural Networks</em> 5 (2): 157–66. <a href="https://doi.org/10.1109/72.279181">https://doi.org/10.1109/72.279181</a>.
+</div>
+<div id="ref-hochreiterLongShortTermMemory1997" class="csl-entry" role="listitem">
+Hochreiter, Sepp, i Jürgen Schmidhuber. 1997. <span>„Long <span>Short-Term Memory</span>”</span>. <em>Neural Computation</em> 9 (8): 1735–80. <a href="https://doi.org/10.1162/neco.1997.9.8.1735">https://doi.org/10.1162/neco.1997.9.8.1735</a>.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./examples2.html" class="pagination-link  aria-label=" nn="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="Literatura">
+        <span class="nav-page-text">Literatura</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Zaawansowane metody uczenia maszynowego, Dariusz Majerek</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
