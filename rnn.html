@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.537">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Zaawansowane metody uczenia maszynowego - 5&nbsp; Rodzaje szeregów czasowych</title>
+<title>Zaawansowane metody uczenia maszynowego - 5&nbsp; DNN dla danych sekwencyjnych</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -153,7 +153,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rnn.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rnn.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">DNN dla danych sekwencyjnych</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -220,7 +220,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rnn.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">DNN dla danych sekwencyjnych</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -237,13 +237,14 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
    
   <ul>
-<li>
-<a href="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" id="toc-zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="nav-link active" data-scroll-target="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych"><span class="header-section-number">5.1</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</a>
+<li><a href="#rodzaje-szereg%C3%B3w-czasowych" id="toc-rodzaje-szeregów-czasowych" class="nav-link active" data-scroll-target="#rodzaje-szereg%C3%B3w-czasowych"><span class="header-section-number">5.1</span> Rodzaje szeregów czasowych</a></li>
+  <li>
+<a href="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" id="toc-zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="nav-link" data-scroll-target="#zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych"><span class="header-section-number">5.2</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</a>
   <ul class="collapse">
-<li><a href="#model-bazowy" id="toc-model-bazowy" class="nav-link" data-scroll-target="#model-bazowy"><span class="header-section-number">5.1.1</span> Model bazowy</a></li>
-  <li><a href="#prosty-model-sieci-g%C4%99stej" id="toc-prosty-model-sieci-gęstej" class="nav-link" data-scroll-target="#prosty-model-sieci-g%C4%99stej"><span class="header-section-number">5.1.2</span> Prosty model sieci gęstej</a></li>
-  <li><a href="#model-oparty-o-konwolucje-1d" id="toc-model-oparty-o-konwolucje-1d" class="nav-link" data-scroll-target="#model-oparty-o-konwolucje-1d"><span class="header-section-number">5.1.3</span> Model oparty o konwolucje 1D</a></li>
-  <li><a href="#model-lstm" id="toc-model-lstm" class="nav-link" data-scroll-target="#model-lstm"><span class="header-section-number">5.1.4</span> Model LSTM</a></li>
+<li><a href="#model-bazowy" id="toc-model-bazowy" class="nav-link" data-scroll-target="#model-bazowy"><span class="header-section-number">5.2.1</span> Model bazowy</a></li>
+  <li><a href="#prosty-model-sieci-g%C4%99stej" id="toc-prosty-model-sieci-gęstej" class="nav-link" data-scroll-target="#prosty-model-sieci-g%C4%99stej"><span class="header-section-number">5.2.2</span> Prosty model sieci gęstej</a></li>
+  <li><a href="#model-oparty-o-konwolucje-1d" id="toc-model-oparty-o-konwolucje-1d" class="nav-link" data-scroll-target="#model-oparty-o-konwolucje-1d"><span class="header-section-number">5.2.3</span> Model oparty o konwolucje 1D</a></li>
+  <li><a href="#model-lstm" id="toc-model-lstm" class="nav-link" data-scroll-target="#model-lstm"><span class="header-section-number">5.2.4</span> Model LSTM</a></li>
   </ul>
 </li>
   <li>
@@ -259,7 +260,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rodzaje szeregów czasowych</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">DNN dla danych sekwencyjnych</span>
 </h1>
 </div>
 
@@ -278,6 +279,8 @@ window.Quarto = {
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<section id="rodzaje-szeregów-czasowych" class="level2 page-columns page-full" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="rodzaje-szeregów-czasowych">
+<span class="header-section-number">5.1</span> Rodzaje szeregów czasowych</h2>
 <p>Szereg czasowy może być dowolnym zestawem danych uzyskanym poprzez pomiary w regularnych odstępach czasu, jak np. dzienna cena akcji, godzinowe zużycie energii elektrycznej w mieście lub tygodniowa sprzedaż w sklepie. Szeregi czasowe są obecne wszędzie, niezależnie od tego, czy patrzymy na zjawiska naturalne (takie jak aktywność sejsmiczna, ewolucja populacji ryb w rzece czy pogoda w danym miejscu), czy na wzorce aktywności ludzkiej (takie jak odwiedzający stronę internetową, PKB kraju czy transakcje kartami kredytowymi). W przeciwieństwie do typów danych, z którymi mieliśmy do tej pory do czynienia, praca z szeregami czasowymi wymaga zrozumienia dynamiki systemu - jego cykli okresowych, trendów w czasie, regularnego reżimu i nagłych skoków.</p>
 <p>Zdecydowanie najbardziej powszechnym zadaniem związanym z szeregami czasowymi jest prognozowanie: przewidywanie, co stanie się w następnej serii; prognozowanie zużycia energii elektrycznej z kilkugodzinnym wyprzedzeniem, aby można było przewidzieć popyt; prognozowanie przychodów z kilkumiesięcznym wyprzedzeniem, aby można było zaplanować budżet; prognozowanie pogody z kilkudniowym wyprzedzeniem, aby można było zaplanować wyjazd. Prognozowanie jest tym, na czym skupia się ten rozdział. Ale w rzeczywistości istnieje wiele innych rzeczy, które można zrobić z szeregami czasowymi:</p>
 <ul>
@@ -303,8 +306,8 @@ window.Quarto = {
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 <figcaption>Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe</figcaption></figure>
 </div>
-<section id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych">
-<span class="header-section-number">5.1</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</h2>
+</section><section id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych">
+<span class="header-section-number">5.2</span> Zastosowanie sieci rekurencyjnych w szeregach czasowych</h2>
 <p>W tym podrozdziale omówimy trzy zaawansowane techniki poprawy wydajności i siły generalizacji rekurencyjnych sieci neuronowych. Zademonstrujemy wszystkie trzy koncepcje na problemie prognozowania pogody, gdzie mamy dostęp do szeregu obserwacji pochodzących z czujników zainstalowanych na dachu budynku, takich jak temperatura, ciśnienie powietrza i wilgotność, które użyjemy do przewidywania, jaka będzie temperatura 24 godziny po ostatniej obserwacji w bazie danych. Jest to dość trudny problem, który ilustruje wiele typowych trudności napotykanych podczas pracy z szeregami czasowymi.</p>
 <p>Omówimy następujące techniki:</p>
 <ul>
@@ -611,8 +614,8 @@ Ważne
 <p>Zanim zaczniemy wykorzystywać modele uczenia głębokiego typu <em>black-box</em> w rozwiązywaniu problemu przewidywania temperatury, wypróbujmy proste, zdroworozsądkowe podejście. Posłuży ono jako sprawdzian poprawności i ustanowi punkt odniesienia, który będziemy musieli pokonać, aby zademonstrować przydatność bardziej zaawansowanych modeli uczenia maszynowego. Takie zdroworozsądkowe podstawy mogą być przydatne, gdy zabieramy się do nowego problemu, dla którego nie ma (jeszcze) znanego rozwiązania. Klasycznym przykładem są niezrównoważone zadania klasyfikacyjne, w których niektóre klasy występują znacznie częściej niż inne. Jeśli zbiór danych zawiera 90% przypadków klasy A i 10% przypadków klasy B, wówczas zdroworozsądkowym podejściem do zadania klasyfikacji jest zawsze przewidywanie “A”, gdy prezentowana jest nowa próbka. Taki klasyfikator jest ogólnie dokładny w 90%, a zatem każde podejście oparte na uczeniu powinno pokonać ten 90% wynik, aby wykazać przydatność. Czasami takie elementarne wartości bazowe mogą okazać się zaskakująco trudne do pokonania.</p>
 </div>
 </div>
-<section id="model-bazowy" class="level3" data-number="5.1.1"><h3 data-number="5.1.1" class="anchored" data-anchor-id="model-bazowy">
-<span class="header-section-number">5.1.1</span> Model bazowy</h3>
+<section id="model-bazowy" class="level3" data-number="5.2.1"><h3 data-number="5.2.1" class="anchored" data-anchor-id="model-bazowy">
+<span class="header-section-number">5.2.1</span> Model bazowy</h3>
 <p>W tym przypadku można bezpiecznie założyć, że szereg czasowy temperatury jest ciągły (temperatury jutro będą prawdopodobnie zbliżone do temperatur dzisiaj), a także okresowy z okresem dziennym. Dlatego zdroworozsądkowym podejściem jest zawsze przewidywanie, że temperatura za 24 godziny będzie równa temperaturze w obecnej chwili. Oceńmy to podejście, korzystając z metryki średniego błędu bezwzględnego (MAE).</p>
 <p>Zamiast oceniać wszystko w R stosując funkcje <code>for, as_ array_iterator()</code> i <code><a href="https://rstudio.github.io/reticulate/reference/iterate.html">iter_next()</a></code>, możemy to równie łatwo zrobić za pomocą transformacji TF Dataset. Najpierw wywołujemy <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_unbatch.html">dataset_unbatch()</a></code>, aby każdy element zbioru danych stał się pojedynczym przypadkiem <code>(sample, target)</code>. Następnie używamy funkcji <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map()</a></code>, aby obliczyć błąd bezwzględny dla każdej pary <code>(sample, target)</code>, a następnie <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_reduce.html">dataset_reduce()</a></code>, aby zgromadzić całkowity błąd i całkowitą liczbę widzianych próbek.</p>
 <p>Przypomnijmy, że funkcje przekazywane do <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map()</a></code> i <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_reduce.html">dataset_reduce()</a></code> będą wywoływane z tensorami symoblicznymi. Wycinanie tensora z liczbą ujemną, taką jak <code>samples[-1, ]</code>, wybiera ostatni wyraz wzdłuż tej osi, tak jakbyśmy napisali <code>samples[nrow(samples), ]</code>.</p>
@@ -660,8 +663,8 @@ Ważne
 </div>
 <p>Zdroworozsądkowy punkt odniesienia osiąga MAE na zbiorze walidacyjnym na poziomie 2,43 stopnia Celsjusza i MAE na testowym na poziomie 2,62 stopnia Celsjusza. Jeśli więc zawsze zakładamy, że temperatura w ciągu 24 godzin w przyszłości będzie taka sama jak obecnie, będziesz się mylił średnio o około dwa i pół stopnia. Prognoza nie jest zła ale z pewnością da się ją poprawić.</p>
 <p>W ten sam sposób, w jaki warto ustalić zdroworozsądkowy model bazowy przed użyciem uczenia maszynowego, warto wypróbować również proste modele uczenia maszynowego (takie jak małe, gęsto połączone sieci) przed przejściem do bardziej skomplikownych i kosztownych obliczeniowo modeli, takich jak RNN. Jest to najlepszy sposób na upewnienie się, że jakakolwiek dalsza złożoność problemu jest uzasadniona i przynosi realne korzyści.</p>
-</section><section id="prosty-model-sieci-gęstej" class="level3" data-number="5.1.2"><h3 data-number="5.1.2" class="anchored" data-anchor-id="prosty-model-sieci-gęstej">
-<span class="header-section-number">5.1.2</span> Prosty model sieci gęstej</h3>
+</section><section id="prosty-model-sieci-gęstej" class="level3" data-number="5.2.2"><h3 data-number="5.2.2" class="anchored" data-anchor-id="prosty-model-sieci-gęstej">
+<span class="header-section-number">5.2.2</span> Prosty model sieci gęstej</h3>
 <p>Poniższy kod pokazuje w pełni połączony model, który rozpoczyna się od spłaszczenia danych, a następnie przepuszcza je przez dwie warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code>. Zwróćmy uwagę na brak funkcji aktywacji w ostatniej warstwie <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code>, co jest typowe dla problemu regresji. Używamy błędu średniokwadratowego (MSE) jako funkcji straty, a nie MAE, ponieważ w przeciwieństwie do MAE, jest on różniczkowalny wokół zera, co jest użyteczną właściwością dla spadku gradientu. MAE będziemy również monitorować, dodając go jako metrykę w funkcji <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code>.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ncol_input_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">input_data_colnames</span><span class="op">)</span></span>
@@ -706,8 +709,8 @@ Ważne
 </div>
 </div>
 <p>Niektóre wartości funkcji straty na zbiorze walidacyjnym są zbliżone do modelu bazowego ale nie można powiedzieć, że model ten jest lepszy od bazowego. To pokazuje zaletę posiadania modelu odniesienia, bo okazuje się, że nie jest łatwo go “pokonać”. Zdrowy rozsądek zawiera wiele cennych informacji, do których model uczenia maszynowego nie ma dostępu. Jest to dość istotne ograniczenie uczenia maszynowego w ogóle: o ile algorytm uczenia nie jest zakodowany na sztywno, by szukać konkretnego rodzaju prostego modelu, może on czasem nie znaleźć prostego rozwiązania problemu. Właśnie dlatego wykorzystanie dobrej inżynierii cech i odpowiednich założeń dotyczących architektury ma zasadnicze znaczenie. Powinniśmy dokładnie powiedzieć modelowi, czego powinien szukać.</p>
-</section><section id="model-oparty-o-konwolucje-1d" class="level3" data-number="5.1.3"><h3 data-number="5.1.3" class="anchored" data-anchor-id="model-oparty-o-konwolucje-1d">
-<span class="header-section-number">5.1.3</span> Model oparty o konwolucje 1D</h3>
+</section><section id="model-oparty-o-konwolucje-1d" class="level3" data-number="5.2.3"><h3 data-number="5.2.3" class="anchored" data-anchor-id="model-oparty-o-konwolucje-1d">
+<span class="header-section-number">5.2.3</span> Model oparty o konwolucje 1D</h3>
 <p>Mówiąc o wykorzystaniu odpowiednich założeń co do architektury, być może model konwolucyjny będzie działać poprawnie. Sieć konwolucyjna 1D mogłaby ponownie wykorzystywać te same reprezentacje w różnych dniach, podobnie jak przestrzenna sieć konwolucyjna może ponownie wykorzystywać te same reprezentacje w różnych lokalizacjach na obrazie. Znamy już warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_2d.html">layer_conv_2d()</a></code> i <code><a href="https://rdrr.io/pkg/keras/man/layer_separable_conv_2d.html">layer_separable_conv_2d()</a></code>, które widzą dane wejściowe przez małe okna (filtry), które przesuwają się po siatkach 2D. Istnieją również wersje 1D, a nawet 3D tych warstw: <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d()</a></code>, <code>layer_separable_ conv_1d()</code> i <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_3d.html">layer_conv_3d()</a></code>. Warstwa <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_1d.html">layer_conv_1d()</a></code> opiera się na oknach 1D, które przesuwają się po sekwencjach wejściowych, natomiast warstwa <code><a href="https://rdrr.io/pkg/keras/man/layer_conv_3d.html">layer_conv_3d()</a></code> opiera się na sześciennych oknach, które przesuwają się po woluminach wejściowych.</p>
 <p>W ten sposób można budować sieci konwolucyjne 1D, ściśle analogiczne do sieci 2D. Świetnie nadają się do wszelkich danych sekwencyjnych, które są zgodne z założeniem niezmienności translacji (co oznacza, że jeśli przesuniesz okno po sekwencji, zawartość okna powinna mieć te same właściwości niezależnie od położenia okna).</p>
 <p>Wypróbujmy sieć 1D na naszym problemie prognozowania temperatury. Wybierzemy początkową długość okna wynoszącą 24, tak abyśmy patrzyli na 24 godziny danych na raz (jeden cykl). Gdy zmniejszymy próbkowanie sekwencji (poprzez warstwy <code><a href="https://rdrr.io/pkg/keras/man/layer_max_pooling_1d.html">layer_max_pooling_1d()</a></code>), odpowiednio zmniejszymy rozmiar okna:</p>
@@ -742,7 +745,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 6s - loss: 18.9587 - mae: 3.4415 - 6s/epoch - 14ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 18.9587 - mae: 3.4415 - 4s/epoch - 10ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -759,8 +762,8 @@ Ważne
 <ul>
 <li>Po pierwsze, dane pogodowe nie do końca spełniają założenie o niezmienności translacji. Chociaż dane te charakteryzują się cyklami dobowymi, dane z poranka mają inne właściwości niż dane z wieczora lub ze środka nocy. Dane pogodowe są translacyjnie niezmienne tylko w bardzo określonej skali czasowej.</li>
 <li>Po drugie, kolejność w naszych danych ma duże znaczenie. Niedawna przeszłość jest znacznie bardziej pouczająca dla przewidywania temperatury następnego dnia niż dane sprzed pięciu dni. Sieć konwekcyjna 1D nie jest w stanie wykorzystać tego faktu. W szczególności nasze warstwy łączenia maksymalnego i średniego globalnego w dużej mierze niszczą informacje o kolejności.</li>
-</ul></section><section id="model-lstm" class="level3" data-number="5.1.4"><h3 data-number="5.1.4" class="anchored" data-anchor-id="model-lstm">
-<span class="header-section-number">5.1.4</span> Model LSTM</h3>
+</ul></section><section id="model-lstm" class="level3" data-number="5.2.4"><h3 data-number="5.2.4" class="anchored" data-anchor-id="model-lstm">
+<span class="header-section-number">5.2.4</span> Model LSTM</h3>
 <p>Ani w pełni połączone podejście, ani podejście konwolucyjne nie poradziły sobie dobrze z zadanie, ale nie oznacza to, że uczenie maszynowe nie ma zastosowania do tego problemu. Sieć gęsto połączona najpierw spłaszczyła szereg czasowy, co usunęło pojęcie czasu z danych wejściowych. Podejście konwolucyjne traktowało każdy segment danych w ten sam sposób, nawet stosując łączenie, które niszczyło informacje o kolejności. Zamiast tego spójrzmy na dane jako na to, czym są - sekwencją, w której liczy się przyczynowość i kolejność. W tym celu użyjemy sieci LSTM.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
@@ -788,7 +791,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 5s - loss: 11.2176 - mae: 2.6383 - 5s/epoch - 12ms/step</code></pre>
+<pre><code>405/405 - 5s - loss: 11.2176 - mae: 2.6383 - 5s/epoch - 11ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -1012,7 +1015,7 @@ Rysunek&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 5s - loss: 22.8799 - mae: 3.8075 - 5s/epoch - 12ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 22.8799 - mae: 3.8075 - 4s/epoch - 11ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1063,7 +1066,7 @@ Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 8s - loss: 10.8280 - mae: 2.5962 - 8s/epoch - 21ms/step</code></pre>
+<pre><code>405/405 - 7s - loss: 10.8280 - mae: 2.5962 - 7s/epoch - 18ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
