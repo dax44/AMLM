@@ -251,6 +251,7 @@ window.Quarto = {
   <ul class="collapse">
 <li><a href="#rnn" id="toc-rnn" class="nav-link" data-scroll-target="#rnn"><span class="header-section-number">6.1</span> RNN</a></li>
   <li><a href="#lstm-i-gru" id="toc-lstm-i-gru" class="nav-link" data-scroll-target="#lstm-i-gru"><span class="header-section-number">6.2</span> LSTM i GRU</a></li>
+  <li><a href="#dwukierunkowe-sieci-rekurencyjne" id="toc-dwukierunkowe-sieci-rekurencyjne" class="nav-link" data-scroll-target="#dwukierunkowe-sieci-rekurencyjne"><span class="header-section-number">6.3</span> Dwukierunkowe sieci rekurencyjne</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
@@ -690,7 +691,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 9ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 10ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -741,7 +742,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 18.9587 - mae: 3.4415 - 4s/epoch - 11ms/step</code></pre>
+<pre><code>405/405 - 6s - loss: 18.9587 - mae: 3.4415 - 6s/epoch - 14ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -787,7 +788,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 11ms/step</code></pre>
+<pre><code>405/405 - 5s - loss: 11.2176 - mae: 2.6383 - 5s/epoch - 12ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -881,14 +882,244 @@ Rysunek&nbsp;6.2: Schemat sieci LSTM
 <span>  <span class="va">train_dataset</span>,</span>
 <span>  epochs <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span></span>
-<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_lstm_dropout.keras"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Zagrożenie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Modele rekurencyjne z bardzo małą liczbą parametrów, takie jak te w tym rozdziale, są zwykle znacznie szybsze na wielordzeniowym CPU niż na GPU, ponieważ obejmują tylko mnożenia małych macierzy, a łańcuch mnożeń nie jest dobrze zrównoleglony ze względu na obecność pętli <code>for</code>. Większe sieci RNN mogą jednak w znacznym stopniu skorzystać z możliwości GPU.</p>
+<p>Podczas korzystania z warstw LSTM i GRU na GPU z domyślnymi argumentami, warstwy będą wykorzystywać jądro cuDNN, wysoce zoptymalizowaną, niskopoziomową implementację algorytmu dostarczoną przez firmę NVIDIA. Niestety, jądra cuDNN są wątpliwym błogosławieństwem: są szybkie, ale nieelastyczne - jeśli spróbujemy zrobić coś, co nie jest obsługiwane przez domyślne jądro, doświadczymy dramatycznego spowolnienia. Przykładowo, rekurencyjny <em>dropout</em> nie jest obsługiwany przez jądra LSTM i GRU cuDNN, więc dodanie go do warstw zmusza algorytm do wykonywania na zwykłej implementacji TensorFlow, która jest generalnie od dwóch do pięciu razy wolniejsza na GPU (mimo że jej koszt obliczeniowy jest taki sam).</p>
+<p>Aby przyspieszyć działanie warstwy RNN, gdy nie można użyć cuDNN, można spróbować ją rozwinąć (ang. <em>unfold</em>). Rozwijanie pętli for polega na usunięciu pętli i po prostu wpisaniu jej zawartości N razy. W przypadku pętli for sieci RNN, rozwijanie może pomóc TensorFlow zoptymalizować bazowy graf obliczeniowy. Jednak znacznie zwiększy to również zużycie pamięci przez sieć RNN. W związku z tym jest to opłacalne tylko w przypadku stosunkowo małych sekwencji (około 100 kroków lub mniej). Należy również pamiętać, że można to zrobić tylko wtedy, gdy liczba kroków czasowych w danych jest znana z góry przez model. Działa to w następujący sposób:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">num_features</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span><span class="fl">32</span>, recurrent_dropout <span class="op">=</span> <span class="fl">0.2</span>, unroll <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_lstm_dropout.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 273s - loss: 10.2870 - mae: 2.5415 - 273s/epoch - 675ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 2.54"</code></pre>
+</div>
+</div>
+<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;6.3
+</figcaption></figure>
+</div>
+<p><a href="#fig-lstm-dropout" class="quarto-xref">Rysunek&nbsp;<span>6.3</span></a> przedstawia wyniki uczenia. Usunięto przeuczenie (do co najmniej 20 epoki). Osiągamy MAE walidacji na poziomie zaledwie 2,37 stopnia (2,5% poprawa w stosunku do modelu bazowego bez uczenia) i testowy MAE na poziomie 2,54 stopnia (3% poprawa w stosunku do lini bazowej).</p>
+<p>Ponieważ <em>overfitting</em> nie jest już tak wyraźnym problemem, ale wydaje się, że trafiliśmy na wąskie gardło wydajności, powinniśmy rozważyć zwiększenie pojemności i mocy obliczeniowej sieci. Przypomnijmy sobie opis uniwersalnego przepływu pracy uczenia maszynowego: generalnie dobrym pomysłem jest zwiększenie pojemności modelu, dopóki <em>overfitting</em> nie stanie się głównym problemem.</p>
+<p>Zwiększenie pojemności sieci odbywa się zazwyczaj poprzez zwiększenie liczby neuronów w warstwach lub dodanie większej liczby warstw. Składanie warstw rekurencyjnych to klasyczny sposób budowania potężniejszych sieci rekurencyjnych. Aby układać warstwy rekurencyjne jedna na drugiej w Kerasie, wszystkie warstwy pośrednie powinny zwracać pełną sekwencję swoich wyjść (tensor rangi 3), a nie swoje wyjście w ostatnim kroku czasowym. Jak już się dowiedzieliśmy, odbywa się to poprzez ustawienie flagi <code>return_ sequences = TRUE</code>.</p>
+<p>W poniższym przykładzie wypróbujemy stos dwóch warstw rekurencyjnych z regularyzacją <em>dropout</em>. Dla odmiany użyjemy warstw Gated Recurrent Unit (GRU) zamiast LSTM. GRU jest bardzo podobny do LSTM - można o nim myśleć jako o nieco prostszej, usprawnionej wersji architektury LSTM. Została ona wprowadzona w 2014 roku przez <span class="citation" data-cites="choPropertiesNeuralMachine2014">Cho i in. (<a href="references.html#ref-choPropertiesNeuralMachine2014" role="doc-biblioref">b.d.</a>)</span>, gdy sieci rekurencyjne dopiero zaczynały na nowo zyskiwać zainteresowanie w niewielkiej wówczas społeczności badawczej.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_gru.html">layer_gru</a></span><span class="op">(</span><span class="fl">32</span>, recurrent_dropout <span class="op">=</span> <span class="fl">0.5</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_gru.html">layer_gru</a></span><span class="op">(</span><span class="fl">32</span>, recurrent_dropout <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dropout.html">layer_dropout</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span></span>
+<span>  <span class="va">train_dataset</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_gru_dropout.keras"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_gru_dropout.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 577s - loss: 9.6074 - mae: 2.4491 - 577s/epoch - 1s/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 2.45"</code></pre>
+</div>
+</div>
+<div id="fig-gru_dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/jena_gru_dropout_hist.png" id="fig-gru_dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;6.4
+</figcaption></figure>
+</div>
+<p><span class="quarto-unresolved-ref">?fig-gru-dropout</span> przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na poziomie 2,45 stopnia (poprawa o 6,5% w stosunku do linii bazowej). Widać, że dodana warstwa nieco poprawia wyniki, choć nie dramatycznie, zatem można zaobserwować malejące zyski ze zwiększania pojemności sieci.</p>
+</section><section id="dwukierunkowe-sieci-rekurencyjne" class="level2 page-columns page-full" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="dwukierunkowe-sieci-rekurencyjne">
+<span class="header-section-number">6.3</span> Dwukierunkowe sieci rekurencyjne</h2>
+<p>Ostatnią techniką, której przyjrzymy się w tej sekcji, jest dwukierunkowa sieć RNN. Dwukierunkowy RNN jest powszechnym wariantem RNN, który może oferować większą wydajność niż zwykły RNN w niektórych zadaniach. Jest często używany w przetwarzaniu języka naturalnego - można go nazwać szwajcarskim scyzorykiem głębokiego uczenia się do przetwarzania języka naturalnego.</p>
+<p>RNN są w szczególności zależne od kolejności: przetwarzają kroki czasowe swoich sekwencji wejściowych w kolejności, a tasowanie lub odwracanie kroków czasowych może całkowicie zmienić reprezentacje, które RNN wyodrębnia z sekwencji. To jest właśnie powód, dla którego dobrze radzą sobie z problemami, w których kolejność ma znaczenie, takimi jak problem prognozowania temperatury. Dwukierunkowa RNN wykorzystuje wrażliwość RNN na kolejność: wykorzystuje dwie zwykłe RNN, takie jak GRU i LSTM, z których każda przetwarza sekwencję wejściową w jednym kierunku (chronologicznie i antychronologicznie), a następnie łączy ich reprezentacje. Przetwarzając sekwencję w obie strony, dwukierunkowa sieć RNN może wychwycić wzorce, które mogą zostać przeoczone przez jednokierunkową sieć RNN.</p>
+<p>Czy RNN mogłyby działać wystarczająco dobrze, gdyby na przykład przetwarzały sekwencje wejściowe w porządku antychronologicznym (z nowszymi krokami czasowymi jako pierwszymi)? Spróbujmy tego i zobaczmy, co się stanie. Wszystko, co musimy zrobić, to zmodyfikować zestaw danych TF, aby sekwencje wejściowe zostały odwrócone wzdłuż wymiaru czasu. Wystarczy przekształcić zbiór danych za pomocą funkcji <code><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map()</a></code> w następujący sposób:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">samples</span>, <span class="va">targets</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">samples</span><span class="op">[</span>, <span class="cn">NA</span><span class="op">:</span><span class="cn">NA</span><span class="op">:</span><span class="op">-</span><span class="fl">1</span>, <span class="op">]</span>, <span class="va">targets</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">callbacks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/callback_model_checkpoint.html">callback_model_checkpoint</a></span><span class="op">(</span><span class="st">"jena_lstm_reversed"</span>,</span>
+<span>                                            save_best_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dataset_reverse_time</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span><span class="va">ds</span>, <span class="kw">function</span><span class="op">(</span><span class="va">samples</span>, <span class="va">targets</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">samples</span><span class="op">[</span>, <span class="cn">NA</span><span class="op">:</span><span class="cn">NA</span><span class="op">:</span><span class="op">-</span><span class="fl">1</span>, <span class="op">]</span>, <span class="va">targets</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span></span>
+<span>  <span class="va">train_dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dataset_reverse_time</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  validation_data <span class="op">=</span> <span class="va">val_dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dataset_reverse_time</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  callbacks <span class="op">=</span> <span class="va">callbacks</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">model</span>, <span class="st">"models/jena_lstm_rev.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">history</span>, <span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev.keras"</span><span class="op">)</span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 5s - loss: 22.8799 - mae: 3.8075 - 5s/epoch - 12ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 3.81"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>LSTM z odwróconym czasem silnie ustępuje nawet zdroworozsądkowemu poziomowi bazowemu, wskazując, że w tym przypadku przetwarzanie chronologiczne jest ważne dla powodzenia tego podejścia. Ma to sens: warstwa LSTM zazwyczaj lepiej zapamiętuje niedawną przeszłość niż odległą przeszłość, a naturalnie bardziej aktualne dane pogodowe niosą w sobie więcej informacji niż starsze dane (to właśnie sprawia, że zdroworozsądkowa linia bazowa jest dość silna). Tak więc chronologiczna wersja sieci z pewnością przewyższy wersję z odwróconym porządkiem.</p>
+<p>Nie jest to jednak prawdą w przypadku wielu innych problemów, w tym języka naturalnego: intuicyjnie, znaczenie słowa w zrozumieniu zdania zwykle nie zależy od jego pozycji w zdaniu. W przypadku danych tekstowych, przetwarzanie w odwróconej kolejności działa równie dobrze jak przetwarzanie chronologiczne - można czytać tekst od tyłu. Chociaż kolejność słów ma znaczenie dla zrozumienia języka, to kolejność, której używamy, nie jest kluczowa. Co ważne, RNN wytrenowana na odwróconych sekwencjach nauczy się innych reprezentacji niż ta wytrenowana na oryginalnych sekwencjach, podobnie jak w prawdziwym świecie mielibyśmy inne modele mentalne, gdyby czas płynął wstecz - gdybyśmy żyli życiem, w którym umieramy pierwszego dnia i rodzimy się ostatniego. W uczeniu maszynowym reprezentacje, które są użyteczne, są zawsze warte wykorzystania, a im bardziej się różnią, tym lepiej, bo oferują nowy kąt, z którego można spojrzeć na dane, wychwytując aspekty danych, które zostały pominięte przez inne podejścia, a tym samym mogą pomóc zwiększyć wydajność zadania.</p>
+<p>Dwukierunkowa sieć RNN wykorzystuje ten pomysł, aby poprawić wydajność sieci RNN z porządkiem chronologicznym. Analizuje sekwencję wejściową w obie strony (patrz <a href="#fig-bidirectional" class="quarto-xref">Rysunek&nbsp;<span>6.5</span></a>), uzyskując potencjalnie bogatsze reprezentacje i wychwytując wzorce, które mogły zostać pominięte przez samą wersję chronologiczną.</p>
+<div id="fig-bidirectional" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-bidirectional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bidirectional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
+</figcaption></figure>
+</div>
+<p>Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code>, które jako pierwszy argument przyjmują instancję warstwy rekurencyjnej. <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code> tworzy drugą, oddzielną instancję tej warstwy rekurencyjnej i wykorzystuje jedną instancję do przetwarzania sekwencji wejściowych w porządku chronologicznym, a drugą instancję do przetwarzania sekwencji wejściowych w porządku odwróconym.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                  loss <span class="op">=</span> <span class="st">"mse"</span>,</span>
+<span>                  metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_dataset</span>,</span>
+<span>      epochs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>      validation_data <span class="op">=</span> <span class="va">val_dataset</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">model</span>, <span class="st">"models/jena_lstm_bi.keras"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">history</span>, <span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi.keras"</span><span class="op">)</span></span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>405/405 - 8s - loss: 10.8280 - mae: 2.5962 - 8s/epoch - 21ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test MAE: 2.60"</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Jeśli porównamy wyniki do zwykłej <code><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm()</a></code>, to zauważymy tylko nieznaczną poprawę wyników. Łatwo jest zrozumieć, dlaczego - niemal cała zdolność predykcyjna musi pochodzić z chronologicznej połowy sieci, ponieważ wiadomo, że antychronologiczna połowa ma znacznie gorsze wyniki w tym zadaniu (ponownie, ponieważ niedawna przeszłość ma w tym przypadku znacznie większe znaczenie niż odległa przeszłość). Jednocześnie obecność antychronologicznej połowy podwaja pojemność sieci i powoduje, że zaczyna się ona przeuczać znacznie wcześniej.</p>
+<p>Jednak dwukierunkowe sieci RNN doskonale nadają się do danych tekstowych lub innych rodzajów danych, w których kolejność ma znaczenie, ale gdzie kolejność, której używasz, nie ma znaczenia. W rzeczywistości aż do roku 2016 dwukierunkowe LSTM były uważane za najnowocześniejsze w wielu zadaniach przetwarzania języka naturalnego (przed pojawieniem się architektury Transformer, o której będzie nieco później).</p>
+<p>Istnieje wiele innych rzeczy, które można wypróbować w celu poprawy wydajności prognozowania temperatury:</p>
+<ul>
+<li>Dostosować liczbę neuronów w każdej warstwie rekurencyjnej, a także ilość porzuconych neurnonów. Obecne wybory są w dużej mierze arbitralne, a zatem prawdopodobnie nieoptymalne.</li>
+<li>Dostosować szybkość uczenia optymalizatora RMSprop lub wypróbować inny optymalizator.</li>
+<li>Użyć stosu kilku warstw gęstych <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code> jako regresora na wierzchu warstwy rekurencyjnej, zamiast pojedynczej.</li>
+<li>Ulepszyć dane wejściowe do modelu - użyć dłuższych lub krótszych sekwencji lub innej częstotliwości próbkowania lub wykonać inżynierię cech.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Wskazówka
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Głębokie uczenie jest bardziej sztuką niż nauką. Możemy dostarczać wskazówek, które sugerują, co może działać lub nie działać w danym problemie, ale ostatecznie każdy zbiór danych jest wyjątkowy; będziesz musiał empirycznie ocenić różne strategie. Obecnie nie istnieje żadna teoria, która z góry powiedziałaby, co powinniśmy zrobić, aby optymalnie rozwiązać dany problem.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ostrzeżenie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Niektórzy czytelnicy z pewnością będą chcieli skorzystać z technik, które tu przedstawiliśmy i wypróbować je w problemie prognozowania przyszłych cen papierów wartościowych na giełdzie (lub kursów wymiany walut itp.). Rynki mają jednak zupełnie inną charakterystykę statystyczną niż zjawiska naturalne, takie jak wzorce pogodowe. Jeśli chodzi o rynki, przeszłe wyniki nie są dobrym predyktorem przyszłych zwrotów<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Z drugiej strony uczenie maszynowe ma zastosowanie do zbiorów danych, w których przeszłość jest dobrym predyktorem przyszłości, takich jak pogoda, zużycie energii elektrycznej lub ruch pieszych na danym odcinku drogi.</p>
+<p>Zawsze pamiętajmy, że cały handel papierami wartościowymi jest zasadniczo arbitrażem informacyjnym: zdobywaniem przewagi poprzez wykorzystanie danych lub spostrzeżeń, których brakuje innym uczestnikom rynku. Próba wykorzystania dobrze znanych technik uczenia maszynowego i publicznie dostępnych danych w celu pokonania rynków jest w rzeczywistości ślepym zaułkiem, ponieważ nie będzie dawać żadnej przewagi informacyjnej w porównaniu do wszystkich innych.</p>
+</div>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div class="no-row-height column-margin column-container"><p><sup>3</sup>&nbsp;patrzenie w lusterko wsteczne nie jest najlepszą metodą prowadzenia auta 🙉 🤔</p></div><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-bengio1994" class="csl-entry" role="listitem">
 Bengio, Y., P. Simard, i P. Frasconi. 1994. <span>„Learning long-term dependencies with gradient descent is difficult”</span>. <em>IEEE Transactions on Neural Networks</em> 5 (2): 157–66. <a href="https://doi.org/10.1109/72.279181">https://doi.org/10.1109/72.279181</a>.
+</div>
+<div id="ref-choPropertiesNeuralMachine2014" class="csl-entry" role="listitem">
+Cho, Kyunghyun, Bart van Merrienboer, Dzmitry Bahdanau, i Yoshua Bengio. b.d. <span>„On the Properties of Neural Machine Translation: Encoder-Decoder Approaches”</span>. <a href="https://doi.org/10.48550/arXiv.1409.1259">https://doi.org/10.48550/arXiv.1409.1259</a>.
 </div>
 <div id="ref-hochreiterLongShortTermMemory1997" class="csl-entry" role="listitem">
 Hochreiter, Sepp, i Jürgen Schmidhuber. 1997. <span>„Long <span>Short-Term Memory</span>”</span>. <em>Neural Computation</em> 9 (8): 1735–80. <a href="https://doi.org/10.1162/neco.1997.9.8.1735">https://doi.org/10.1162/neco.1997.9.8.1735</a>.
