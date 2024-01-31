@@ -19,6 +19,10 @@ również technikom transferu wiedzy, uczenia ze wzmocnieniem oraz generatywnym
 modelom, takim jak generatywne sieci przeciwdziedzinowe (GAN), które poszerzają
 granice możliwości maszynowego uczenia się.
 
+::: column-margin
+![](images/vader.jpeg)
+:::
+
 Trzeci kluczowy obszar, który będzie przedmiotem analizy, to modele językowe.
 Rozważania rozpoczniemy od głębokich sieci neuronowych, a następnie
 skoncentrujemy się na transformatorach, które rewolucjonizują przetwarzanie

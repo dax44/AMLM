@@ -30,6 +30,9 @@ book:
     - index.qmd
     - intro.qmd
     - multi_target_models.qmd
+    - examples.qmd
+    - examples2.qmd
+    - rnn.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -37,6 +40,7 @@ reference-location: margin
 
 format:
   html:
+    reference-location: margin
     grid:
       sidebar-width: 300px
       body-width: 1400px
