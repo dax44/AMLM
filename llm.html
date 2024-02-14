@@ -281,6 +281,8 @@ window.Quarto = {
 <a href="#t%C5%82umaczenia-typu-sequence-to-sequence" id="toc-tłumaczenia-typu-sequence-to-sequence" class="nav-link" data-scroll-target="#t%C5%82umaczenia-typu-sequence-to-sequence"><span class="header-section-number">7.9</span> Tłumaczenia typu sequence-to-sequence</a>
   <ul class="collapse">
 <li><a href="#przyk%C5%82ad-t%C5%82umaczenia-maszynowego" id="toc-przykład-tłumaczenia-maszynowego" class="nav-link" data-scroll-target="#przyk%C5%82ad-t%C5%82umaczenia-maszynowego"><span class="header-section-number">7.9.1</span> Przykład tłumaczenia maszynowego</a></li>
+  <li><a href="#uczenie-sekwencyjne-z-wykorzystaniem-sieci-rnn" id="toc-uczenie-sekwencyjne-z-wykorzystaniem-sieci-rnn" class="nav-link" data-scroll-target="#uczenie-sekwencyjne-z-wykorzystaniem-sieci-rnn"><span class="header-section-number">7.9.2</span> Uczenie sekwencyjne z wykorzystaniem sieci RNN</a></li>
+  <li><a href="#uczenie-si%C4%99-sekwencyjne-z-transformerem" id="toc-uczenie-się-sekwencyjne-z-transformerem" class="nav-link" data-scroll-target="#uczenie-si%C4%99-sekwencyjne-z-transformerem"><span class="header-section-number">7.9.3</span> Uczenie się sekwencyjne z transformerem</a></li>
   </ul>
 </li>
   </ul>
@@ -671,7 +673,7 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(b'The Menagerie parts one and two was the only 2-parter during the 3-year run of the original Trek series and it was because Roddenberry was able to insert most of the footage from the 1st pilot "The Cage." The move was made out of necessity, to combat deadline problems in getting episodes produced (such a sf show back in the 1960s was a hassle to get done on time). One positive outcome back then was that audiences, unaware of the pilot produced almost a couple of years earlier, were treated to a whole new crew and captain for these two episodes on top of the regular cast of characters, as if the producers had spent double the money on these episodes to present a TV epic spanning a dozen years of Starfleet history (though they still used terms such as \'United Space Fleet\' in these early episodes).&lt;br /&gt;&lt;br /&gt;The wraparound story begins as a space mystery plot: the Enterprise is diverted to Starbase 11 for unknown reasons and very soon Spock is a suspect in these shenanigans. Astonishingly, though even McCoy belabors the fact that Spock\'s Vulcan heritage makes subterfuge on his part impossible, it does turn out that Spock is indeed acting out some mutinous scheme to shanghai our precious starship and kidnap his former captain, Pike, now horribly crippled. Well, Spock is half human, we tend to forget. Or has he simply gone mad? It may very well be, for he\'s directing Enterprise to Talos IV, a planet so off-limits it\'s the subject of the only known death penalty on Starfleet\'s books. When the jig is up, there\'s a great scene of Spock surrendering to a flabbergasted McCoy, as Uhura looks on in shock. Even Kirk, usually steady as a captain should be, doesn\'t know what to make of his first officer\'s illogical conduct.&lt;br /&gt;&lt;br /&gt;In the 3rd and final acts, we begin to see transmitted images of a mission of the Enterprise from 13 years prior, when Capt. Pike was commanding and Spock was one of his officers. We really don\'t know where all this is going and what Spock hopes to accomplish - and that\'s another thing that makes this a very good 2-parter - we really need to find out what it\'s all about in the 2nd part. Not only is Spock facing severe penalties, but it looks like Kirk\'s career may be finished, as well. Double jeopardy, folks. This is also the 1st televised episode to feature one of those shuttlecrafts (none were available in the earlier "The Enemy Within" when the crafts were really needed). There\'s also one of those neat matte paintings to convey the ambiance of a futuristic starbase - this was the only way to visualize such things back then. Finally, check out Kirk\'s smug approach at the start of the episode - boy, do things go sideways on him as the story progresses.', shape=(), dtype=string)</code></pre>
+<pre><code>tf.Tensor(b"I saw this film a few years ago and I got to say that I really love it.Jason Patric was perfect for this weird role that he played.The director?I don't too many things about him...and I don't care.The screenplay is good,that's for sure.In just a few words I have to say about this movie that is weird,strange,even dark,but it's a good one.I saw it a few years ago and never saw it since then.I want to see it again and again.I know that I'm not gonna get sick of watching it.The scenes,the atmosphere,the actors,the story...everything is good.The movie should have lasted longer.I think 120 minutes should have been perfect.I was hoping for a part 2 for this movie.Too bad it din't happened.Jason Patric:you're the man ! very good movie. the end. :-)", shape=(), dtype=string)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -725,11 +727,11 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor([1. 1. 0. ... 0. 0. 0.], shape=(20000), dtype=float32)</code></pre>
+<pre><code>tf.Tensor([1. 1. 1. ... 0. 0. 0.], shape=(20000), dtype=float32)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(0, shape=(), dtype=int32)</code></pre>
+<pre><code>tf.Tensor(1, shape=(), dtype=int32)</code></pre>
 </div>
 </div>
 <p>Napiszmy funkcję budowania modelu wielokrotnego użytku, której będziemy używać we wszystkich naszych eksperymentach w tej sekcji.</p>
@@ -817,7 +819,7 @@ Test acc: 0.887</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">binary_2gram_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 4s - loss: 0.2556 - accuracy: 0.9012 - 4s/epoch - 5ms/step
+<pre><code>782/782 - 3s - loss: 0.2556 - accuracy: 0.9012 - 3s/epoch - 4ms/step
 Test acc: 0.901</code></pre>
 </div>
 </div>
@@ -1025,7 +1027,7 @@ ________________________________________________________________________________
 <p>Kiedy kodujemy coś za pomocą kodowania one-hot, podejmujemy decyzję o inżynierii cech. Wprowadzamy do naszego modelu fundamentalne założenie dotyczące struktury przestrzeni cech. Założeniem tym jest to, że różne tokeny, które kodujemy, są od siebie niezależne: w rzeczywistości wektory one-hot są względem siebie ortogonalne. W przypadku słów założenie to jest oczywiście błędne. Słowa tworzą ustrukturyzowaną przestrzeń: dzielą się ze sobą informacjami. Słowa “movie” i “film” są wymienne w większości zdań, więc wektor reprezentujący “movie” nie powinien być ortogonalny do wektora reprezentującego “film” - powinny być tym samym wektorem lub bardzo zbliżonym.</p>
 <p>Podchodząc do sprawy niecobardziej abstrakcyjnie, geometryczna relacja między dwoma wektorami słów powinna odzwierciedlać semantyczną relację między tymi słowami. Na przykład, w rozsądnej przestrzeni wektorów słów można oczekiwać, że synonimy będą osadzone w podobnych wektorach słów, a ogólnie rzecz biorąc, można oczekiwać, że odległość geometryczna (taka jak odległość cosinusowa lub odległość L2) między dowolnymi dwoma wektorami słów będzie odnosić się do “odległości semantycznej” między powiązanymi słowami. Słowa, które oznaczają różne pojęcia, powinny znajdować się daleko od siebie, podczas gdy podobne słowa powinny znajdować się bliżej.</p>
 <p>Osadzenia słów to wektorowe reprezentacje słów, które osiągają ten cel: mapują ludzki język na ustrukturyzowaną przestrzeń geometryczną. Podczas gdy wektory uzyskane w wyniku kodowania one-hot są binarne, rzadkie (w większości składają się z zer) i wielowymiarowe (taka sama wymiarowość jak liczba słów w słowniku), osadzenia słów są niskowymiarowymi wektorami typu <em>float</em> (tj. gęstymi wektorami, w przeciwieństwie do rzadkich wektorów) - patrz <a href="#fig-embd1" class="quarto-xref">Rysunek&nbsp;<span>7.2</span></a>. W przypadku bardzo dużych słowników często spotyka się osadzenia słów, które są 256-wymiarowe, 512-wymiarowe lub 1024-wymiarowe. Z drugiej strony, kodowanie słów metodą <em>one-hot</em> zazwyczaj prowadzi do wektorów, które mają 20 000 wymiarów lub więcej (słownik składający się z 20,000 tokenów). Tak więc osadzanie słów zawiera więcej informacji w znacznie mniejszej liczbie wymiarów.</p>
-<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" width="400" data-fig-align="center">
+<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="400">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-embd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" id="fig-embd1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="400">
 </div>
@@ -1034,7 +1036,7 @@ Rysunek&nbsp;7.2
 </figcaption></figure>
 </div>
 <p>Oprócz tego, że są gęstymi reprezentacjami, osadzenia słów są również reprezentacjami strukturalnymi, a ich struktura jest uczona na podstawie danych. Podobne słowa są osadzone w bliskich lokalizacjach, a ponadto określone kierunki w przestrzeni osadzania mają znaczenie. Aby to wyjaśnić, spójrzmy na konkretny przykład.</p>
-<div id="fig-vectors" class="quarto-figure quarto-figure-center quarto-float anchored" width="250" data-fig-align="center">
+<div id="fig-vectors" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="250">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" id="fig-vectors" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="250">
 </div>
@@ -1118,7 +1120,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 27s - loss: 0.4049 - accuracy: 0.8601 - 27s/epoch - 35ms/step
+<pre><code>782/782 - 26s - loss: 0.4049 - accuracy: 0.8601 - 26s/epoch - 33ms/step
 Test acc: 0.860
  </code></pre>
 </div>
@@ -1197,7 +1199,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>,</span>
 <span>            <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 33s - loss: 2.4718 - accuracy: 0.5019 - 33s/epoch - 42ms/step
+<pre><code>782/782 - 32s - loss: 2.4718 - accuracy: 0.5019 - 32s/epoch - 41ms/step
 Test acc: 0.502</code></pre>
 </div>
 </div>
@@ -1212,7 +1214,7 @@ Test acc: 0.502</code></pre>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"http://nlp.stanford.edu/data/glove.6B.zip"</span>,</span>
 <span>              destfile <span class="op">=</span> <span class="st">"glove.6B.zip"</span><span class="op">)</span></span>
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"glove.6B.zip"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"glove.6B.zip"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Przeanalizujmy rozpakowany plik (plik .txt), aby utworzyć indeks, który mapuje słowa (jako ciągi) na ich reprezentację wektorową.</p>
@@ -1317,7 +1319,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 32s - loss: 0.5601 - accuracy: 0.7365 - 32s/epoch - 41ms/step
+<pre><code>782/782 - 32s - loss: 0.5601 - accuracy: 0.7365 - 32s/epoch - 40ms/step
 Test acc: 0.736</code></pre>
 </div>
 </div>
@@ -1408,7 +1410,7 @@ Rysunek&nbsp;7.6: Samo-atencja. Wskaźniki uwagi są obliczane między “statio
 <span class="header-section-number">7.7.2</span> Uogólnienie samo-atencji</h3>
 <p>Do tej pory rozważaliśmy tylko jedną sekwencję wejściową. Jednak architektura transformera została pierwotnie opracowana dla tłumaczenia maszynowego, gdzie mamy do czynienia z dwiema sekwencjami wejściowymi: sekwencją źródłową, którą aktualnie tłumaczysz (np. “How’s the weather today?”) i sekwencją docelową, na którą ją konwertujesz (np. “¿Qué tiempo hace hoy?”). Transformer jest modelem dziłającym od sekwencji do sekwencji. Został zaprojektowany do konwersji jednej sekwencji na inną.</p>
 <p>Teraz cofnijmy się o krok. Mechanizm samo-uwagi, tak jak go przedstawiliśmy, wykonuje następujące czynności, schematycznie:</p>
-<div id="fig-attention3" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
+<div id="fig-attention3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" id="fig-attention3" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
@@ -1651,7 +1653,7 @@ ________________________________________________________________________________
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 170s - loss: 0.2902 - accuracy: 0.8876 - 170s/epoch - 217ms/step</code></pre>
+<pre><code>782/782 - 156s - loss: 0.2902 - accuracy: 0.8876 - 156s/epoch - 200ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test acc: 0.888"</code></pre>
@@ -1812,7 +1814,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 182s - loss: 0.2802 - accuracy: 0.8857 - 182s/epoch - 233ms/step
+<pre><code>782/782 - 158s - loss: 0.2802 - accuracy: 0.8857 - 158s/epoch - 202ms/step
 Test acc: 0.886</code></pre>
 </div>
 </div>
@@ -1821,7 +1823,7 @@ Test acc: 0.886</code></pre>
 <span class="header-section-number">7.8</span> Wskazówki praktyczne dotyczące wyboru modelu</h2>
 <p>Czasami można usłyszeć, że metody <em>bag-of-words</em> są przestarzałe i że modele sekwencji oparte na transformatach są najlepszym rozwiązaniem, niezależnie od zadania lub zbioru danych. Zdecydowanie tak nie jest. Mały stos gęstych warstw na szczycie <em>bag-of-bigrams</em> pozostaje całkowicie poprawnym i odpowiednim podejściem w wielu przypadkach. W rzeczywistości, spośród różnych technik, które wypróbowaliśmy na zbiorze danych IMDB w tym rozdziale, jak dotąd najlepiej sprawdzał się <em>bag-of-bigrams</em>! Kiedy więc należy preferować jedno podejście nad drugim?</p>
 <p>W 2017 roku zespół pod kierownictwem Cholleta przeprowadził systematyczną analizę wydajności różnych technik klasyfikacji tekstu w wielu różnych typach zbiorów danych tekstowych i odkrył niezwykłą i zaskakującą zasadę podejmowania decyzji, czy wybrać model <em>bag-of-words</em>, czy model sekwencji (<a href="http://mng.bz/AOzK" class="uri">http://mng.bz/AOzK</a>) - swego rodzaju złotą proporcję. Okazuje się, że zabierając się do nowego zadania klasyfikacji tekstu, należy zwrócić szczególną uwagę na stosunek liczby próbek w danych treningowych do średniej liczby słów na próbkę (patrz <a href="#fig-rule" class="quarto-xref">Rysunek&nbsp;<span>7.11</span></a>). Jeśli stosunek ten jest niewielki - mniejszy niż 1500 - wówczas model <em>bag-of-bigrams</em> będzie działał lepiej (i jako bonus, będzie znacznie szybszy do trenowania). Jeśli współczynnik ten jest wyższy niż 1500, należy wybrać model sekwencyjny. Innymi słowy, modele sekwencyjne działają najlepiej, gdy dostępnych jest wiele danych szkoleniowych i gdy każda próbka jest stosunkowo krótka.</p>
-<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" width="600" data-fig-align="center">
+<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="600">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" id="fig-rule" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="600">
 </div>
@@ -1832,7 +1834,7 @@ Rysunek&nbsp;7.11
 <p>Tak więc, jeśli klasyfikujemy dokumenty o długości 1000 słów i mamy ich 100 000 (stosunek 100), powinniśmy wybrać model bigramowy. Jeśli klasyfikujemy tweety o średniej długości 40 słów i mamy ich 50 000 (stosunek 1250), powinniśmy również wybrać model bigramowy. Ale jeśli zwiększymy rozmiar zbioru danych do 500 000 tweetów (stosunek 12 500), wybierzmy wówczas transformery. A co z zadaniem klasyfikacji recenzji filmów IMDB? Mieliśmy 20 000 próbek treningowych i średnią liczbę słów wynoszącą 233, więc nasza zasada kciuka wskazuje na model bigramowy, co potwierdza to, co znaleźliśmy w praktyce.</p>
 <p>Intuicyjnie ma to sens: dane wejściowe modelu sekwencji reprezentują bogatszą i bardziej złożoną przestrzeń, a zatem potrzeba więcej danych, aby ją odwzorować; tymczasem zwykły zestaw terminów jest przestrzenią tak prostą, że można na niej trenować regresję logistyczną przy użyciu zaledwie kilkuset lub tysięcy próbek. Ponadto, im krótsza jest próbka, tym mniej model może sobie pozwolić na odrzucenie jakichkolwiek zawartych w niej informacji - w szczególności kolejność słów staje się ważniejsza, a odrzucenie jej może powodować niejednoznaczność. Zdania “ten film jest bombą” i “ten film był bombą” mają bardzo zbliżone reprezentacje unigramów, co może zmylić model <em>bag-of-words</em>, ale model sekwencji może stwierdzić, który z nich jest negatywny, a który pozytywny. Przy dłuższej próbce statystyki słów stałyby się bardziej wiarygodne, a temat lub sentyment byłyby bardziej widoczne na podstawie samego histogramu słów.</p>
 <p>Należy pamiętać, że ta heurystyczna reguła została opracowana specjalnie dla klasyfikacji tekstu. Niekoniecznie musi się ona sprawdzać w innych zadaniach NLP - na przykład, jeśli chodzi o tłumaczenie maszynowe, Transformer wyróżnia się szczególnie w przypadku bardzo długich sekwencji, w porównaniu do sieci RNN. Nasza heurystyka jest również tylko praktyczną zasadą, a nie naukowym prawem, więc spodziewaj się, że będzie działać przez większość czasu, ale niekoniecznie za każdym razem.</p>
-</section><section id="tłumaczenia-typu-sequence-to-sequence" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="tłumaczenia-typu-sequence-to-sequence">
+</section><section id="tłumaczenia-typu-sequence-to-sequence" class="level2 page-columns page-full" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="tłumaczenia-typu-sequence-to-sequence">
 <span class="header-section-number">7.9</span> Tłumaczenia typu sequence-to-sequence</h2>
 <p>Posiadamy już wszystkie narzędzia, których będziemy potrzebować, aby poradzić sobie z większością zadań przetwarzania języka naturalnego. Jednakże, widzieliśmy te narzędzia w akcji tylko w jednym problemie: klasyfikacji tekstu. Jest to niezwykle popularny przypadek użycia, ale NLP to znacznie więcej niż klasyfikacja. W tym podrozdziale poszerzymy swoją wiedzę, poznając modele <em>sequence-to-sequence</em>.</p>
 <p>Model sekwencja-sekwencja przyjmuje jedną sekwencję jako dane wejściowe (często zdanie lub akapit) i tłumaczy ją na drugą sekwencję. Jest to zadanie leżące u podstaw wielu najbardziej udanych zastosowań NLP:</p>
@@ -1866,6 +1868,695 @@ Rysunek&nbsp;7.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana 
 <p>Zasadę działania takiego modelu przedstawimy na przykładzie.</p>
 <section id="przykład-tłumaczenia-maszynowego" class="level3" data-number="7.9.1"><h3 data-number="7.9.1" class="anchored" data-anchor-id="przykład-tłumaczenia-maszynowego">
 <span class="header-section-number">7.9.1</span> Przykład tłumaczenia maszynowego</h3>
+<p>Zademonstrujemy modelowanie sekwencja do sekwencji, w zadaniu tłumaczenia maszynowego. Tłumaczenie maszynowe jest dokładnie tym, do czego transformer został opracowany! Zaczniemy od rekurencyjnego modelu sekwencji, a następnie wykorzystamy pełną architekturę transformera. Będziemy pracować z zestawem danych tłumaczeń z angielskiego na hiszpański dostępnym na stronie <a href="http://www.manythings.org/anki/." class="uri">http://www.manythings.org/anki/.</a> Pobierzmy go:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"http://storage.googleapis.com/download.tensorflow.org/data/spa-eng.zip"</span>,</span>
+<span>              destfile <span class="op">=</span> <span class="st">"data/spa-eng.zip"</span><span class="op">)</span></span>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"data/spa-eng.zip"</span>, exdir <span class="op">=</span> <span class="st">"data/"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Plik tekstowy zawiera jeden przykład w wierszu: zdanie w języku angielskim, po którym następuje znak tabulacji, a następnie odpowiadające mu zdanie w języku hiszpańskim. Użyjmy <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_tsv()</a></code>, ponieważ mamy wartości oddzielone tabulatorami:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb145"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_file</span> <span class="op">&lt;-</span> <span class="st">"data/spa-eng/spa.txt"</span></span>
+<span><span class="va">text_pairs</span> <span class="op">&lt;-</span> <span class="va">text_file</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span>col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"english"</span>, <span class="st">"spanish"</span><span class="op">)</span>,</span>
+<span>                  col_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"cc"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html">within</a></span><span class="op">(</span><span class="va">spanish</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"[start]"</span>, <span class="va">.</span>, <span class="st">"[end]"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Nasz przykładowy tekst wygląda teraz tak:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+ $ english: chr "Those flowers have died."
+ $ spanish: chr "[start] Esas flores murieron. [end]"</code></pre>
+</div>
+</div>
+<p>Przetasujmy je i podzielmy na zwykłe zestawy treningowe, walidacyjne i testowe:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb148"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">num_test_samples</span> <span class="op">&lt;-</span> <span class="va">num_val_samples</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">0.15</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">num_train_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span> <span class="op">-</span> <span class="va">num_val_samples</span> <span class="op">-</span> <span class="va">num_test_samples</span></span>
+<span></span>
+<span><span class="va">pair_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="va">num_train_samples</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">num_test_samples</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"val"</span>, <span class="va">num_val_samples</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">train_pairs</span> <span class="op">&lt;-</span> <span class="va">text_pairs</span><span class="op">[</span><span class="va">pair_group</span> <span class="op">==</span> <span class="st">"train"</span>, <span class="op">]</span></span>
+<span><span class="va">test_pairs</span> <span class="op">&lt;-</span> <span class="va">text_pairs</span><span class="op">[</span><span class="va">pair_group</span> <span class="op">==</span> <span class="st">"test"</span>, <span class="op">]</span></span>
+<span><span class="va">val_pairs</span> <span class="op">&lt;-</span> <span class="va">text_pairs</span><span class="op">[</span><span class="va">pair_group</span> <span class="op">==</span> <span class="st">"val"</span>, <span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Następnie przygotujmy dwie oddzielne warstwy <code>TextVectorization</code>: jedną dla języka angielskiego i jedną dla hiszpańskiego. Będziemy musieli dostosować sposób wstępnego przetwarzania ciągów znaków:</p>
+<ul>
+<li>Musimy zachować wstawione przez nas tokeny “<code>[start]</code>” i “<code>[end]</code>”. Domyślnie znaki <code>[</code> i <code>]</code> zostaną usunięte, ale chcemy je zachować, abyśmy mogli odróżnić słowo “start” od tokenu startowego “[start]”.</li>
+<li>Interpunkcja różni się w zależności od języka! W hiszpańskiej warstwie wektoryzacji tekstu, jeśli zamierzamy usunąć znaki interpunkcyjne, musimy również usunąć znak <code>¿</code>.</li>
+</ul>
+<p>Zauważmy, że w przypadku modelu tłumaczenia innego niż <em>toy-model</em>, traktowalibyśmy znaki interpunkcyjne jako oddzielne tokeny, zamiast je usuwać, ponieważ chcielibyśmy być w stanie generować poprawnie interpunkcyjne zdania. W naszym przypadku, dla uproszczenia, pozbędziemy się całej interpunkcji.</p>
+<p>Przygotowujemy niestandardową funkcję standaryzacji ciągów znaków dla hiszpańskiej warstwy <code>TextVectorization</code> - zachowuje ona <code>[</code> i <code>]</code>, ale usuwa <code>¿</code>, <code>¡</code> i wszystkie inne znaki z klasy <code>[:punct:]</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb149"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">punctuation_regex</span> <span class="op">&lt;-</span> <span class="st">"[^[:^punct:][\\]]|[¡¿]"</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/tensorflow">tensorflow</a></span><span class="op">)</span></span>
+<span><span class="va">custom_standardization</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input_string</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">input_string</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">lower</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">regex_replace</span><span class="op">(</span><span class="va">punctuation_regex</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">input_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="st">"[start] ¡corre! [end]"</span><span class="op">)</span></span>
+<span><span class="fu">custom_standardization</span><span class="op">(</span><span class="va">input_string</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(b'[start] corre [end]', shape=(), dtype=string)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adnotacja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wyrażenia regularne TensorFlow różnią się nieznacznie w stosunku do silnika wyrażeń regularnych R. Więcej szczegółów można znaleźć pod adresem <a href="https://github.com/google/re2/wiki/Syntax." class="uri">https://github.com/google/re2/wiki/Syntax.</a></p>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb151"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vocab_size</span> <span class="op">&lt;-</span> <span class="fl">15000</span></span>
+<span><span class="va">sequence_length</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
+<span></span>
+<span><span class="va">source_vectorization</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">layer_text_vectorization</a></span><span class="op">(</span></span>
+<span>  max_tokens <span class="op">=</span> <span class="va">vocab_size</span>,</span>
+<span>  output_mode <span class="op">=</span> <span class="st">"int"</span>,</span>
+<span>  output_sequence_length <span class="op">=</span> <span class="va">sequence_length</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">target_vectorization</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">layer_text_vectorization</a></span><span class="op">(</span></span>
+<span>  max_tokens <span class="op">=</span> <span class="va">vocab_size</span>,</span>
+<span>  output_mode <span class="op">=</span> <span class="st">"int"</span>,</span>
+<span>  output_sequence_length <span class="op">=</span> <span class="va">sequence_length</span> <span class="op">+</span> <span class="fl">1</span>,</span>
+<span>  standardize <span class="op">=</span> <span class="va">custom_standardization</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/adapt.html">adapt</a></span><span class="op">(</span><span class="va">source_vectorization</span>, <span class="va">train_pairs</span><span class="op">$</span><span class="va">english</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/adapt.html">adapt</a></span><span class="op">(</span><span class="va">target_vectorization</span>, <span class="va">train_pairs</span><span class="op">$</span><span class="va">spanish</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Na koniec możemy przekształcić nasze dane w potok TF Dataset. Chcemy, aby zwracał on parę (<code>inputs, target</code>), gdzie <code>inputs</code> jest nazwaną listą z dwoma wpisami, angielskim zdaniem (wejście kodera) i hiszpańskim zdaniem (wejście dekodera), a <code>target</code> jest hiszpańskim zdaniem przesuniętym o jeden krok do przodu.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb152"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">format_pair</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pair</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">eng</span> <span class="op">&lt;-</span> <span class="fu">source_vectorization</span><span class="op">(</span><span class="va">pair</span><span class="op">$</span><span class="va">english</span><span class="op">)</span></span>
+<span>  <span class="va">spa</span> <span class="op">&lt;-</span> <span class="fu">target_vectorization</span><span class="op">(</span><span class="va">pair</span><span class="op">$</span><span class="va">spanish</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>english <span class="op">=</span> <span class="va">eng</span>,</span>
+<span>                 spanish <span class="op">=</span> <span class="va">spa</span><span class="op">[</span><span class="cn">NA</span><span class="op">:</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">targets</span> <span class="op">&lt;-</span> <span class="va">spa</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="cn">NA</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">targets</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="va">batch_size</span> <span class="op">&lt;-</span> <span class="fl">64</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/tfdatasets">tfdatasets</a></span><span class="op">)</span></span>
+<span><span class="va">make_dataset</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pairs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/tensor_slices_dataset.html">tensor_slices_dataset</a></span><span class="op">(</span><span class="va">pairs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span><span class="va">format_pair</span>, num_parallel_calls <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_cache.html">dataset_cache</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_shuffle.html">dataset_shuffle</a></span><span class="op">(</span><span class="fl">2048</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_batch.html">dataset_batch</a></span><span class="op">(</span><span class="va">batch_size</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_prefetch.html">dataset_prefetch</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">train_ds</span> <span class="op">&lt;-</span>  <span class="fu">make_dataset</span><span class="op">(</span><span class="va">train_pairs</span><span class="op">)</span></span>
+<span><span class="va">val_ds</span> <span class="op">&lt;-</span> <span class="fu">make_dataset</span><span class="op">(</span><span class="va">val_pairs</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Oto jak wyglądają dane wyjściowe naszego zestawu danych:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb153"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">targets</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/iterate.html">iter_next</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/iterate.html">as_iterator</a></span><span class="op">(</span><span class="va">train_ds</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>List of 2
+ $ english:&lt;tf.Tensor: shape=(64, 20), dtype=int64, numpy=…&gt;
+ $ spanish:&lt;tf.Tensor: shape=(64, 20), dtype=int64, numpy=…&gt;</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb155"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">targets</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>&lt;tf.Tensor: shape=(64, 20), dtype=int64, numpy=…&gt;</code></pre>
+</div>
+</div>
+<p>Dane są teraz gotowe - czas zbudować kilka modeli. Zaczniemy od rekurencyjnego modelu sekwencja-sekwencja, zanim przejdziemy do transformera.</p>
+</section><section id="uczenie-sekwencyjne-z-wykorzystaniem-sieci-rnn" class="level3 page-columns page-full" data-number="7.9.2"><h3 data-number="7.9.2" class="anchored" data-anchor-id="uczenie-sekwencyjne-z-wykorzystaniem-sieci-rnn">
+<span class="header-section-number">7.9.2</span> Uczenie sekwencyjne z wykorzystaniem sieci RNN</h3>
+<p>Rekurencyjne sieci neuronowe zdominowały uczenie sekwencyjne w latach 2015-2017, zanim zostały wyprzedzone przez transformery. Były one podstawą wielu rzeczywistych systemów tłumaczenia maszynowego. Google Translate około 2017 roku był zasilany przez stos siedmiu dużych warstw LSTM. Dziś również warto zapoznać się z tym podejściem, ponieważ stanowi ono łatwy punkt wejścia do zrozumienia modeli sekwencja-sekwencja.</p>
+<p>Najprostszym, naiwnym sposobem wykorzystania RNN do przekształcenia sekwencji w inną sekwencję jest zachowanie danych wyjściowych RNN w każdym kroku czasowym. W języku <code>keras</code> wyglądałoby to następująco:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb157"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="va">vocab_size</span>, output_dim <span class="op">=</span> <span class="fl">128</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_lstm.html">layer_lstm</a></span><span class="op">(</span><span class="fl">32</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">vocab_size</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Podejście to ma jednak dwa główne problemy:</p>
+<ul>
+<li>Sekwencja docelowa musi być zawsze tej samej długości co sekwencja źródłowa. W praktyce rzadko ma to miejsce. Z technicznego punktu widzenia nie jest to istotne, ponieważ zawsze można uzupełnić sekwencję źródłową lub docelową, aby ich długości się zgadzały.</li>
+<li>Ze względu na charakter przetwarzania zadania przez sieć RNN krok po kroku, model będzie patrzył tylko na tokeny <span class="math inline">\(1\ldots N\)</span> w sekwencji źródłowej, aby przewidzieć token <span class="math inline">\(N\)</span> w sekwencji docelowej. To ograniczenie sprawia, że ta konfiguracja nie nadaje się do większości zadań, w szczególności do tłumaczenia. Rozważmy tłumaczenie “The weather is nice today” na francuski - byłoby to “Il fait beau aujourd’hui”. Musiałbyś być w stanie przewidzieć “Il” z samego “The”, “Il fait” z samego “The weather” i tak dalej, co jest po prostu niemożliwe.</li>
+</ul>
+<p>Jeśli jesteśmy tłumaczami, zacznamy od przeczytania całego zdania źródłowego, zanim zaczniemy je tłumaczyć. Jest to szczególnie ważne, jeśli mamy do czynienia z językami, które mają bardzo różną kolejność słów, jak angielski i japoński. I dokładnie to robią standardowe modele sekwencja-sekwencja.</p>
+<p>W prawidłowej konfiguracji sekwencja-sekwencja (patrz rysunek 11.13), najpierw należy użyć RNN (kodera), aby przekształcić całą sekwencję źródłową w pojedynczy wektor (lub zestaw wektorów). Może to być ostatnie wyjście RNN lub alternatywnie jego końcowe wektory stanu wewnętrznego. Następnie należy użyć tego wektora (lub wektorów) jako stanu początkowego innej sieci RNN (dekodera), która przyjrzy się elementom <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej i spróbuje przewidzieć krok <span class="math inline">\(N+1\)</span> w sekwencji docelowej.</p>
+<div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;7.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworzenia wektora, który koduje całą sekwencję źródłową, która jest używana jako stan początkowy dla dekodera RNN.
+</figcaption></figure>
+</div>
+<p>Zaimplementujmy to w Keras za pomocą koderów i dekoderów opartych na GRU. Wybór GRU zamiast LSTM nieco upraszcza sprawę, ponieważ GRU ma tylko jeden wektor stanu, podczas gdy LSTM ma ich wiele. Zacznijmy od kodera.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb158"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">embed_dim</span> <span class="op">&lt;-</span> <span class="fl">256</span></span>
+<span><span class="va">latent_dim</span> <span class="op">&lt;-</span> <span class="fl">1024</span></span>
+<span></span>
+<span><span class="va">source</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span>, name <span class="op">=</span> <span class="st">"english"</span><span class="op">)</span></span>
+<span><span class="va">encoded_source</span> <span class="op">&lt;-</span> <span class="va">source</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span><span class="va">vocab_size</span>, <span class="va">embed_dim</span>, mask_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_gru.html">layer_gru</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">latent_dim</span><span class="op">)</span>, merge_mode <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Następnie dodajmy dekoder - prostą warstwę GRU, która jako stan początkowy przyjmuje zakodowane zdanie źródłowe. Na wierzchu dodajemy <code><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense()</a></code>, która tworzy dla każdego kroku wyjściowego rozkład prawdopodobieństwa w hiszpańskim słownictwie.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb159"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">decoder_gru</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_gru.html">layer_gru</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">latent_dim</span>, return_sequences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">past_target</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span>, name <span class="op">=</span> <span class="st">"spanish"</span><span class="op">)</span></span>
+<span><span class="va">target_next_step</span> <span class="op">&lt;-</span> <span class="va">past_target</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span><span class="va">vocab_size</span>, <span class="va">embed_dim</span>, mask_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">decoder_gru</span><span class="op">(</span>initial_state <span class="op">=</span> <span class="va">encoded_source</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dropout.html">layer_dropout</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">vocab_size</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
+<span><span class="va">seq2seq_rnn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span>inputs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">source</span>, <span class="va">past_target</span><span class="op">)</span>,</span>
+<span>                           outputs <span class="op">=</span> <span class="va">target_next_step</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Podczas treningu dekoder przyjmuje jako dane wejściowe całą sekwencję docelową, ale dzięki krokowej naturze RNN, patrzy tylko na tokeny <span class="math inline">\(1\ldots N\)</span> na wejściu, aby przewidzieć token <span class="math inline">\(N\)</span> na wyjściu (co odpowiada następnemu tokenowi w sekwencji, ponieważ wyjście ma być przesunięte o jeden krok). Oznacza to, że używamy tylko informacji z przeszłości do przewidywania przyszłości, tak jak powinniśmy; w przeciwnym razie oszukiwalibyśmy, a nasz model nie działałby w czasie wnioskowania.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb160"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">seq2seq_rnn</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>                        loss <span class="op">=</span> <span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span>                        metrics <span class="op">=</span> <span class="st">"accuracy"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">seq2seq_rnn</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_ds</span>, epochs <span class="op">=</span> <span class="fl">15</span>, validation_data <span class="op">=</span> <span class="va">val_ds</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Wybraliśmy <em>accuracy</em> jako niezbyt fortunny sposób monitorowania wydajności zestawu walidacyjnego podczas treningu. Średnio model przewiduje następne słowo w hiszpańskim zdaniu poprawnie w 63,2% przypadków. Jednak w praktyce dokładność następnego tokenu nie jest optymalną miarą dla modeli tłumaczenia maszynowego, w szczególności dlatego, że zakłada, że prawidłowe tokeny docelowe od <span class="math inline">\(0\)</span> do <span class="math inline">\(N\)</span> są już znane podczas przewidywania tokenu <span class="math inline">\(N+1\)</span>. W rzeczywistości podczas wnioskowania generujemy zdanie docelowe od zera i nie możemy polegać na tym, że wcześniej wygenerowane tokeny są w 100% poprawne. Jeśli pracujemy nad rzeczywistym systemem tłumaczenia maszynowego, prawdopodobnie użyjemy metryki BLEU<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> do oceny swoich modeli - metryki, która analizuje całe wygenerowane sekwencje i wydaje się dobrze korelować z ludzkim postrzeganiem jakości tłumaczenia.</p>
+<div class="no-row-height column-margin column-container"><p><sup>6</sup>&nbsp;BLEU (ang. <em>BiLingual Evaluation Understudy</em>) to wskaźnik służący do automatycznej oceny tekstu przetłumaczonego maszynowo. Wynik BLEU to liczba od zera do jednego, która mierzy podobieństwo tekstu przetłumaczonego maszynowo do zestawu wysokiej jakości tłumaczeń referencyjnych. Wartość 0 oznacza, że tekst przetłumaczony maszynowo nie pokrywa się z tłumaczeniem referencyjnym (niska jakość), podczas gdy wartość 1 oznacza, że tekst idealnie pokrywa się z tłumaczeniem referencyjnym (wysoka jakość).</p></div><p>Na koniec użyjmy naszego modelu do wnioskowania. Wybierzemy kilka zdań z zestawu testowego i sprawdzimy, jak nasz model je tłumaczy. Zaczniemy od tokenu początkowego “<code>[start]</code>” i wprowadzimy go do modelu dekodera wraz z zakodowanym angielskim zdaniem źródłowym. Pobierzemy predykcję następnego tokena i ponownie wprowadzimy ją do dekodera, próbkując jeden nowy token docelowy w każdej iteracji, aż dojdziemy do “<code>[end]</code>” lub osiągniemy maksymalną długość zdania.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb161"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spa_vocab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">get_vocabulary</a></span><span class="op">(</span><span class="va">target_vectorization</span><span class="op">)</span></span>
+<span><span class="va">max_decoded_sentence_length</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
+<span></span>
+<span><span class="va">decode_sequence</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input_sentence</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">tokenized_input_sentence</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu">source_vectorization</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="va">input_sentence</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">decoded_sentence</span> <span class="op">&lt;-</span> <span class="st">"[start]"</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">max_decoded_sentence_length</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">tokenized_target_sentence</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu">target_vectorization</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="va">decoded_sentence</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">next_token_predictions</span> <span class="op">&lt;-</span> <span class="va">seq2seq_rnn</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tokenized_input_sentence</span>,</span>
+<span>                   <span class="va">tokenized_target_sentence</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">sampled_token_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">next_token_predictions</span><span class="op">[</span><span class="fl">1</span>, <span class="va">i</span>, <span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">sampled_token</span> <span class="op">&lt;-</span> <span class="va">spa_vocab</span><span class="op">[</span><span class="va">sampled_token_index</span><span class="op">]</span></span>
+<span>    <span class="va">decoded_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">decoded_sentence</span>, <span class="va">sampled_token</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">sampled_token</span> <span class="op">==</span> <span class="st">"[end]"</span><span class="op">)</span></span>
+<span>      <span class="kw">break</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">decoded_sentence</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">input_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">test_pairs</span><span class="op">$</span><span class="va">english</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"-"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">input_sentence</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">decode_sequence</span><span class="op">(</span><span class="va">input_sentence</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "-"
+[1] "I am willing to agree to your request."
+1/1 - 2s - 2s/epoch - 2s/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "-"
+[1] "The forest is very thick."
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 35ms/epoch - 35ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "-"
+[1] "They made me wait for a long time."
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 35ms/epoch - 35ms/step
+1/1 - 0s - 37ms/epoch - 37ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 37ms/epoch - 37ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "-"
+[1] "It's all I have."
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 35ms/epoch - 35ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 39ms/epoch - 39ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "-"
+[1] "Leave town."
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 35ms/epoch - 35ms/step
+1/1 - 0s - 34ms/epoch - 34ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 36ms/epoch - 36ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
+[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"</code></pre>
+</div>
+</div>
+<p><code>decode_sequence()</code> działa dobrze, choć być może nieco wolniej niż byśmy chcieli. Jednym z łatwych sposobów na przyspieszenie działania takiego kodu jest użycie funkcji <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Przepiszmy funkcję <code>decode_sentence()</code> tak, aby była kompilowana przez <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Oznacza to, że zamiast używać natywnych funkcji R, takich jak <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> i <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code>, użyjemy odpowiedników TensorFlow, takich jak <code>tf$range()</code>, wywołując bezpośrednio <code>model()</code> i <code>tf$argmax()</code>.</p>
+<p>Ponieważ <code>tf$range()</code> i <code>tf$argmax()</code> zwracają wartość równą 0, ustawimy lokalną opcję funkcji: <code>option(tensorflow.extract.style = "python")</code>. Zmieni to zachowanie <code>[</code> dla tensorów, aby również startowały od 0.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb163"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tf_decode_sequence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input_sentence</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>  <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_options.html">local_options</a></span><span class="op">(</span>tensorflow.extract.style <span class="op">=</span> <span class="st">"python"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">tokenized_input_sentence</span> <span class="op">&lt;-</span> <span class="va">input_sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">source_vectorization</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">spa_vocab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">spa_vocab</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">decoded_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="st">"[start]"</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">max_decoded_sentence_length</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="va">tokenized_target_sentence</span> <span class="op">&lt;-</span> <span class="va">decoded_sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu">target_vectorization</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">next_token_predictions</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu">seq2seq_rnn</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tokenized_input_sentence</span>,</span>
+<span>                       <span class="va">tokenized_target_sentence</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">sampled_token_index</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">argmax</span><span class="op">(</span><span class="va">next_token_predictions</span><span class="op">[</span><span class="fl">0</span>, <span class="va">i</span>, <span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">sampled_token</span> <span class="op">&lt;-</span> <span class="va">spa_vocab</span><span class="op">[</span><span class="va">sampled_token_index</span><span class="op">]</span></span>
+<span>    <span class="va">decoded_sentence</span> <span class="op">&lt;-</span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">join</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">decoded_sentence</span>, <span class="va">sampled_token</span><span class="op">)</span>,</span>
+<span>                      separator <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">sampled_token</span> <span class="op">==</span> <span class="st">"[end]"</span><span class="op">)</span></span>
+<span>      <span class="kw">break</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">decoded_sentence</span></span>
+<span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">input_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">test_pairs</span><span class="op">$</span><span class="va">english</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"-\n"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">input_sentence</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">input_sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>          <span class="fu">tf_decode_sequence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>-
+Have you heard that a burglar broke into my neighbor's house? 
+[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+-
+Your dog always barks at me. 
+[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+-
+They kept quiet so that they would not be found. 
+[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+-
+He responded to her offer with a laugh. 
+[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+-
+She has a bag under her arm. 
+[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas </code></pre>
+</div>
+</div>
+<p>Nasza funkcja <code>tf_decode_sentence()</code> jest około 10 razy szybsza od wersji natywnej.</p>
+<p>Należy zauważyć, że ta konfiguracja wnioskowania, choć bardzo prosta, jest raczej nieefektywna, ponieważ ponownie przetwarzamy całe zdanie źródłowe i całe wygenerowane zdanie docelowe za każdym razem, gdy próbkujemy nowe słowo. W praktycznym zastosowaniu koder i dekoder byłyby traktowane jako dwa oddzielne modele, a dekoder wykonywałby tylko jeden krok w każdej iteracji próbkowania tokenów, ponownie wykorzystując swój poprzedni stan wewnętrzny.</p>
+<p>Oto wyniki naszego tłumaczenia. Nasz model działa przyzwoicie jak na model typu <em>toy</em>, choć nadal popełnia wiele podstawowych błędów.</p>
+<p>Istnieje wiele sposobów na ulepszenie “zabawkowego” modelu: moglibyśmy użyć głębokiego stosu warstw rekurencyjnych zarówno dla kodera, jak i dekodera (należy pamiętać, że w przypadku dekodera zarządzanie stanem jest nieco bardziej skomplikowane). Moglibyśmy użyć LSTM zamiast GRU. I tak dalej. Poza takimi poprawkami, podejście RNN do uczenia sekwencyjnego ma jednak kilka fundamentalnych ograniczeń:</p>
+<ul>
+<li><p>Reprezentacja sekwencji źródłowej musi być przechowywana w całości w wektorze (wektorach) stanu kodera, co nakłada znaczne ograniczenia na rozmiar i złożoność zdań, które można przetłumaczyć. To trochę tak, jakby człowiek tłumaczył zdanie w całości z pamięci, nie patrząc dwa razy na zdanie źródłowe podczas tworzenia tłumaczenia.</p></li>
+<li><p>RNN mają problem z radzeniem sobie z bardzo długimi sekwencjami, ponieważ mają tendencję do stopniowego zapominania o przeszłości - do czasu osiągnięcia setnego tokena w dowolnej sekwencji, niewiele informacji pozostaje o początku sekwencji. Oznacza to, że modele oparte na RNN nie są w stanie utrzymać długoterminowego kontekstu, który może być niezbędny do tłumaczenia długich dokumentów.</p></li>
+</ul>
+<p>Ograniczenia te sprawiły, że społeczność zajmująca się uczeniem maszynowym przyjęła architekturę transformer do rozwiązywania problemów typu sekwencja-sekwencja. Przyjrzyjmy się temu.</p>
+</section><section id="uczenie-się-sekwencyjne-z-transformerem" class="level3 page-columns page-full" data-number="7.9.3"><h3 data-number="7.9.3" class="anchored" data-anchor-id="uczenie-się-sekwencyjne-z-transformerem">
+<span class="header-section-number">7.9.3</span> Uczenie się sekwencyjne z transformerem</h3>
+<p>Uczenie sekwencyjne to zadanie, w którym transformer naprawdę błyszczy. Atencja neuronowa umożliwia modelom transformer właściwe przetwarzanie sekwencji, które są znacznie dłuższe i bardziej złożone niż te, z którymi radzą sobie sieci RNN.</p>
+<p>Jako człowiek tłumaczący z angielskiego na hiszpański, nie czytamy angielskiego zdania po jednym słowie na raz, tylko zachowujemy jego znaczenie w pamięci, a następnie generujemy hiszpańskie zdanie po jednym słowie na raz. Może to zadziałać w przypadku zdania składającego się z pięciu słów, ale jest mało prawdopodobne, by zadziałało w przypadku całego akapitu. Zamiast tego, prawdopodobnie będziemy chcieli przeskakiwać między zdaniem źródłowym a tłumaczeniem i zwracać uwagę na różne słowa w źródle podczas zapisywania różnych części tłumaczenia.</p>
+<p>Dokładnie to można osiągnąć za pomocą atencji neuronowej i transformerów. Znamy już koder transformera, który wykorzystuje samo-atencję (w odmianie z wieloma głowami) do tworzenia reprezentacji kontekstowych każdego tokena w sekwencji wejściowej. W transformatorze sekwencja-sekwencja, koder transformera naturalnie odgrywałby rolę kodera, który odczytuje sekwencję źródłową i tworzy jej zakodowaną reprezentację. Jednak w przeciwieństwie do naszego poprzedniego kodera RNN, koder transformer utrzymuje zakodowaną reprezentację w formacie sekwencji: jest to sekwencja wektorów osadzania z uwzględnieniem kontekstu.</p>
+<p>Druga część modelu to dekoder transformera. Podobnie jak dekoder RNN, odczytuje on tokeny <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej i próbuje przewidzieć token <span class="math inline">\(N + 1\)</span>. Co najważniejsze, robiąc to, wykorzystuje atencję neuronową, aby zidentyfikować, które tokeny w zakodowanym zdaniu źródłowym są najbardziej powiązane z tokenem docelowym, który obecnie próbuje przewidzieć. Przypomnijmy model atencji posiadał query, key i value. W dekoderze transformerowym sekwencja docelowa służy jako query, które jest używane do zwracania większej uwagi na różne części sekwencji źródłowej (sekwencja źródłowa odgrywa role zarówno key, jak i value).</p>
+<section id="dekoder-transformerowy" class="level4 page-columns page-full" data-number="7.9.3.1"><h4 data-number="7.9.3.1" class="anchored" data-anchor-id="dekoder-transformerowy">
+<span class="header-section-number">7.9.3.1</span> Dekoder transformerowy</h4>
+<p><span class="quarto-unresolved-ref">?fig-trans1</span> przedstawia pełny transformator sekwencja do sekwencji. Przyjrzyjmy się wewnętrznym elementom dekodera. Rozpoznamy, że wygląda on bardzo podobnie do kodera transformera, z wyjątkiem tego, że dodatkowy blok atencji jest wstawiony pomiędzy blok samo-atencji zastosowany do sekwencji docelowej i gęstych warstw bloku wyjściowego.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2024-02-14 o 20.56.12.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<figcaption><code>TransformerDecoder</code> jest podobny do <code>TransformerEncoder</code>, z wyjątkiem tego, że zawiera dodatkowy blok atencji, w którym key i value są sekwencją źródłową zakodowaną przez <code>TransformerEncoder</code>. Razem, koder i dekoder tworzą transformator end-to-end.</figcaption></figure>
+</div>
+<p>Zaimplementujmy to. Podobnie jak w przypadku <code>TransformerEncoder</code>, będziemy tworzyć nową klasę warstw.</p>
+<p>Metoda <code><a href="https://rdrr.io/r/base/call.html">call()</a></code> jest prostym odwzorowaniem połączeń diagramu z <span class="quarto-unresolved-ref">?fig-trans1</span>. Jest jednak dodatkowy szczegół, który musimy wziąć pod uwagę - przyczynowe wypełnianie (ang. <em>casual padding</em>). Wypełnianie przyczynowe jest absolutnie krytyczne dla pomyślnego uczenia transformatora sekwencja do sekwencji. W przeciwieństwie do RNN, który patrzy na swoje dane wejściowe po jednym kroku na raz, a zatem będzie miał dostęp tylko do kroków <span class="math inline">\(1\ldots N\)</span>, aby wygenerować krok wyjściowy <span class="math inline">\(N\)</span> (który jest tokenem <span class="math inline">\(N+1\)</span> w sekwencji docelowej), natomiast <code>TransformerDecoder</code> jest niezależny od kolejności: patrzy na całą sekwencję docelową naraz. Gdyby pozwolić mu na wykorzystanie całego wejścia, po prostu nauczyłby się kopiować krok wejściowy <span class="math inline">\(N+1\)</span> do lokalizacji <span class="math inline">\(N\)</span> na wyjściu. W ten sposób model osiągnąłby idealną dokładność treningu, ale oczywiście podczas wnioskowania byłby całkowicie bezużyteczny, ponieważ kroki wejściowe poza <span class="math inline">\(N\)</span> nie są dostępne.</p>
+<p>Rozwiązanie jest proste - zamaskujemy górną połowę macierzy atencji parami, aby uniemożliwić modelowi zwracanie uwagi na informacje z przyszłości - informacje tylko z tokenów <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej powinny być używane podczas generowania tokena docelowego <span class="math inline">\(N+1\)</span>. Aby to zrobić, dodamy metodę <code>get_causal_attention_mask(inputs)</code> do naszego <code>TransformerDecoder</code>, aby pobrać maskę uwagi, którą możemy przekazać do naszych warstw <code>MultiHeadAttention</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb165"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layer_transformer_decoder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/new-classes.html">new_layer_class</a></span><span class="op">(</span></span>
+<span>  classname <span class="op">=</span> <span class="st">"TransformerDecoder"</span>,</span>
+<span></span>
+<span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">embed_dim</span>, <span class="va">dense_dim</span>, <span class="va">num_heads</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">embed_dim</span> <span class="op">&lt;-</span> <span class="va">embed_dim</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">dense_dim</span> <span class="op">&lt;-</span> <span class="va">dense_dim</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="va">num_heads</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">attention_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_multi_head_attention.html">layer_multi_head_attention</a></span><span class="op">(</span>num_heads <span class="op">=</span> <span class="va">num_heads</span>,</span>
+<span>                                                   key_dim <span class="op">=</span> <span class="va">embed_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">attention_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_multi_head_attention.html">layer_multi_head_attention</a></span><span class="op">(</span>num_heads <span class="op">=</span> <span class="va">num_heads</span>,</span>
+<span>                                                   key_dim <span class="op">=</span> <span class="va">embed_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">dense_proj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">dense_dim</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">embed_dim</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">supports_masking</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  get_config <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">config</span> <span class="op">&lt;-</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_config</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">name</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"embed_dim"</span>, <span class="st">"num_heads"</span>, <span class="st">"dense_dim"</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">config</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="va">config</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  get_causal_attention_mask <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">batch_size</span>, <span class="va">sequence_length</span>, <span class="va">encoding_length</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="fu">unstack</span><span class="op">(</span><span class="va">tf</span><span class="op">$</span><span class="fu">shape</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="va">sequence_length</span><span class="op">)</span></span>
+<span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span><span class="op">]</span></span>
+<span>    <span class="va">j</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, <span class="op">]</span></span>
+<span>    <span class="va">mask</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">cast</span><span class="op">(</span><span class="va">i</span> <span class="op">&gt;=</span> <span class="va">j</span>, <span class="st">"int32"</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">tf</span><span class="op">$</span><span class="fu">tile</span><span class="op">(</span><span class="va">mask</span><span class="op">[</span><span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, , <span class="op">]</span>,</span>
+<span>            <span class="va">tf</span><span class="op">$</span><span class="fu">stack</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">batch_size</span>, <span class="fl">1L</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  call <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span>, <span class="va">encoder_outputs</span>, <span class="va">mask</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="va">causal_mask</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">get_causal_attention_mask</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">mask</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">mask</span> <span class="op">&lt;-</span> <span class="va">causal_mask</span></span>
+<span>    <span class="kw">else</span></span>
+<span>      <span class="va">mask</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="op">{</span> <span class="va">tf</span><span class="op">$</span><span class="fu">minimum</span><span class="op">(</span><span class="va">tf</span><span class="op">$</span><span class="fu">cast</span><span class="op">(</span><span class="va">.</span><span class="op">[</span>, <span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, <span class="op">]</span>, <span class="st">"int32"</span><span class="op">)</span>,</span>
+<span>                             <span class="va">causal_mask</span><span class="op">)</span> <span class="op">}</span></span>
+<span></span>
+<span>    <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">attention_1</span><span class="op">(</span>query <span class="op">=</span> <span class="va">.</span>, value <span class="op">=</span> <span class="va">.</span>, key <span class="op">=</span> <span class="va">.</span>,</span>
+<span>                         attention_mask <span class="op">=</span> <span class="va">causal_mask</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_1</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">attention_2</span><span class="op">(</span>query <span class="op">=</span> <span class="va">.</span>,</span>
+<span>                         value <span class="op">=</span> <span class="va">encoder_outputs</span>,</span>
+<span>                         key <span class="op">=</span> <span class="va">encoder_outputs</span>,</span>
+<span>                         attention_mask <span class="op">=</span> <span class="va">mask</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_2</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">dense_proj</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_3</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Będziemy trenować model transformator typu <em>end-to-end</em>. Mapuje on sekwencję źródłową i docelową do sekwencji docelowej o jeden krok w przyszłości. W prosty sposób łączy elementy, które zbudowaliśmy do tej pory: warstwy <code>PositionalEmbedding</code>, <code>TransformerEncoder</code> i <code>TransformerDecoder</code>. Zwróćmy uwagę, że zarówno <code>TransformerEncoder</code>, jak i <code>TransformerDecoder</code> są niezmienne pod względem kształtu<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, więc możemy połączyć wiele z nich, aby stworzyć bardziej wydajny koder lub dekoder. W naszym przykładzie będziemy trzymać się pojedynczej instancji każdego z nich.</p>
+<div class="no-row-height column-margin column-container"><p><sup>7</sup>&nbsp;wejście i wyjście jest tych samych rozmiarów</p></div><div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb166"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">embed_dim</span> <span class="op">&lt;-</span> <span class="fl">256</span></span>
+<span><span class="va">dense_dim</span> <span class="op">&lt;-</span> <span class="fl">2048</span></span>
+<span><span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="fl">8</span></span>
+<span></span>
+<span><span class="va">encoder_inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html">shape</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span>, name <span class="op">=</span> <span class="st">"english"</span><span class="op">)</span></span>
+<span><span class="va">encoder_outputs</span> <span class="op">&lt;-</span> <span class="va">encoder_inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">layer_positional_embedding</span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">vocab_size</span>, <span class="va">embed_dim</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">layer_transformer_encoder</span><span class="op">(</span><span class="va">embed_dim</span>, <span class="va">dense_dim</span>, <span class="va">num_heads</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">transformer_decoder</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">layer_transformer_decoder</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">embed_dim</span>, <span class="va">dense_dim</span>, <span class="va">num_heads</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">decoder_inputs</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html">shape</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span>, name <span class="op">=</span> <span class="st">"spanish"</span><span class="op">)</span></span>
+<span><span class="va">decoder_outputs</span> <span class="op">&lt;-</span> <span class="va">decoder_inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">layer_positional_embedding</span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">vocab_size</span>, <span class="va">embed_dim</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">transformer_decoder</span><span class="op">(</span><span class="va">.</span>, <span class="va">encoder_outputs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dropout.html">layer_dropout</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">vocab_size</span>, activation<span class="op">=</span><span class="st">"softmax"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">transformer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">encoder_inputs</span>, <span class="va">decoder_inputs</span><span class="op">)</span>,</span>
+<span>                           <span class="va">decoder_outputs</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb167"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transformer</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>          loss <span class="op">=</span> <span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span>          metrics <span class="op">=</span> <span class="st">"accuracy"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">transformer</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_ds</span>, epochs <span class="op">=</span> <span class="fl">30</span>, validation_data <span class="op">=</span> <span class="va">val_ds</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">save_model_tf</a></span><span class="op">(</span><span class="va">transformer</span>, filepath <span class="op">=</span> <span class="st">"models/end_to_end_transformer.keras"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Osiągamy dokładność 65,3%, czyli istotnie lepiej niż z modelu opartego na GRU.</p>
+<p>Na koniec spróbujmy użyć naszego modelu do przetłumaczenia nigdy wcześniej nie widzianych angielskich zdań z zestawu testowego. Konfiguracja jest identyczna z tą, której użyliśmy do modelu RNN typu sekwencja-sekwencja. Zastąpimy tylko <code>seq2seq_rnn</code> transformatorem i usuniemy dodatkowego tokena, który skonfigurowaliśmy do dodania w warstwie <code>target_vectorization()</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb168"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transformer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span></span>
+<span>  <span class="st">"models/end_to_end_transformer.keras"</span>,</span>
+<span>  custom_objects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="va">layer_positional_embedding</span>,</span>
+<span>    <span class="va">layer_transformer_decoder</span>,</span>
+<span>    <span class="va">layer_transformer_encoder</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb169"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tf_decode_sequence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input_sentence</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_options.html">local_options</a></span><span class="op">(</span>tensorflow.extract.style <span class="op">=</span> <span class="st">"python"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">tokenized_input_sentence</span> <span class="op">&lt;-</span> <span class="va">input_sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">source_vectorization</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">spa_vocab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">spa_vocab</span><span class="op">)</span></span>
+<span>  <span class="va">decoded_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="st">"[start]"</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">max_decoded_sentence_length</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="va">tokenized_target_sentence</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu">target_vectorization</span><span class="op">(</span><span class="va">decoded_sentence</span><span class="op">)</span><span class="op">[</span>,<span class="cn">NA</span><span class="op">:</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span>    <span class="va">next_token_predictions</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu">transformer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tokenized_input_sentence</span>,</span>
+<span>                       <span class="va">tokenized_target_sentence</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">sampled_token_index</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">argmax</span><span class="op">(</span><span class="va">next_token_predictions</span><span class="op">[</span><span class="fl">0</span>, <span class="va">i</span>, <span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">sampled_token</span> <span class="op">&lt;-</span> <span class="va">spa_vocab</span><span class="op">[</span><span class="va">sampled_token_index</span><span class="op">]</span></span>
+<span>    <span class="va">decoded_sentence</span> <span class="op">&lt;-</span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">join</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">decoded_sentence</span>, <span class="va">sampled_token</span><span class="op">)</span>,</span>
+<span>                      separator <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">sampled_token</span> <span class="op">==</span> <span class="st">"[end]"</span><span class="op">)</span></span>
+<span>      <span class="kw">break</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">decoded_sentence</span></span>
+<span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">input_sentence</span>, <span class="va">correct_translation</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span></span>
+<span>      <span class="va">test_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">test_pairs</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="op">]</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"-\n"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">input_sentence</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">correct_translation</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">input_sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>          <span class="fu">tf_decode_sequence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>-
+When did you get back? 
+[start] ¿Cuándo regresó usted? [end] 
+[start] aquí hizo hecho cosas te [UNK] [end] 
+-
+I kept the $20 I found in the street. 
+[start] Me quedé con el billete de 20$ que encontré en la calle. [end] 
+[start] el río que me [UNK] me viaje con el hermano [end] 
+-
+Let's wait until six o'clock. 
+[start] Esperemos hasta las seis. [end] 
+[start] peligro la tierra de oficina allí no ha bebe la tierra de para [end] 
+-
+You've taken a long time eating lunch. 
+[start] Te has tomado mucho tiempo para almorzar. [end] 
+[start] de paseo a un siempre día rato [end] 
+-
+Tom devoted his whole life to studying sharks. 
+[start] Tom dedicó su vida a estudiar a los tiburones. [end] 
+[start] tom vivir sé broma que Él habla se cabeza mary ella [end] 
+-
+I don't fear death. 
+[start] Yo no le temo a la muerte. [end] 
+[start] no estoy de mujeres aquí no te nadie de mujeres [end] 
+-
+Spain ruled Cuba at that time. 
+[start] España gobernaba Cuba en ese tiempo. [end] 
+[start] en manzanas quise de verdad consejo de que teléfono [end] 
+-
+Whales are very large mammals that live in the ocean. 
+[start] Las ballenas son mamíferos gigantescos que viven en el mar. [end] 
+[start] a los atrapó se le [UNK] en el todavía [end] 
+-
+It was nothing but a joke. 
+[start] No era más que una broma. [end] 
+[start] fue de cuál mañana te [UNK] [end] 
+-
+The man is right. 
+[start] El hombre tiene razón. [end] 
+[start] el hombre es unas [end] 
+-
+The bridge collapsed. 
+[start] El puente se derrumbó. [end] 
+[start] el peor a accidente el perdido de peor y se verano [end] 
+-
+Tom is also a vegetarian. 
+[start] Tomás también es vegetariano. [end] 
+[start] tom este tuvo se me va [end] 
+-
+The young man driving the car was drunk. 
+[start] El joven que conducía el coche estaba borracho. [end] 
+[start] el padre su tiene pronto de la pared [end] 
+-
+Her daughter can recite many poems. 
+[start] Su hija es capaz de recitar muchos poemas. [end] 
+[start] se bien cayó sal vio en muchas sí [end] 
+-
+It's your turn next. 
+[start] Después viene su turno. [end] 
+[start] me va a lugar [end] 
+-
+He has a terrible hangover. 
+[start] Tiene una goma horrible. [end] 
+[start] está este un [UNK] en la si [end] 
+-
+They began to look into the problem. 
+[start] Empezaron a investigar sobre ese problema. [end] 
+[start] vez te [UNK] [end] 
+-
+I'll make a note of that. 
+[start] Lo tomaré en cuenta. [end] 
+[start] por son no [UNK] con eso [end] 
+-
+Don't be careless in your work. 
+[start] No seas tan descuidado en tu trabajo. [end] 
+[start] no te animales a días [end] 
+-
+I bought this T-shirt on sale. 
+[start] Me compré esta camiseta en las rebajas. [end] 
+[start] estoy de pertenece me primero [end] </code></pre>
+</div>
+</div>
+<p>Na tym kończy się ten rozdział o przetwarzaniu języka naturalnego. W ramach niego przeszliśmy od podstaw do w rozwiązania współcześnie używanego, czyli Transformera, który może tłumaczyć zdania z angielskiego na hiszpański.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1876,7 +2567,7 @@ Bengio, Yoshua, Réjean Ducharme, Pascal Vincent, i Christian Jauvin. b.d. <span
 Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, i Illia Polosukhin. b.d. <span>„Attention Is All You Need”</span>. <a href="https://doi.org/10.48550/arXiv.1706.03762">https://doi.org/10.48550/arXiv.1706.03762</a>.
 </div>
 </div>
-</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
