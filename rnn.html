@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.549">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Zaawansowane metody uczenia maszynowego - 5&nbsp; DNN dla danych sekwencyjnych</title>
 <style>
@@ -329,7 +329,7 @@ window.Quarto = {
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span></span>
 <span> <span class="st">"https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
 <span>          files <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -385,7 +385,7 @@ Wskazówka
 <img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;5.1: Przebieg szeregu czasowego temperatury
+Rys.&nbsp;5.1: Przebieg szeregu czasowego temperatury
 </figcaption></figure>
 </div>
 </div>
@@ -399,7 +399,7 @@ Rysunek&nbsp;5.1: Przebieg szeregu czasowego temperatury
 <img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
+Rys.&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
 </figcaption></figure>
 </div>
 </div>
@@ -700,7 +700,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 5s - loss: 58.4128 - mae: 6.2125 - 5s/epoch - 13ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2124 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -751,7 +751,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 6s - loss: 18.9587 - mae: 3.4415 - 6s/epoch - 14ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -797,7 +797,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 6s - loss: 11.2176 - mae: 2.6383 - 6s/epoch - 15ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 9ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -821,7 +821,7 @@ Ważne
 <img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.1: Zasada działania sieci RNN
+Rys.&nbsp;6.1: Zasada działania sieci RNN
 </figcaption></figure>
 </div>
 <p><code>keras</code> ma również swoją implementację tego rodzaju sieci poprzez <code><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn()</a></code>. Przyjmuje on dane wejściowe o kształcie <code>(batch_size, timesteps, input_features)</code>. Podobnie jak wszystkie warstwy rekurencyjne w <code>keras,</code> <code>layer_simple_rnn</code> może być uruchomiona w dwóch różnych trybach: może zwrócić albo pełne sekwencje kolejnych wyjść dla każdego kroku czasowego (tensor 3D o kształcie <code>(batch_size, timesteps, output_features)</code>) lub tylko ostatnie wyjście dla każdej sekwencji wejściowej (tensor 2D o kształcie <code>(batch_size, output_features)</code>). Te dwa tryby są kontrolowane przez argument <code>return_sequences</code>.</p>
@@ -867,7 +867,7 @@ Rysunek&nbsp;6.1: Zasada działania sieci RNN
 <img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.2: Schemat sieci LSTM
+Rys.&nbsp;6.2: Schemat sieci LSTM
 </figcaption></figure>
 </div>
 <p>Typowa jednostka LSTM składa się z komórki (ang. <em>cell</em>), bramki wejściowej (ang. <em>input gate</em>), bramki wyjściowej (ang. <em>output gate</em>) i bramki zapomnienia (ang. <em>forget gate</em>). Komórka zapamiętuje wartości w dowolnych odstępach czasu, a trzy bramki regulują przepływ informacji do i z komórki. Bramki zapominania decydują o tym, jakie informacje z poprzedniego stanu należy odrzucić, przypisując poprzedniemu stanowi, w porównaniu z bieżącym wejściem, wartość z przedziału od 0 do 1. Wartość 1 oznacza zachowanie informacji, a wartość 0 - jej odrzucenie. Bramki wejściowe decydują, które kawałki nowej informacji zapisać w bieżącym stanie, używając tego samego systemu co bramki zapomnienia. Bramki wyjściowe kontrolują, które fragmenty informacji z bieżącego stanu należy wypisać, przypisując im wartość od 0 do 1, biorąc pod uwagę stan poprzedni i bieżący. Selektywne wyprowadzanie odpowiednich informacji z bieżącego stanu pozwala sieci LSTM zachować użyteczne, długoterminowe zależności, pozwalające na dokonywanie przewidywań, zarówno w bieżących, jak i przyszłych krokach czasowych.</p>
@@ -930,7 +930,7 @@ Zagrożenie
 <img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.3
+Rys.&nbsp;6.3
 </figcaption></figure>
 </div>
 <p><a href="#fig-lstm-dropout" class="quarto-xref">Rysunek&nbsp;<span>6.3</span></a> przedstawia wyniki uczenia. Usunięto przeuczenie (do co najmniej 20 epoki). Osiągamy MAE walidacji na poziomie zaledwie 2,37 stopnia (2,5% poprawa w stosunku do modelu bazowego bez uczenia) i testowy MAE na poziomie 2,54 stopnia (3% poprawa w stosunku do lini bazowej).</p>
@@ -973,7 +973,7 @@ Rysunek&nbsp;6.3
 <img src="images/jena_gru_dropout_hist.png" id="fig-gru_dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.4
+Rys.&nbsp;6.4
 </figcaption></figure>
 </div>
 <p><span class="quarto-unresolved-ref">?fig-gru-dropout</span> przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na poziomie 2,45 stopnia (poprawa o 6,5% w stosunku do linii bazowej). Widać, że dodana warstwa nieco poprawia wyniki, choć nie dramatycznie, zatem można zaobserwować malejące zyski ze zwiększania pojemności sieci.</p>
@@ -1021,7 +1021,7 @@ Rysunek&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 6s - loss: 22.8799 - mae: 3.8075 - 6s/epoch - 15ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 8ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1042,7 +1042,7 @@ Rysunek&nbsp;6.4
 <img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bidirectional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
+Rys.&nbsp;6.5: Zasada działania warstw dwukierunkowych
 </figcaption></figure>
 </div>
 <p>Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code>, które jako pierwszy argument przyjmują instancję warstwy rekurencyjnej. <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code> tworzy drugą, oddzielną instancję tej warstwy rekurencyjnej i wykorzystuje jedną instancję do przetwarzania sekwencji wejściowych w porządku chronologicznym, a drugą instancję do przetwarzania sekwencji wejściowych w porządku odwróconym.</p>
@@ -1072,7 +1072,7 @@ Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 8s - loss: 10.8280 - mae: 2.5962 - 8s/epoch - 20ms/step</code></pre>
+<pre><code>405/405 - 5s - loss: 10.8280 - mae: 2.5962 - 5s/epoch - 13ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
@@ -1665,12 +1665,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./examples2.html" class="pagination-link" aria-label="Przykłady NN">
+      <a href="./examples2.html" class="pagination-link  aria-label=" nn="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./llm.html" class="pagination-link" aria-label="Modele językowe">
+      <a href="./llm.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Modele językowe</span>">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
