@@ -673,11 +673,11 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(b'I think the movie was pretty good, will add it to my "clasic collection" after all this time. I believe I saw other posters who reminded some of the pickier people that it is still just a movie. Maybe some of the more esoteric points defy "logic", but a great many religious matters accepted "on faith" fail to pass the smell test. If you\'re going to accept whatever faith you subscribe to you can certainly accept a movie. Is it just me or has anyone else noticed the Aja-Yee Dagger is the same possessed knife Lamonte Cranston had so much trouble gaining control of in "The Shadow". No mention of it in the trivia section for either movie here (IMDB), but I would bet a dollar to a donut it\'s the same prop.', shape=(), dtype=string)</code></pre>
+<pre><code>tf.Tensor(b'Now I love Bela Lugosi,don\'t get me wrong,he is one of the most interesting people to ever make a movie but he certainly did his share of clunkers.This is just another one of those.&lt;br /&gt;&lt;br /&gt;Lugosi plays Dr.Lorenz,a doctor who has had his medical license pulled for unexplained reasons.He is however doing experiments to keep his wife young and beautiful.It\'s revealed that she is 70-80 years old yet Lugosi looks to be in his mid 50\'s so why he is married to this old woman is never really explained.&lt;br /&gt;&lt;br /&gt;Anyway these treatments or experiments involved giving brides who are at the altar being married some sort of sweet smelling substance whereby they pass out but are thought to be dead.Then Lugosi and some of his assistants steal the body on its way to the morgue and take it back to his lab where it\'s kept in some sort of suspended animation or catatonic state.Then the stolen brides have a needle rammed somewhere in their bodies,maybe the neck,and then the needle is rammed into the body of Lugosi\'s wife to bring her back to youth and beauty.We never really see where Lugosi sticks the needle or what it is that he draws out of the brides but it somehow restores his wife .Apparently old age makes you scream with pain because Lugosi\'s wife does a lot of screaming until she gets back to her younger state.Helping Lugosi in his lab is the only good thing about this movie....a weird old hag and her two deformed sons....one son is a big lumpy looking slow acting fellow who likes to fondle the snoozing brides and the other son is a mean little dwarf....little person, to be politically correct in today\'s world.At night these three just sort of pile up and sleep in Lugosi\'s dreary downstairs lab.Who these 3 are and how they came to be Lugosi\'s scared assistants is,like a lot of stuff in this film, never explained.&lt;br /&gt;&lt;br /&gt;So anyway a female reporter is given the assignment by her gruff editor to find out where all the stolen brides are going to.She quickly figures out that the one common thing among all the stolen brides is a rare orchid that is found on them.So she asks around and is told that there is a world renowned orchid expert living nearby who just happens to be the one who developed this particular orchid.This expert turns out to be creepy Dr.Lorenz.She quickly tracks him down and upsets his little house of horrors.I\'m not sure where the police were during all this but they came in to mop up after the reporter had done all the dirty work.&lt;br /&gt;&lt;br /&gt;It seems that Lugosi\'s movies always had some sort of unnecessary silly plot line that just made the whole thing stink to high heavens.I mean a world famous orchid expert kidnaps brides by sending them a doped up orchid he himself is known to have developed? D\'OH!&lt;br /&gt;&lt;br /&gt;And then later it\'s revealed that the young ladies don\'t even have to be brides for the procedure to work so why would Lugosi keep kidnapping brides from heavily guarded churches for his experiments and create all the attention and newspaper headlines? Why not just grab a prostitute off the street like a normal weirdo pervert would do? This clunker reminded me a lot of another Lugosi stinker,"The Devil Bat"....same silly plot lines and bad acting and same silly \'reporter gets bad guy\' deal.&lt;br /&gt;&lt;br /&gt;But Lugosi is always good--he is creepy and sinister enough to keep you interested at least enough to keep watching him.The woman playing the reporter was just a terrible actor....she had no emotion whatsoever,she just delivered her lines like a machine gun ,spewing them out as quickly as she could.Everyone else pretty much blew too,when it came to being good actors.&lt;br /&gt;&lt;br /&gt;But this thing is watchable ,if only for Bela Lugosi fans.Lugosi was always so intense even when the picture was a dog.He must have known he was doing terrible pictures but maybe he also knew that if he gave it everything he had a little of that intensity might shine through past all the bad plots and bad acting which surrounded him.&lt;br /&gt;&lt;br /&gt;And he was right----we horror fans will always have a love for Bela Lugosi.He gave it his all every time he was in front of the camera.We do give two f**ks for you,Bela.', shape=(), dtype=string)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(1, shape=(), dtype=int32)</code></pre>
+<pre><code>tf.Tensor(0, shape=(), dtype=int32)</code></pre>
 </div>
 </div>
 <p>Wszystko gotowe. Teraz spróbujmy nauczyć się czegoś z tych danych.</p>
@@ -1120,7 +1120,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 26s - loss: 0.4049 - accuracy: 0.8601 - 26s/epoch - 33ms/step
+<pre><code>782/782 - 27s - loss: 0.4049 - accuracy: 0.8601 - 27s/epoch - 34ms/step
 Test acc: 0.860
  </code></pre>
 </div>
@@ -1199,7 +1199,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>,</span>
 <span>            <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 30s - loss: 2.4718 - accuracy: 0.5019 - 30s/epoch - 39ms/step
+<pre><code>782/782 - 31s - loss: 2.4718 - accuracy: 0.5019 - 31s/epoch - 40ms/step
 Test acc: 0.502</code></pre>
 </div>
 </div>
@@ -1319,7 +1319,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 31s - loss: 0.5601 - accuracy: 0.7365 - 31s/epoch - 39ms/step
+<pre><code>782/782 - 32s - loss: 0.5601 - accuracy: 0.7365 - 32s/epoch - 40ms/step
 Test acc: 0.736</code></pre>
 </div>
 </div>
@@ -1443,7 +1443,7 @@ Rys.&nbsp;7.8: Pobieranie obrazów z bazy danych. “Zapytanie” jest porównyw
 </section><section id="atencja-typu-multi-head" class="level3" data-number="7.7.3"><h3 data-number="7.7.3" class="anchored" data-anchor-id="atencja-typu-multi-head">
 <span class="header-section-number">7.7.3</span> Atencja typu <em>multi-head</em>
 </h3>
-<p><em>Multi-head attention</em> to dodatkowe ulepszenie mechanizmu samo-uwagi, wprowadzone w “Attention Is All You Need”. Przydomek <em>multi-head</em> odnosi się do faktu, że przestrzeń wyjściowa warstwy samo-uwagi jest podzielona na zestaw niezależnych podprzestrzeni, uczonych oddzielnie: początkowe zapytanie, klucz i wartość są wysyłane przez trzy niezależne zestawy gęstych projekcji, co skutkuje trzema oddzielnymi wektorami. Każdy wektor jest przetwarzany przez warstwę atencji, a trzy wyjścia są łączone z powrotem w jedną sekwencję wyjściową. Każda taka podprzestrzeń nazywana jest “głową”. Pełny obraz został przedstawiony na <span class="citation" data-cites="ig-attention5">(<a href="references.html#ref-ig-attention5" role="doc-biblioref"><strong>ig-attention5?</strong></a>)</span>.</p>
+<p><em>Multi-head attention</em> to dodatkowe ulepszenie mechanizmu samo-uwagi, wprowadzone w “Attention Is All You Need”. Przydomek <em>multi-head</em> odnosi się do faktu, że przestrzeń wyjściowa warstwy samo-uwagi jest podzielona na zestaw niezależnych podprzestrzeni, uczonych oddzielnie: początkowe zapytanie, klucz i wartość są wysyłane przez trzy niezależne zestawy gęstych projekcji, co skutkuje trzema oddzielnymi wektorami. Każdy wektor jest przetwarzany przez warstwę atencji, a trzy wyjścia są łączone z powrotem w jedną sekwencję wyjściową. Każda taka podprzestrzeń nazywana jest “głową”. Pełny obraz został przedstawiony na <a href="#fig-attention5" class="quarto-xref">Rys.&nbsp;<span>7.9</span></a>.</p>
 <div id="fig-attention5" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-10 o 14.41.55.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
@@ -1653,7 +1653,7 @@ ________________________________________________________________________________
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 150s - loss: 0.2902 - accuracy: 0.8876 - 150s/epoch - 191ms/step</code></pre>
+<pre><code>782/782 - 155s - loss: 0.2902 - accuracy: 0.8876 - 155s/epoch - 198ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test acc: 0.888"</code></pre>
@@ -1814,7 +1814,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 149s - loss: 0.2802 - accuracy: 0.8857 - 149s/epoch - 191ms/step
+<pre><code>782/782 - 156s - loss: 0.2802 - accuracy: 0.8857 - 156s/epoch - 199ms/step
 Test acc: 0.886</code></pre>
 </div>
 </div>
@@ -1889,8 +1889,8 @@ Rys.&nbsp;7.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana prz
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
- $ english: chr "That's just an excuse."
- $ spanish: chr "[start] Esa solo es una excusa. [end]"</code></pre>
+ $ english: chr "Do you want fries with that?"
+ $ spanish: chr "[start] ¿Quiere papas fritas con eso? [end]"</code></pre>
 </div>
 </div>
 <p>Przetasujmy je i podzielmy na zwykłe zestawy treningowe, walidacyjne i testowe:</p>
@@ -2105,120 +2105,120 @@ Rys.&nbsp;7.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworze
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "-"
-[1] "He went to school by car."
+[1] "He's not in."
 1/1 - 1s - 1s/epoch - 1s/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-[1] "[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos"
-[1] "-"
-[1] "That is just typical of him."
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-[1] "[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos"
-[1] "-"
-[1] "Tom did well for a beginner."
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-[1] "[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos"
-[1] "-"
-[1] "It started a chain reaction."
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 42ms/epoch - 42ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 33ms/epoch - 33ms/step
 1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-[1] "[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos"
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+[1] "[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos"
 [1] "-"
-[1] "Tomorrow is a holiday."
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
+[1] "Tom flipped over the card and saw that it was the ace of spades."
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 26ms/epoch - 26ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+[1] "[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos"
+[1] "-"
+[1] "She likes all of us."
+1/1 - 0s - 26ms/epoch - 26ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 31ms/epoch - 31ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
-[1] "[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos"</code></pre>
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+[1] "[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos"
+[1] "-"
+[1] "You have many friends."
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+[1] "[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos"
+[1] "-"
+[1] "We're in grave danger."
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+[1] "[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos"</code></pre>
 </div>
 </div>
 <p><code>decode_sequence()</code> działa dobrze, choć być może nieco wolniej niż byśmy chcieli. Jednym z łatwych sposobów na przyspieszenie działania takiego kodu jest użycie funkcji <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Przepiszmy funkcję <code>decode_sentence()</code> tak, aby była kompilowana przez <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Oznacza to, że zamiast używać natywnych funkcji R, takich jak <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> i <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code>, użyjemy odpowiedników TensorFlow, takich jak <code>tf$range()</code>, wywołując bezpośrednio <code>model()</code> i <code>tf$argmax()</code>.</p>
@@ -2268,20 +2268,20 @@ Rys.&nbsp;7.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworze
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-That's amazing! 
-[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos 
+Tom went to see Mary early yesterday morning. 
+[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos 
 -
-How many students are there in your university? 
-[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos 
+I'm already late. 
+[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos 
 -
-Is everything ready? 
-[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos 
+He is capable of keeping a secret when he wants to. 
+[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos 
 -
-I like to play tennis. 
-[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos 
+We have to take the risk. 
+[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos 
 -
-What kind of sports we play depends on the weather and the season. 
-[start] nomás caca matrimonio ningún enormemente subas disculpe recorrimos tripa cenicienta cansada oímos composiciones promete promete colocar colocar atónito ahogarse modernos </code></pre>
+The people are so friendly. 
+[start] imprimir entrenado úneteles exploradores recepcionista superé rasgado fui pagaste resucitó comidas comidas margarita vitamina tirado invitaste tren 1990 dueños sensatos </code></pre>
 </div>
 </div>
 <p>Nasza funkcja <code>tf_decode_sentence()</code> jest około 10 razy szybsza od wersji natywnej.</p>
@@ -2479,85 +2479,85 @@ Rys.&nbsp;7.14: <code>TransformerDecoder</code> jest podobny do <code>Transforme
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-This book is new. 
-[start] Este libro es nuevo. [end] 
-[start] se ha estuvo déjame no es [end] 
+The elbow is the joint between the arm and forearm. 
+[start] El codo es la articulación entre el brazo y el antebrazo. [end] 
+[start] el rápido está veinte de la [UNK] del aconsejó hacer la [UNK] [end] 
 -
-The coffee was so hot that I nearly burned my tongue. 
-[start] El café estaba tan caliente que casi me quemé la lengua. [end] 
-[start] no sabía que nada sea vos de que [UNK] de francés [UNK] [end] 
+This is one of the dictionaries I told you about yesterday. 
+[start] Este es uno de los diccionarios de los que te hablé ayer. [end] 
+[start] yo libro debería de los nuestro de fue [end] 
 -
-Haven't I already told you about this before? 
-[start] ¿No te lo he dicho ya antes? [end] 
-[start] sin fue tengo que te habría [end] 
+Tom put the envelope on the table. 
+[start] Tom puso el sobre en la mesa. [end] 
+[start] tom se [UNK] la siempre un canta [end] 
 -
-I thought Tom had a dog. 
-[start] Pensé que Tom tenía un perro. [end] 
-[start] quiere cuando estuvo tom [end] 
+I never speak French. 
+[start] Nunca hablo francés. [end] 
+[start] yo aún camino puedo lo ver [end] 
 -
-I am hanging up a picture of my grandmother. 
-[start] Estoy colgando una foto de mi abuela. [end] 
-[start] yo pero de la había [end] 
+She is curious to find who sent the flowers. 
+[start] Ella tiene curiosidad por saber quién mandó las flores. [end] 
+[start] está en el prestar está conocen en el cuántos [end] 
 -
-Tom didn't know that Mary liked to cook. 
-[start] Tom no sabía que a Mary le gustaba cocinar. [end] 
-[start] tom no sabía que para tenía estáis estaba japón [end] 
+It would be nice if you had a wedge of lime I could squeeze into my icewater. 
+[start] Sería agradable si tuvieras una rodajita de lima para echar en mi agua helada. [end] 
+[start] en qué sí está he me eres chicos de mis plan [end] 
 -
-It's difficult to understand his theory. 
-[start] Es difícil entender su teoría. [end] 
-[start] deberías se ha estuvo a mi casi discusión [end] 
+You have it in the bag. 
+[start] Lo tienes en la mochila. [end] 
+[start] esto lo dónde en el [end] 
 -
-Please say a prayer for those who were onboard. 
-[start] Por favor diga una plegaria por aquellos que estuvieron a bordo. [end] 
-[start] por todos equivocado en sueño de fácil se [UNK] [end] 
+It's impossible to go out now. 
+[start] Ahora es imposible salir. [end] 
+[start] el tiempo iba mary vez sal [end] 
 -
-I am never free on Sundays. 
-[start] Nunca estoy libre los domingos. [end] 
-[start] yo tengo mayor diste por vi diste [end] 
+I don't know who wrote it. 
+[start] No sé quién lo escribió. [end] 
+[start] no solo que dónde cuanto [end] 
 -
-Why did you call me at this unearthly hour? 
-[start] ¿Para qué me llamas a esta hora imprudente? [end] 
-[start] de nuestro te [UNK] antes que todo tengo usar [end] 
+Didn't you go out? 
+[start] ¿No habías salido? [end] 
+[start] quieren de hiciera que se bien pidió [end] 
 -
-He drinks a lot of milk every day. 
-[start] Él toma mucha leche todos los días. [end] 
-[start] su eso niño habló he pronto tan mi tren [end] 
+You two are brothers, right? 
+[start] Ustedes dos son hermanos, ¿no? [end] 
+[start] parece alguien gusta los allí había a los allí había [end] 
 -
-He's three years older than she is. 
-[start] Él tiene tres años más que ella. [end] 
-[start] tan mi perder pie hace [end] 
+Don't you feel stupid now? 
+[start] ¿Ahora no te sientes estúpido? [end] 
+[start] no te tres un coche falta [end] 
 -
-I feel like throwing up. 
-[start] Tengo ganas de vomitar. [end] 
-[start] me policía en mira [end] 
+I was very tired today. 
+[start] Hoy estaba muy cansada. [end] 
+[start] él hacer aquí él entre [end] 
 -
-Tom worked as a farmer. 
-[start] Tomás trabajaba como granjero. [end] 
-[start] tom preguntaba a un piensas [UNK] [end] 
+We don't have much time. Let's hurry. 
+[start] Tenemos poco tiempo. Apurémonos. [end] 
+[start] no te eso esta guerra estaba hay [UNK] [end] 
 -
-My father likes fishing, and so do I. 
-[start] A mi padre le gusta pescar y a mí también. [end] 
-[start] el toda béisbol [UNK] y algunas [end] 
+I don't have a car. 
+[start] No tengo coche. [end] 
+[start] no estoy tan de dijo [end] 
 -
-Tom is deeply in love with Mary. 
-[start] Tom está perdidamente enamorado de Mary. [end] 
-[start] tom es posible en mis estas para [end] 
+I noticed she was wearing a new hat. 
+[start] Me di cuenta de que ella llevaba un sombrero nuevo. [end] 
+[start] yo él roja que ella él pagado diez de conducir [end] 
 -
-The man slumped to the floor. 
-[start] El hombre se derrumbó sobre el suelo. [end] 
-[start] se te buscando era [end] 
+I'll call you a cab. 
+[start] Te llamaré un taxi. [end] 
+[start] por todos te [UNK] [end] 
 -
-Move along now. 
-[start] Muévase ya. [end] 
-[start] dijo estás madre ojos [end] 
+He is present at the meeting. 
+[start] Él está presente en la reunión. [end] 
+[start] es importa en importa [end] 
 -
-Do you want to kill me? 
-[start] ¿Quieres matarme? [end] 
-[start] desde a este terminado [end] 
+I stayed in bed all day instead of going to work. 
+[start] Me quedé todo el día en la cama en lugar de ir a trabajar. [end] 
+[start] han accidente que desde [UNK] en los toques era [end] 
 -
-This is not enough. 
-[start] No es suficiente. [end] 
-[start] trabajo no se ha estuvo [end] </code></pre>
+I saw Tom hitting Mary. 
+[start] Yo vi a Tom golpeando a Mary. [end] 
+[start] alguien te [UNK] a tom en menudo de alguien para [end] </code></pre>
 </div>
 </div>
 <p>Na tym kończy się ten rozdział o przetwarzaniu języka naturalnego. W ramach niego przeszliśmy od podstaw do w rozwiązania współcześnie używanego, czyli Transformera, który może tłumaczyć zdania z angielskiego na hiszpański.</p>
