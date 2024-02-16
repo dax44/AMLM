@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Zaawansowane metody uczenia maszynowego - 5&nbsp; DNN dla danych sekwencyjnych</title>
 <style>
@@ -329,7 +329,7 @@ window.Quarto = {
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span></span>
 <span> <span class="st">"https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
 <span>          files <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -700,7 +700,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 10ms/step</code></pre>
+<pre><code>405/405 - 5s - loss: 58.4128 - mae: 6.2125 - 5s/epoch - 13ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -751,7 +751,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 18.9587 - mae: 3.4415 - 4s/epoch - 10ms/step</code></pre>
+<pre><code>405/405 - 6s - loss: 18.9587 - mae: 3.4415 - 6s/epoch - 14ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -797,7 +797,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 10ms/step</code></pre>
+<pre><code>405/405 - 6s - loss: 11.2176 - mae: 2.6383 - 6s/epoch - 15ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -925,7 +925,7 @@ Zagrożenie
 <pre><code>[1] "Test MAE: 2.54"</code></pre>
 </div>
 </div>
-<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
@@ -968,7 +968,7 @@ Rysunek&nbsp;6.3
 <pre><code>[1] "Test MAE: 2.45"</code></pre>
 </div>
 </div>
-<div id="fig-gru_dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-gru_dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/jena_gru_dropout_hist.png" id="fig-gru_dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
@@ -1021,7 +1021,7 @@ Rysunek&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 8ms/step</code></pre>
+<pre><code>405/405 - 6s - loss: 22.8799 - mae: 3.8075 - 6s/epoch - 15ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1072,7 +1072,7 @@ Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 5s - loss: 10.8280 - mae: 2.5962 - 5s/epoch - 13ms/step</code></pre>
+<pre><code>405/405 - 8s - loss: 10.8280 - mae: 2.5962 - 8s/epoch - 20ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
@@ -1665,12 +1665,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./examples2.html" class="pagination-link  aria-label=" nn="">
+      <a href="./examples2.html" class="pagination-link" aria-label="Przykłady NN">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./llm.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Modele językowe</span>">
+      <a href="./llm.html" class="pagination-link" aria-label="Modele językowe">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

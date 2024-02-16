@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Zaawansowane metody uczenia maszynowego - 6&nbsp; Modele językowe</title>
 <style>
@@ -673,11 +673,11 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(b"I saw this film a few years ago and I got to say that I really love it.Jason Patric was perfect for this weird role that he played.The director?I don't too many things about him...and I don't care.The screenplay is good,that's for sure.In just a few words I have to say about this movie that is weird,strange,even dark,but it's a good one.I saw it a few years ago and never saw it since then.I want to see it again and again.I know that I'm not gonna get sick of watching it.The scenes,the atmosphere,the actors,the story...everything is good.The movie should have lasted longer.I think 120 minutes should have been perfect.I was hoping for a part 2 for this movie.Too bad it din't happened.Jason Patric:you're the man ! very good movie. the end. :-)", shape=(), dtype=string)</code></pre>
+<pre><code>tf.Tensor(b'honestly, i don\'t know what\'s funnier, this horrific remake, or the comments on this board. Masterpiece\'s review had me in tears, that\'s so funny. Anyway, this movie is the among the worst movies ever, and certainly the bottom of the barrel for sequels. The "Omen" name on the title made me stop and watch it this morning on HBO, but it\'s a slap in the face to the other three, especially the original. There are so many classically bad moments, but my favorite is the guy catching fire from the juggler at the psychic fair!! good times ! This movie is to the Omen series what "Scary Movie" is to the entire genre. Avoid unless you\'re looking for a good laugh.', shape=(), dtype=string)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(1, shape=(), dtype=int32)</code></pre>
+<pre><code>tf.Tensor(0, shape=(), dtype=int32)</code></pre>
 </div>
 </div>
 <p>Wszystko gotowe. Teraz spróbujmy nauczyć się czegoś z tych danych.</p>
@@ -771,7 +771,7 @@ Wskazówka
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">binary_1gram_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 3s - loss: 0.2856 - accuracy: 0.8868 - 3s/epoch - 4ms/step
+<pre><code>782/782 - 5s - loss: 0.2856 - accuracy: 0.8868 - 5s/epoch - 7ms/step
 Test acc: 0.887</code></pre>
 </div>
 </div>
@@ -819,7 +819,7 @@ Test acc: 0.887</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">binary_2gram_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 3s - loss: 0.2556 - accuracy: 0.9012 - 3s/epoch - 4ms/step
+<pre><code>782/782 - 5s - loss: 0.2556 - accuracy: 0.9012 - 5s/epoch - 7ms/step
 Test acc: 0.901</code></pre>
 </div>
 </div>
@@ -903,7 +903,7 @@ Adnotacja
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">tfidf_2gram_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 3s - loss: 0.2973 - accuracy: 0.8940 - 3s/epoch - 4ms/step
+<pre><code>782/782 - 5s - loss: 0.2973 - accuracy: 0.8940 - 5s/epoch - 7ms/step
 Test acc: 0.894 </code></pre>
 </div>
 </div>
@@ -936,7 +936,7 @@ Adnotacja
 <span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu">inference_model</span><span class="op">(</span><span class="va">raw_text_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">predictions</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>&lt;tf.Tensor: shape=(1, 1), dtype=float32, numpy=array([[0.8422111]], dtype=float32)&gt;</code></pre>
+<pre><code>&lt;tf.Tensor: shape=(1, 1), dtype=float32, numpy=array([[0.8422112]], dtype=float32)&gt;</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.2f percent positive\n"</span>,</span>
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">predictions</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1027,7 +1027,7 @@ ________________________________________________________________________________
 <p>Kiedy kodujemy coś za pomocą kodowania one-hot, podejmujemy decyzję o inżynierii cech. Wprowadzamy do naszego modelu fundamentalne założenie dotyczące struktury przestrzeni cech. Założeniem tym jest to, że różne tokeny, które kodujemy, są od siebie niezależne: w rzeczywistości wektory one-hot są względem siebie ortogonalne. W przypadku słów założenie to jest oczywiście błędne. Słowa tworzą ustrukturyzowaną przestrzeń: dzielą się ze sobą informacjami. Słowa “movie” i “film” są wymienne w większości zdań, więc wektor reprezentujący “movie” nie powinien być ortogonalny do wektora reprezentującego “film” - powinny być tym samym wektorem lub bardzo zbliżonym.</p>
 <p>Podchodząc do sprawy niecobardziej abstrakcyjnie, geometryczna relacja między dwoma wektorami słów powinna odzwierciedlać semantyczną relację między tymi słowami. Na przykład, w rozsądnej przestrzeni wektorów słów można oczekiwać, że synonimy będą osadzone w podobnych wektorach słów, a ogólnie rzecz biorąc, można oczekiwać, że odległość geometryczna (taka jak odległość cosinusowa lub odległość L2) między dowolnymi dwoma wektorami słów będzie odnosić się do “odległości semantycznej” między powiązanymi słowami. Słowa, które oznaczają różne pojęcia, powinny znajdować się daleko od siebie, podczas gdy podobne słowa powinny znajdować się bliżej.</p>
 <p>Osadzenia słów to wektorowe reprezentacje słów, które osiągają ten cel: mapują ludzki język na ustrukturyzowaną przestrzeń geometryczną. Podczas gdy wektory uzyskane w wyniku kodowania one-hot są binarne, rzadkie (w większości składają się z zer) i wielowymiarowe (taka sama wymiarowość jak liczba słów w słowniku), osadzenia słów są niskowymiarowymi wektorami typu <em>float</em> (tj. gęstymi wektorami, w przeciwieństwie do rzadkich wektorów) - patrz <a href="#fig-embd1" class="quarto-xref">Rysunek&nbsp;<span>7.2</span></a>. W przypadku bardzo dużych słowników często spotyka się osadzenia słów, które są 256-wymiarowe, 512-wymiarowe lub 1024-wymiarowe. Z drugiej strony, kodowanie słów metodą <em>one-hot</em> zazwyczaj prowadzi do wektorów, które mają 20 000 wymiarów lub więcej (słownik składający się z 20,000 tokenów). Tak więc osadzanie słów zawiera więcej informacji w znacznie mniejszej liczbie wymiarów.</p>
-<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="400">
+<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" width="400" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-embd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" id="fig-embd1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="400">
 </div>
@@ -1036,7 +1036,7 @@ Rysunek&nbsp;7.2
 </figcaption></figure>
 </div>
 <p>Oprócz tego, że są gęstymi reprezentacjami, osadzenia słów są również reprezentacjami strukturalnymi, a ich struktura jest uczona na podstawie danych. Podobne słowa są osadzone w bliskich lokalizacjach, a ponadto określone kierunki w przestrzeni osadzania mają znaczenie. Aby to wyjaśnić, spójrzmy na konkretny przykład.</p>
-<div id="fig-vectors" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="250">
+<div id="fig-vectors" class="quarto-figure quarto-figure-center quarto-float anchored" width="250" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" id="fig-vectors" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="250">
 </div>
@@ -1120,7 +1120,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 26s - loss: 0.4049 - accuracy: 0.8601 - 26s/epoch - 33ms/step
+<pre><code>782/782 - 31s - loss: 0.4049 - accuracy: 0.8601 - 31s/epoch - 40ms/step
 Test acc: 0.860
  </code></pre>
 </div>
@@ -1199,7 +1199,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>,</span>
 <span>            <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 32s - loss: 2.4718 - accuracy: 0.5019 - 32s/epoch - 41ms/step
+<pre><code>782/782 - 51s - loss: 2.4718 - accuracy: 0.5019 - 51s/epoch - 66ms/step
 Test acc: 0.502</code></pre>
 </div>
 </div>
@@ -1214,7 +1214,7 @@ Test acc: 0.502</code></pre>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"http://nlp.stanford.edu/data/glove.6B.zip"</span>,</span>
 <span>              destfile <span class="op">=</span> <span class="st">"glove.6B.zip"</span><span class="op">)</span></span>
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"glove.6B.zip"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"glove.6B.zip"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Przeanalizujmy rozpakowany plik (plik .txt), aby utworzyć indeks, który mapuje słowa (jako ciągi) na ich reprezentację wektorową.</p>
@@ -1319,7 +1319,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 32s - loss: 0.5601 - accuracy: 0.7365 - 32s/epoch - 40ms/step
+<pre><code>782/782 - 51s - loss: 0.5601 - accuracy: 0.7365 - 51s/epoch - 66ms/step
 Test acc: 0.736</code></pre>
 </div>
 </div>
@@ -1410,7 +1410,7 @@ Rysunek&nbsp;7.6: Samo-atencja. Wskaźniki uwagi są obliczane między “statio
 <span class="header-section-number">7.7.2</span> Uogólnienie samo-atencji</h3>
 <p>Do tej pory rozważaliśmy tylko jedną sekwencję wejściową. Jednak architektura transformera została pierwotnie opracowana dla tłumaczenia maszynowego, gdzie mamy do czynienia z dwiema sekwencjami wejściowymi: sekwencją źródłową, którą aktualnie tłumaczysz (np. “How’s the weather today?”) i sekwencją docelową, na którą ją konwertujesz (np. “¿Qué tiempo hace hoy?”). Transformer jest modelem dziłającym od sekwencji do sekwencji. Został zaprojektowany do konwersji jednej sekwencji na inną.</p>
 <p>Teraz cofnijmy się o krok. Mechanizm samo-uwagi, tak jak go przedstawiliśmy, wykonuje następujące czynności, schematycznie:</p>
-<div id="fig-attention3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-attention3" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" id="fig-attention3" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
 </div>
@@ -1653,7 +1653,7 @@ ________________________________________________________________________________
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 156s - loss: 0.2902 - accuracy: 0.8876 - 156s/epoch - 200ms/step</code></pre>
+<pre><code>782/782 - 547s - loss: 0.2902 - accuracy: 0.8876 - 547s/epoch - 700ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test acc: 0.888"</code></pre>
@@ -1814,7 +1814,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 158s - loss: 0.2802 - accuracy: 0.8857 - 158s/epoch - 202ms/step
+<pre><code>782/782 - 308s - loss: 0.2802 - accuracy: 0.8857 - 308s/epoch - 394ms/step
 Test acc: 0.886</code></pre>
 </div>
 </div>
@@ -1823,7 +1823,7 @@ Test acc: 0.886</code></pre>
 <span class="header-section-number">7.8</span> Wskazówki praktyczne dotyczące wyboru modelu</h2>
 <p>Czasami można usłyszeć, że metody <em>bag-of-words</em> są przestarzałe i że modele sekwencji oparte na transformatach są najlepszym rozwiązaniem, niezależnie od zadania lub zbioru danych. Zdecydowanie tak nie jest. Mały stos gęstych warstw na szczycie <em>bag-of-bigrams</em> pozostaje całkowicie poprawnym i odpowiednim podejściem w wielu przypadkach. W rzeczywistości, spośród różnych technik, które wypróbowaliśmy na zbiorze danych IMDB w tym rozdziale, jak dotąd najlepiej sprawdzał się <em>bag-of-bigrams</em>! Kiedy więc należy preferować jedno podejście nad drugim?</p>
 <p>W 2017 roku zespół pod kierownictwem Cholleta przeprowadził systematyczną analizę wydajności różnych technik klasyfikacji tekstu w wielu różnych typach zbiorów danych tekstowych i odkrył niezwykłą i zaskakującą zasadę podejmowania decyzji, czy wybrać model <em>bag-of-words</em>, czy model sekwencji (<a href="http://mng.bz/AOzK" class="uri">http://mng.bz/AOzK</a>) - swego rodzaju złotą proporcję. Okazuje się, że zabierając się do nowego zadania klasyfikacji tekstu, należy zwrócić szczególną uwagę na stosunek liczby próbek w danych treningowych do średniej liczby słów na próbkę (patrz <a href="#fig-rule" class="quarto-xref">Rysunek&nbsp;<span>7.11</span></a>). Jeśli stosunek ten jest niewielki - mniejszy niż 1500 - wówczas model <em>bag-of-bigrams</em> będzie działał lepiej (i jako bonus, będzie znacznie szybszy do trenowania). Jeśli współczynnik ten jest wyższy niż 1500, należy wybrać model sekwencyjny. Innymi słowy, modele sekwencyjne działają najlepiej, gdy dostępnych jest wiele danych szkoleniowych i gdy każda próbka jest stosunkowo krótka.</p>
-<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="600">
+<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" width="600" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" id="fig-rule" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="600">
 </div>
@@ -1872,7 +1872,7 @@ Rysunek&nbsp;7.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana 
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"http://storage.googleapis.com/download.tensorflow.org/data/spa-eng.zip"</span>,</span>
 <span>              destfile <span class="op">=</span> <span class="st">"data/spa-eng.zip"</span><span class="op">)</span></span>
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"data/spa-eng.zip"</span>, exdir <span class="op">=</span> <span class="st">"data/"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span><span class="st">"data/spa-eng.zip"</span>, exdir <span class="op">=</span> <span class="st">"data/"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Plik tekstowy zawiera jeden przykład w wierszu: zdanie w języku angielskim, po którym następuje znak tabulacji, a następnie odpowiadające mu zdanie w języku hiszpańskim. Użyjmy <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_tsv()</a></code>, ponieważ mamy wartości oddzielone tabulatorami:</p>
@@ -1889,8 +1889,8 @@ Rysunek&nbsp;7.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana 
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
- $ english: chr "Those flowers have died."
- $ spanish: chr "[start] Esas flores murieron. [end]"</code></pre>
+ $ english: chr "In my opinion, German is the best language in the world."
+ $ spanish: chr "[start] Según mi opinión, el alemán es la mejor lengua del mundo. [end]"</code></pre>
 </div>
 </div>
 <p>Przetasujmy je i podzielmy na zwykłe zestawy treningowe, walidacyjne i testowe:</p>
@@ -2028,8 +2028,8 @@ Adnotacja
 <li>Sekwencja docelowa musi być zawsze tej samej długości co sekwencja źródłowa. W praktyce rzadko ma to miejsce. Z technicznego punktu widzenia nie jest to istotne, ponieważ zawsze można uzupełnić sekwencję źródłową lub docelową, aby ich długości się zgadzały.</li>
 <li>Ze względu na charakter przetwarzania zadania przez sieć RNN krok po kroku, model będzie patrzył tylko na tokeny <span class="math inline">\(1\ldots N\)</span> w sekwencji źródłowej, aby przewidzieć token <span class="math inline">\(N\)</span> w sekwencji docelowej. To ograniczenie sprawia, że ta konfiguracja nie nadaje się do większości zadań, w szczególności do tłumaczenia. Rozważmy tłumaczenie “The weather is nice today” na francuski - byłoby to “Il fait beau aujourd’hui”. Musiałbyś być w stanie przewidzieć “Il” z samego “The”, “Il fait” z samego “The weather” i tak dalej, co jest po prostu niemożliwe.</li>
 </ul>
-<p>Jeśli jesteśmy tłumaczami, zacznamy od przeczytania całego zdania źródłowego, zanim zaczniemy je tłumaczyć. Jest to szczególnie ważne, jeśli mamy do czynienia z językami, które mają bardzo różną kolejność słów, jak angielski i japoński. I dokładnie to robią standardowe modele sekwencja-sekwencja.</p>
-<p>W prawidłowej konfiguracji sekwencja-sekwencja (patrz rysunek 11.13), najpierw należy użyć RNN (kodera), aby przekształcić całą sekwencję źródłową w pojedynczy wektor (lub zestaw wektorów). Może to być ostatnie wyjście RNN lub alternatywnie jego końcowe wektory stanu wewnętrznego. Następnie należy użyć tego wektora (lub wektorów) jako stanu początkowego innej sieci RNN (dekodera), która przyjrzy się elementom <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej i spróbuje przewidzieć krok <span class="math inline">\(N+1\)</span> w sekwencji docelowej.</p>
+<p>Jeśli jesteśmy tłumaczami, zaczynamy od przeczytania całego zdania źródłowego, zanim zaczniemy je tłumaczyć. Jest to szczególnie ważne, jeśli mamy do czynienia z językami, które mają bardzo różną kolejność słów, jak angielski i japoński. I dokładnie to robią standardowe modele sekwencja-sekwencja.</p>
+<p>W prawidłowej konfiguracji sekwencja-sekwencja (patrz <a href="#fig-rnn1" class="quarto-xref">Rysunek&nbsp;<span>7.13</span></a>), najpierw należy użyć RNN (kodera), aby przekształcić całą sekwencję źródłową w pojedynczy wektor (lub zestaw wektorów). Może to być ostatnie wyjście RNN lub alternatywnie jego końcowe wektory stanu wewnętrznego. Następnie należy użyć tego wektora (lub wektorów) jako stanu początkowego innej sieci RNN (dekodera), która przyjrzy się elementom <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej i spróbuje przewidzieć krok <span class="math inline">\(N+1\)</span> w sekwencji docelowej.</p>
 <div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
@@ -2105,120 +2105,120 @@ Rysunek&nbsp;7.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do two
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "-"
-[1] "I am willing to agree to your request."
-1/1 - 2s - 2s/epoch - 2s/step
+[1] "I made it myself."
+1/1 - 3s - 3s/epoch - 3s/step
+1/1 - 0s - 101ms/epoch - 101ms/step
+1/1 - 0s - 55ms/epoch - 55ms/step
+1/1 - 0s - 54ms/epoch - 54ms/step
+1/1 - 0s - 64ms/epoch - 64ms/step
+1/1 - 0s - 59ms/epoch - 59ms/step
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 53ms/epoch - 53ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
 1/1 - 0s - 52ms/epoch - 52ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 58ms/epoch - 58ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+[1] "[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará"
 [1] "-"
-[1] "The forest is very thick."
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 35ms/epoch - 35ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "I have never been to the States."
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 53ms/epoch - 53ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 82ms/epoch - 82ms/step
+1/1 - 0s - 56ms/epoch - 56ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 54ms/epoch - 54ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+[1] "[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará"
 [1] "-"
-[1] "They made me wait for a long time."
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 35ms/epoch - 35ms/step
-1/1 - 0s - 37ms/epoch - 37ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 37ms/epoch - 37ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "We've finished cleaning the classroom."
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 67ms/epoch - 67ms/step
+1/1 - 0s - 74ms/epoch - 74ms/step
+1/1 - 0s - 68ms/epoch - 68ms/step
+1/1 - 0s - 61ms/epoch - 61ms/step
+1/1 - 0s - 66ms/epoch - 66ms/step
+1/1 - 0s - 233ms/epoch - 233ms/step
+[1] "[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará"
 [1] "-"
-[1] "It's all I have."
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 35ms/epoch - 35ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 39ms/epoch - 39ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"
+[1] "Have you ever mentioned this to the teacher?"
+1/1 - 0s - 74ms/epoch - 74ms/step
+1/1 - 0s - 80ms/epoch - 80ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 54ms/epoch - 54ms/step
+1/1 - 0s - 54ms/epoch - 54ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 60ms/epoch - 60ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 55ms/epoch - 55ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 46ms/epoch - 46ms/step
+1/1 - 0s - 67ms/epoch - 67ms/step
+1/1 - 0s - 50ms/epoch - 50ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+1/1 - 0s - 55ms/epoch - 55ms/step
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 51ms/epoch - 51ms/step
+[1] "[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará"
 [1] "-"
-[1] "Leave town."
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 35ms/epoch - 35ms/step
-1/1 - 0s - 34ms/epoch - 34ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 36ms/epoch - 36ms/step
-1/1 - 0s - 32ms/epoch - 32ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 33ms/epoch - 33ms/step
-[1] "[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas"</code></pre>
+[1] "How's school?"
+1/1 - 0s - 53ms/epoch - 53ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 66ms/epoch - 66ms/step
+1/1 - 0s - 64ms/epoch - 64ms/step
+1/1 - 0s - 94ms/epoch - 94ms/step
+1/1 - 0s - 121ms/epoch - 121ms/step
+1/1 - 0s - 58ms/epoch - 58ms/step
+1/1 - 0s - 52ms/epoch - 52ms/step
+1/1 - 0s - 66ms/epoch - 66ms/step
+1/1 - 0s - 49ms/epoch - 49ms/step
+1/1 - 0s - 48ms/epoch - 48ms/step
+1/1 - 0s - 53ms/epoch - 53ms/step
+1/1 - 0s - 47ms/epoch - 47ms/step
+1/1 - 0s - 53ms/epoch - 53ms/step
+1/1 - 0s - 57ms/epoch - 57ms/step
+1/1 - 0s - 58ms/epoch - 58ms/step
+1/1 - 0s - 64ms/epoch - 64ms/step
+1/1 - 0s - 91ms/epoch - 91ms/step
+1/1 - 0s - 58ms/epoch - 58ms/step
+[1] "[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará"</code></pre>
 </div>
 </div>
 <p><code>decode_sequence()</code> działa dobrze, choć być może nieco wolniej niż byśmy chcieli. Jednym z łatwych sposobów na przyspieszenie działania takiego kodu jest użycie funkcji <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Przepiszmy funkcję <code>decode_sentence()</code> tak, aby była kompilowana przez <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Oznacza to, że zamiast używać natywnych funkcji R, takich jak <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> i <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code>, użyjemy odpowiedników TensorFlow, takich jak <code>tf$range()</code>, wywołując bezpośrednio <code>model()</code> i <code>tf$argmax()</code>.</p>
@@ -2268,20 +2268,20 @@ Rysunek&nbsp;7.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do two
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-Have you heard that a burglar broke into my neighbor's house? 
-[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+Your letter didn't reach me until today. 
+[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará 
 -
-Your dog always barks at me. 
-[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+Would you like some more tea? 
+[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará 
 -
-They kept quiet so that they would not be found. 
-[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+I really want to spend some time alone with Tom. 
+[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará 
 -
-He responded to her offer with a laugh. 
-[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas 
+What do you think about this plan? 
+[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará 
 -
-She has a bag under her arm. 
-[start] rojos checo tomar stones polen comí comí torta salario ganaron ssh extrañaré tecnologías cogiendo bolas son hace propietario velar pasadas </code></pre>
+I'll love you forever. 
+[start] constructiva verla invitarte Ésos mató tortura valido bébete perderte dictador osos universitarios interesan acuerdas prominente callejones abordar ocurren desperdiciando despejará </code></pre>
 </div>
 </div>
 <p>Nasza funkcja <code>tf_decode_sentence()</code> jest około 10 razy szybsza od wersji natywnej.</p>
@@ -2475,85 +2475,85 @@ She has a bag under her arm.
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-When did you get back? 
-[start] ¿Cuándo regresó usted? [end] 
-[start] aquí hizo hecho cosas te [UNK] [end] 
+Tom is in love with another woman. 
+[start] Tom está enamorado de otra mujer. [end] 
+[start] tom eso creo años no estar cosas [end] 
 -
-I kept the $20 I found in the street. 
-[start] Me quedé con el billete de 20$ que encontré en la calle. [end] 
-[start] el río que me [UNK] me viaje con el hermano [end] 
+He knows a lot of people. 
+[start] Él conoce a mucha gente. [end] 
+[start] se [UNK] a la si de la si [end] 
 -
-Let's wait until six o'clock. 
-[start] Esperemos hasta las seis. [end] 
-[start] peligro la tierra de oficina allí no ha bebe la tierra de para [end] 
+She stole a lot of money from him. 
+[start] Ella le robó un montón de dinero a él. [end] 
+[start] ella llenos un hoy se larga de él [end] 
 -
-You've taken a long time eating lunch. 
-[start] Te has tomado mucho tiempo para almorzar. [end] 
-[start] de paseo a un siempre día rato [end] 
+Tom told Mary to buy some coffee and cigarettes. 
+[start] Tom le dijo a Mary que comprara algo de café y cigarrillos. [end] 
+[start] tom casa a para a viaje que dio realmente espero está oíste de seguía [end] 
 -
-Tom devoted his whole life to studying sharks. 
-[start] Tom dedicó su vida a estudiar a los tiburones. [end] 
-[start] tom vivir sé broma que Él habla se cabeza mary ella [end] 
+The baby is sucking his finger. 
+[start] El bebé se está chupando su dedo. [end] 
+[start] los plan los otoño a quieren la dejaré [end] 
 -
-I don't fear death. 
-[start] Yo no le temo a la muerte. [end] 
-[start] no estoy de mujeres aquí no te nadie de mujeres [end] 
+They worked hard day and night. 
+[start] Ellos trabajaban duro día y noche. [end] 
+[start] es examen nunca me todos la tenía [end] 
 -
-Spain ruled Cuba at that time. 
-[start] España gobernaba Cuba en ese tiempo. [end] 
-[start] en manzanas quise de verdad consejo de que teléfono [end] 
+He caught them stealing apples. 
+[start] Él los pilló robando manzanas. [end] 
+[start] mi niños guerra cuando [UNK] decía [end] 
 -
-Whales are very large mammals that live in the ocean. 
-[start] Las ballenas son mamíferos gigantescos que viven en el mar. [end] 
-[start] a los atrapó se le [UNK] en el todavía [end] 
+Was Tom on your team? 
+[start] ¿Estuvo Tom en el equipo de ustedes? [end] 
+[start] del de eres fue [end] 
 -
-It was nothing but a joke. 
-[start] No era más que una broma. [end] 
-[start] fue de cuál mañana te [UNK] [end] 
+Didn't you hear the doorbell? 
+[start] ¿No escuchaste el timbre? [end] 
+[start] por semana te ya recursos el delante [end] 
 -
-The man is right. 
-[start] El hombre tiene razón. [end] 
-[start] el hombre es unas [end] 
+We want to know. 
+[start] Queremos saber. [end] 
+[start] con tomás pudo debería en el [end] 
 -
-The bridge collapsed. 
-[start] El puente se derrumbó. [end] 
-[start] el peor a accidente el perdido de peor y se verano [end] 
+The girl screamed when she saw the flames. 
+[start] La niña gritó al ver las llamas. [end] 
+[start] la dice [UNK] vez los juego a la estados [end] 
 -
-Tom is also a vegetarian. 
-[start] Tomás también es vegetariano. [end] 
-[start] tom este tuvo se me va [end] 
+I had just finished my homework when he visited me. 
+[start] Acababa de terminar los deberes cuando vino a visitarme. [end] 
+[start] usted vez simplemente acaba a si [end] 
 -
-The young man driving the car was drunk. 
-[start] El joven que conducía el coche estaba borracho. [end] 
-[start] el padre su tiene pronto de la pared [end] 
+The trouble with you is that you talk too much. 
+[start] El problema que tienes es que hablas demasiado. [end] 
+[start] vez demasiado libro la difícil es hizo [end] 
 -
-Her daughter can recite many poems. 
-[start] Su hija es capaz de recitar muchos poemas. [end] 
-[start] se bien cayó sal vio en muchas sí [end] 
+You're OK. 
+[start] Estás perfectamente. [end] 
+[start] te lo pillo está quedando nunca [end] 
 -
-It's your turn next. 
-[start] Después viene su turno. [end] 
-[start] me va a lugar [end] 
+Tom believed Mary. 
+[start] Tom le creía a María. [end] 
+[start] tom contigo de la trata y para [end] 
 -
-He has a terrible hangover. 
-[start] Tiene una goma horrible. [end] 
-[start] está este un [UNK] en la si [end] 
+What do you say we go skiing? 
+[start] ¿Qué te parece si vamos a esquiar? [end] 
+[start] qué verme en debes alguien durmió [end] 
 -
-They began to look into the problem. 
-[start] Empezaron a investigar sobre ese problema. [end] 
-[start] vez te [UNK] [end] 
+I knew you'd find Tom. 
+[start] Sabía que encontrarías a Tom. [end] 
+[start] me va a mientras gran con tom [end] 
 -
-I'll make a note of that. 
-[start] Lo tomaré en cuenta. [end] 
-[start] por son no [UNK] con eso [end] 
+The man left the restaurant without paying. 
+[start] El hombre se fue del restaurante sin pagar. [end] 
+[start] el francés nadar el visitar no casa un aceptar mundo [end] 
 -
-Don't be careless in your work. 
-[start] No seas tan descuidado en tu trabajo. [end] 
-[start] no te animales a días [end] 
+The dog is sleeping in the car. 
+[start] El perro está durmiendo en el auto. [end] 
+[start] el sobre los en encontró [end] 
 -
-I bought this T-shirt on sale. 
-[start] Me compré esta camiseta en las rebajas. [end] 
-[start] estoy de pertenece me primero [end] </code></pre>
+I want a new tennis racket. 
+[start] Quiero una raqueta de tenis nueva. [end] 
+[start] yo nunca me bien tenemos un comprar [end] </code></pre>
 </div>
 </div>
 <p>Na tym kończy się ten rozdział o przetwarzaniu języka naturalnego. W ramach niego przeszliśmy od podstaw do w rozwiązania współcześnie używanego, czyli Transformera, który może tłumaczyć zdania z angielskiego na hiszpański.</p>
@@ -3098,7 +3098,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./rnn.html" class="pagination-link  aria-label=" dla="" danych="" sekwencyjnych="">
+      <a href="./rnn.html" class="pagination-link" aria-label="DNN dla danych sekwencyjnych">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">DNN dla danych sekwencyjnych</span></span>
       </a>          
   </div>
