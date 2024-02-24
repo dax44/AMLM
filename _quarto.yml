@@ -33,11 +33,8 @@ book:
     - examples.qmd
     - examples2.qmd
     - rnn.qmd
-<<<<<<< HEAD
     - llm.qmd
     - gan.qmd
-=======
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
     - references.qmd
 
 bibliography: references.bib

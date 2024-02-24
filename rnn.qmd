@@ -942,11 +942,7 @@ model <- load_model_tf("models/jena_gru_dropout.keras")
 sprintf("Test MAE: %.2f", evaluate(model, test_dataset)["mae"])
 ```
 
-<<<<<<< HEAD
 ![](images/jena_gru_dropout_hist.png){#fig-gru-dropout fig-align="center"
-=======
-![](images/jena_gru_dropout_hist.png){#fig-gru_dropout fig-align="center"
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 width="500"}
 
 @fig-gru-dropout przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na
@@ -1057,13 +1053,8 @@ wychwytując wzorce, które mogły zostać pominięte przez samą wersję
 chronologiczną.
 
 ![Zasada działania warstw
-<<<<<<< HEAD
 dwukierunkowych](images/Zrzut%20ekranu%202024-01-27%20o%2013.51.49.png){#fig-bidirectional
 dwukierunkowych fig-align="center" width="300"}
-=======
-dwukierunkowych](images/Zrzut ekranu 2024-01-27 o 13.51.49.png){#fig-bidirectional
-fig-align="center" width="300"}
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 
 Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw
 `bidirectional()`, które jako pierwszy argument przyjmują instancję warstwy
