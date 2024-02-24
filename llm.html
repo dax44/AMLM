@@ -350,7 +350,7 @@ window.Quarto = {
 </ul>
 <div id="fig-token1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-token1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2023-03-17 o 19.57.48.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="images/Zrzut ekranu 2023-03-17 o 19.57.48.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2023-03-17 o 19.57.48.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="images/Zrzut ekranu 2023-03-17 o 19.57.48.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-token1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.1: Przebieg procesu zamiany tekstu na wektory liczbowe
@@ -678,7 +678,7 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor(b'I saw this movie twice. I can\'t believe Pintilie made such a fantasy movie. I\'m also a movie/theatre director and I know what I speak. This is not Romania anymore, but I see the events are happening in the same period with the incident from 11 September. No story, no plot, nothing. No conclusion, no message, nothing profound, nothing hidden. Just empty images.&lt;br /&gt;&lt;br /&gt;What most of Romanians don\'t know, this movie is for the french viewers, not for us. They really believe that is the reality in Romania. Also for teenagers. Pintilie should stop making movies. I don\'t really know if we can call this a movie, maybe a horror :) And we wonder why we\'ve got such an image in Europe. This WAS a reality, but isn\'t anymore. A good friend of mine from the Brithish embassy said: "You have no idea what a long way Romanian people walked from Ceausescu".', shape=(), dtype=string)</code></pre>
+<pre><code>tf.Tensor(b"Another vast conspiracy movie that tries to blame the US government and the Armed Forces (especially the Army) for every disaster since the Great Flood. Anyone who has ever served time in the US military can see how bogus this film is. Uniforms, equipment, sets, and mannerisms are all wrong. (And of course, all Senior Officers are either corrupt criminals or total idiots.) Blatant propaganda with no attempt at objectivity. Most of the theories presented have been disproven over the past few years. Uses every cliche', rumor, and Urban Legend from the Gulf-all are presented as gospel. (The truth is, no one knows for sure why some GW vets are sick and others are healthy as horses.) PS This is not new. War is NOT fun and I know WWII, Korean, and Viet Nam vets with some pretty serious ailments, too. (And the government has the responsibility to take care of all of them.) Sensationalistic movies like this will not solve the problem!", shape=(), dtype=string)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -732,7 +732,7 @@ Wskazówka
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>tf.Tensor([0. 1. 1. ... 0. 0. 0.], shape=(20000), dtype=float32)</code></pre>
+<pre><code>tf.Tensor([1. 1. 1. ... 0. 0. 0.], shape=(20000), dtype=float32)</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">targets</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -1032,9 +1032,9 @@ ________________________________________________________________________________
 <p>Kiedy kodujemy coś za pomocą kodowania one-hot, podejmujemy decyzję o inżynierii cech. Wprowadzamy do naszego modelu fundamentalne założenie dotyczące struktury przestrzeni cech. Założeniem tym jest to, że różne tokeny, które kodujemy, są od siebie niezależne: w rzeczywistości wektory one-hot są względem siebie ortogonalne. W przypadku słów założenie to jest oczywiście błędne. Słowa tworzą ustrukturyzowaną przestrzeń: dzielą się ze sobą informacjami. Słowa “movie” i “film” są wymienne w większości zdań, więc wektor reprezentujący “movie” nie powinien być ortogonalny do wektora reprezentującego “film” - powinny być tym samym wektorem lub bardzo zbliżonym.</p>
 <p>Podchodząc do sprawy niecobardziej abstrakcyjnie, geometryczna relacja między dwoma wektorami słów powinna odzwierciedlać semantyczną relację między tymi słowami. Na przykład, w rozsądnej przestrzeni wektorów słów można oczekiwać, że synonimy będą osadzone w podobnych wektorach słów, a ogólnie rzecz biorąc, można oczekiwać, że odległość geometryczna (taka jak odległość cosinusowa lub odległość L2) między dowolnymi dwoma wektorami słów będzie odnosić się do “odległości semantycznej” między powiązanymi słowami. Słowa, które oznaczają różne pojęcia, powinny znajdować się daleko od siebie, podczas gdy podobne słowa powinny znajdować się bliżej.</p>
 <p>Osadzenia słów to wektorowe reprezentacje słów, które osiągają ten cel: mapują ludzki język na ustrukturyzowaną przestrzeń geometryczną. Podczas gdy wektory uzyskane w wyniku kodowania one-hot są binarne, rzadkie (w większości składają się z zer) i wielowymiarowe (taka sama wymiarowość jak liczba słów w słowniku), osadzenia słów są niskowymiarowymi wektorami typu <em>float</em> (tj. gęstymi wektorami, w przeciwieństwie do rzadkich wektorów) - patrz <a href="#fig-embd1" class="quarto-xref">Rys.&nbsp;<span>6.2</span></a>. W przypadku bardzo dużych słowników często spotyka się osadzenia słów, które są 256-wymiarowe, 512-wymiarowe lub 1024-wymiarowe. Z drugiej strony, kodowanie słów metodą <em>one-hot</em> zazwyczaj prowadzi do wektorów, które mają 20 000 wymiarów lub więcej (słownik składający się z 20,000 tokenów). Tak więc osadzanie słów zawiera więcej informacji w znacznie mniejszej liczbie wymiarów.</p>
-<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
+<div id="fig-embd1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-embd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" id="fig-embd1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
+<a href="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="images/Zrzut ekranu 2023-03-16 o 16.42.03.png" id="fig-embd1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-embd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.2
@@ -1043,7 +1043,7 @@ Rys.&nbsp;6.2
 <p>Oprócz tego, że są gęstymi reprezentacjami, osadzenia słów są również reprezentacjami strukturalnymi, a ich struktura jest uczona na podstawie danych. Podobne słowa są osadzone w bliskich lokalizacjach, a ponadto określone kierunki w przestrzeni osadzania mają znaczenie. Aby to wyjaśnić, spójrzmy na konkretny przykład.</p>
 <div id="fig-vectors" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="250"></a>
+<a href="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="images/Zrzut ekranu 2024-02-9 o 22.26.38.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="250"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.3: Osadzenie słów
@@ -1054,7 +1054,7 @@ Rys.&nbsp;6.3: Osadzenie słów
 <p>Jeszcze inny przykład osadzenia słów można dostrzec na <a href="#fig-embd2" class="quarto-xref">Rys.&nbsp;<span>6.4</span></a></p>
 <div id="fig-embd2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-embd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://editor.analyticsvidhya.com/uploads/450121_sAJdxEsDjsPMioHyzlN3_A.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="https://editor.analyticsvidhya.com/uploads/450121_sAJdxEsDjsPMioHyzlN3_A.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="https://editor.analyticsvidhya.com/uploads/450121_sAJdxEsDjsPMioHyzlN3_A.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="https://editor.analyticsvidhya.com/uploads/450121_sAJdxEsDjsPMioHyzlN3_A.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-embd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.4: Przykład osadzenia słów
@@ -1125,7 +1125,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f\n"</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 24s - loss: 0.4049 - accuracy: 0.8601 - 24s/epoch - 31ms/step
+<pre><code>782/782 - 27s - loss: 0.4049 - accuracy: 0.8601 - 27s/epoch - 34ms/step
 Test acc: 0.860
  </code></pre>
 </div>
@@ -1321,7 +1321,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 31s - loss: 0.5601 - accuracy: 0.7365 - 31s/epoch - 39ms/step
+<pre><code>782/782 - 35s - loss: 0.5601 - accuracy: 0.7365 - 35s/epoch - 45ms/step
 Test acc: 0.736</code></pre>
 </div>
 </div>
@@ -1341,7 +1341,7 @@ Test acc: 0.736</code></pre>
 <p>Istnieje wiele różnych form uwagi, które można sobie wyobrazić, ale wszystkie zaczynają się od znalezienia wskaźnika uwagi dla zestawu cech, z wyższymi wskaźnikami dla bardziej istotnych cech i niższymi dla mniej istotnych (patrz <a href="#fig-attention1" class="quarto-xref">Rys.&nbsp;<span>6.5</span></a>). Sposób obliczania tych wskaźników i to, co należy z nimi zrobić, będzie się różnić w zależności od podejścia.</p>
 <div id="fig-attention1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-10 o 13.57.40.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="images/Zrzut ekranu 2024-02-10 o 13.57.40.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
+<a href="images/Zrzut ekranu 2024-02-10 o 13.57.40.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="images/Zrzut ekranu 2024-02-10 o 13.57.40.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.5: Ogólna koncepcja atencji w uczeniu głębokim: Cechom wejściowym przypisywane są wskaźniki uwagi, które można przekazać do następnej reprezentacji danych wejściowych.
@@ -1351,7 +1351,7 @@ Rys.&nbsp;6.5: Ogólna koncepcja atencji w uczeniu głębokim: Cechom wejściowy
 <p>Oczywiście inteligentna przestrzeń osadzania zapewniłaby inną reprezentację wektorową dla słowa w zależności od innych otaczających go słów. W tym miejscu pojawia się samo-atencja. Celem samo-uwagi jest modulowanie reprezentacji tokena poprzez wykorzystanie reprezentacji powiązanych tokenów w sekwencji. W ten sposób powstają reprezentacje tokenów świadome kontekstu. Rozważmy przykładowe zdanie: “The train left the station on time”. Rozważmy teraz jedno słowo w zdaniu: <em>station</em>. O jakiej stacji mówimy? Czy może to być stacja radiowa? Może Międzynarodowa Stacja Kosmiczna? Rozważmy to algorytmicznie za pomocą samo-atencji (patrz <a href="#fig-attention2" class="quarto-xref">Rys.&nbsp;<span>6.6</span></a>)</p>
 <div id="fig-attention2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-10 o 14.08.20.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="images/Zrzut ekranu 2024-02-10 o 14.08.20.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2024-02-10 o 14.08.20.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6"><img src="images/Zrzut ekranu 2024-02-10 o 14.08.20.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.6: Samo-atencja. Wskaźniki uwagi są obliczane między “station” a każdym innym słowem w sekwencji, a następnie są używane do ważenia sumy wektorów słów, które stają się nowym wektorem “station”
@@ -1414,7 +1414,7 @@ Rys.&nbsp;6.6: Samo-atencja. Wskaźniki uwagi są obliczane między “station�
 <p>Teraz cofnijmy się o krok. Mechanizm samo-uwagi, tak jak go przedstawiliśmy, wykonuje następujące czynności, schematycznie:</p>
 <div id="fig-attention3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
+<a href="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="images/Zrzut ekranu 2024-02-10 o 14.23.50.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.7: Mechanizm samo-uwagi
@@ -1428,7 +1428,7 @@ Rys.&nbsp;6.7: Mechanizm samo-uwagi
 <p>Terminologia ta pochodzi z wyszukiwarek i systemów rekomendacji (patrz <a href="#fig-attention4" class="quarto-xref">Rys.&nbsp;<span>6.8</span></a>). Wyobraźmy sobie, że wpisujemy zapytanie, aby pobrać zdjęcie ze swojej kolekcji, “dogs on the beach”. Wewnętrznie, każde z naszych zdjęć w bazie danych jest opisane przez zestaw słów kluczowych - “cat”, “dog”, “party” i tak dalej. Nazwiemy je “kluczami”. Wyszukiwarka rozpocznie od porównania zapytania z kluczami w bazie danych. “dog” daje dopasowanie 1 dla naszego wyszukiwania, a “cat” daje dopasowanie 0. Następnie algorytm szereguje te klucze według siły dopasowania - trafności - i zwraca zdjęcia powiązane z <span class="math inline">\(N\)</span> najlepszymi dopasowaniami, w kolejności trafności.</p>
 <div id="fig-attention4" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-10 o 14.30.59.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="images/Zrzut ekranu 2024-02-10 o 14.30.59.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
+<a href="images/Zrzut ekranu 2024-02-10 o 14.30.59.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="images/Zrzut ekranu 2024-02-10 o 14.30.59.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.8: Pobieranie obrazów z bazy danych. “Zapytanie” jest porównywane z zestawem “kluczy”, a wyniki dopasowania są wykorzystywane do uszeregowania “wartości” (obrazów)
@@ -1448,7 +1448,7 @@ Rys.&nbsp;6.8: Pobieranie obrazów z bazy danych. “Zapytanie” jest porównyw
 <p><em>Multi-head attention</em> to dodatkowe ulepszenie mechanizmu samo-uwagi, wprowadzone w “Attention Is All You Need”. Przydomek <em>multi-head</em> odnosi się do faktu, że przestrzeń wyjściowa warstwy samo-uwagi jest podzielona na zestaw niezależnych podprzestrzeni, uczonych oddzielnie: początkowe zapytanie, klucz i wartość są wysyłane przez trzy niezależne zestawy gęstych projekcji, co skutkuje trzema oddzielnymi wektorami. Każdy wektor jest przetwarzany przez warstwę atencji, a trzy wyjścia są łączone z powrotem w jedną sekwencję wyjściową. Każda taka podprzestrzeń nazywana jest “głową”. Pełny obraz został przedstawiony na <a href="#fig-attention5" class="quarto-xref">Rys.&nbsp;<span>6.9</span></a>.</p>
 <div id="fig-attention5" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-attention5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-10 o 14.41.55.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="images/Zrzut ekranu 2024-02-10 o 14.41.55.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2024-02-10 o 14.41.55.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="images/Zrzut ekranu 2024-02-10 o 14.41.55.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.9: Multi-head attention
@@ -1462,7 +1462,7 @@ Rys.&nbsp;6.9: Multi-head attention
 <p>Taki proces myślowy, który, rozwijał się w umysłach twórców architektury Transformer. Dzielenie danych wyjściowych na wiele niezależnych przestrzeni, dodawanie połączeń resztkowych, dodawanie warstw normalizacji - wszystko to są standardowe wzorce architektury, które warto wykorzystać w każdym złożonym modelu.</p>
 <div id="fig-tr1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tr1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-11 o 10.51.31.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="images/Zrzut ekranu 2024-02-11 o 10.51.31.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></a>
+<a href="images/Zrzut ekranu 2024-02-11 o 10.51.31.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="images/Zrzut ekranu 2024-02-11 o 10.51.31.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tr1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.10: Transformer-Encoder łączy <code><a href="https://rdrr.io/pkg/keras/man/layer_multi_head_attention.html">layer_multi_head_attention()</a></code> z gęstą projekcją i dodaje normalizację oraz połączenia resztkowe
@@ -1655,7 +1655,7 @@ ________________________________________________________________________________
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test acc: %.3f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 151s - loss: 0.2902 - accuracy: 0.8876 - 151s/epoch - 193ms/step</code></pre>
+<pre><code>782/782 - 150s - loss: 0.2902 - accuracy: 0.8876 - 150s/epoch - 191ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test acc: 0.888"</code></pre>
@@ -1816,7 +1816,7 @@ ________________________________________________________________________________
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Test acc: %.3f\n"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">int_test_ds</span><span class="op">)</span><span class="op">[</span><span class="st">"accuracy"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>782/782 - 156s - loss: 0.2802 - accuracy: 0.8857 - 156s/epoch - 200ms/step
+<pre><code>782/782 - 166s - loss: 0.2802 - accuracy: 0.8857 - 166s/epoch - 212ms/step
 Test acc: 0.886</code></pre>
 </div>
 </div>
@@ -1825,9 +1825,9 @@ Test acc: 0.886</code></pre>
 <span class="header-section-number">6.10</span> Wskazówki praktyczne dotyczące wyboru modelu</h2>
 <p>Czasami można usłyszeć, że metody <em>bag-of-words</em> są przestarzałe i że modele sekwencji oparte na transformatach są najlepszym rozwiązaniem, niezależnie od zadania lub zbioru danych. Zdecydowanie tak nie jest. Mały stos gęstych warstw na szczycie <em>bag-of-bigrams</em> pozostaje całkowicie poprawnym i odpowiednim podejściem w wielu przypadkach. W rzeczywistości, spośród różnych technik, które wypróbowaliśmy na zbiorze danych IMDB w tym rozdziale, jak dotąd najlepiej sprawdzał się <em>bag-of-bigrams</em>! Kiedy więc należy preferować jedno podejście nad drugim?</p>
 <p>W 2017 roku zespół pod kierownictwem Cholleta przeprowadził systematyczną analizę wydajności różnych technik klasyfikacji tekstu w wielu różnych typach zbiorów danych tekstowych i odkrył niezwykłą i zaskakującą zasadę podejmowania decyzji, czy wybrać model <em>bag-of-words</em>, czy model sekwencji (<a href="http://mng.bz/AOzK" class="uri">http://mng.bz/AOzK</a>) - swego rodzaju złotą proporcję. Okazuje się, że zabierając się do nowego zadania klasyfikacji tekstu, należy zwrócić szczególną uwagę na stosunek liczby próbek w danych treningowych do średniej liczby słów na próbkę (patrz <a href="#fig-rule" class="quarto-xref">Rys.&nbsp;<span>6.11</span></a>). Jeśli stosunek ten jest niewielki - mniejszy niż 1500 - wówczas model <em>bag-of-bigrams</em> będzie działał lepiej (i jako bonus, będzie znacznie szybszy do trenowania). Jeśli współczynnik ten jest wyższy niż 1500, należy wybrać model sekwencyjny. Innymi słowy, modele sekwencyjne działają najlepiej, gdy dostępnych jest wiele danych szkoleniowych i gdy każda próbka jest stosunkowo krótka.</p>
-<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" width="600" data-fig-align="center">
+<div id="fig-rule" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="600">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" id="fig-rule" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" data-glightbox="description: .lightbox-desc-11"><img src="images/Zrzut ekranu 2024-02-11 o 14.24.42.png" id="fig-rule" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.11
@@ -1850,7 +1850,7 @@ Rys.&nbsp;6.11
 </ul>
 <div id="fig-seq-to-seq" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-seq-to-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-11 o 14.36.45.png" class="lightbox" data-glightbox="description: .lightbox-desc-12" data-gallery="quarto-lightbox-gallery-12"><img src="images/Zrzut ekranu 2024-02-11 o 14.36.45.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2024-02-11 o 14.36.45.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" data-glightbox="description: .lightbox-desc-12"><img src="images/Zrzut ekranu 2024-02-11 o 14.36.45.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seq-to-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana przez koder, a następnie przesyłana do dekodera. Dekoder analizuje dotychczasową sekwencję docelową i przewiduje przesunięcie sekwencji docelowej o jeden krok w przyszłość. Podczas wnioskowania generujemy jeden token docelowy na raz i przekazujemy go z powrotem do dekodera
@@ -1891,8 +1891,8 @@ Rys.&nbsp;6.12: Uczenie sekwencyjne. Sekwencja źródłowa jest przetwarzana prz
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb145"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">text_pairs</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
- $ english: chr "Can I open the window?"
- $ spanish: chr "[start] ¿Puedo abrir la ventana? [end]"</code></pre>
+ $ english: chr "I just got a good idea."
+ $ spanish: chr "[start] Me vino a la mente una buena idea. [end]"</code></pre>
 </div>
 </div>
 <p>Przetasujmy je i podzielmy na zwykłe zestawy treningowe, walidacyjne i testowe:</p>
@@ -2034,7 +2034,7 @@ Adnotacja
 <p>W prawidłowej konfiguracji sekwencja-sekwencja (patrz <a href="#fig-rnn1" class="quarto-xref">Rys.&nbsp;<span>6.13</span></a>), najpierw należy użyć RNN (kodera), aby przekształcić całą sekwencję źródłową w pojedynczy wektor (lub zestaw wektorów). Może to być ostatnie wyjście RNN lub alternatywnie jego końcowe wektory stanu wewnętrznego. Następnie należy użyć tego wektora (lub wektorów) jako stanu początkowego innej sieci RNN (dekodera), która przyjrzy się elementom <span class="math inline">\(1\ldots N\)</span> w sekwencji docelowej i spróbuje przewidzieć krok <span class="math inline">\(N+1\)</span> w sekwencji docelowej.</p>
 <div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="lightbox" data-glightbox="description: .lightbox-desc-13" data-gallery="quarto-lightbox-gallery-13"><img src="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
+<a href="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" data-glightbox="description: .lightbox-desc-13"><img src="images/Zrzut ekranu 2024-02-14 o 20.24.00.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworzenia wektora, który koduje całą sekwencję źródłową, która jest używana jako stan początkowy dla dekodera RNN
@@ -2107,120 +2107,120 @@ Rys.&nbsp;6.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworze
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "-"
-[1] "It's going to be another hot day."
+[1] "Better late than never."
 1/1 - 1s - 1s/epoch - 1s/step
-1/1 - 0s - 39ms/epoch - 39ms/step
+1/1 - 0s - 35ms/epoch - 35ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
 1/1 - 0s - 32ms/epoch - 32ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-[1] "[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora"
+[1] "[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada"
 [1] "-"
-[1] "I didn't pull the trigger."
-1/1 - 0s - 29ms/epoch - 29ms/step
+[1] "Music is a form of entertainment."
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-[1] "[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora"
-[1] "-"
-[1] "I haven't eaten yet."
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
-1/1 - 0s - 31ms/epoch - 31ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-[1] "[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora"
+[1] "[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada"
 [1] "-"
-[1] "Call for help."
-1/1 - 0s - 26ms/epoch - 26ms/step
+[1] "What's your sister's name?"
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+[1] "[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada"
+[1] "-"
+[1] "Do you want to see your room?"
+1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 31ms/epoch - 31ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 32ms/epoch - 32ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 28ms/epoch - 28ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 30ms/epoch - 30ms/step
-[1] "[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora"
+[1] "[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada"
 [1] "-"
-[1] "Get out of the classroom."
+[1] "I shouldn't have wasted my time trying to convince Tom to change his mind."
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 25ms/epoch - 25ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 27ms/epoch - 27ms/step
 1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 27ms/epoch - 27ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
 1/1 - 0s - 29ms/epoch - 29ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 26ms/epoch - 26ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-1/1 - 0s - 27ms/epoch - 27ms/step
-[1] "[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora"</code></pre>
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+1/1 - 0s - 28ms/epoch - 28ms/step
+1/1 - 0s - 31ms/epoch - 31ms/step
+1/1 - 0s - 30ms/epoch - 30ms/step
+1/1 - 0s - 29ms/epoch - 29ms/step
+[1] "[start] canceló lee parque conociste refrigerador alimento cantar sencillos estampillas octubre varias escondernos restaurantes debíamos quejará quitaron empiezo jarrón teneros esposo"</code></pre>
 </div>
 </div>
 <p><code>decode_sequence()</code> działa dobrze, choć być może nieco wolniej niż byśmy chcieli. Jednym z łatwych sposobów na przyspieszenie działania takiego kodu jest użycie funkcji <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Przepiszmy funkcję <code>decode_sentence()</code> tak, aby była kompilowana przez <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Oznacza to, że zamiast używać natywnych funkcji R, takich jak <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> i <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code>, użyjemy odpowiedników TensorFlow, takich jak <code>tf$range()</code>, wywołując bezpośrednio <code>model()</code> i <code>tf$argmax()</code>.</p>
@@ -2270,20 +2270,20 @@ Rys.&nbsp;6.13: Model RNN sekwencja-sekwencja. Koder RNN jest używany do tworze
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-The negotiations fell through. 
-[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora 
+I'll kill you. 
+[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada 
 -
-I don't know what it means. 
-[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora 
+I no longer need to work. 
+[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada 
 -
-If I had time to do that, I would. 
-[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora 
+Nobody heard the bell ring. 
+[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada 
 -
-Tom is like a father to me. 
-[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora 
+You were my best friend. 
+[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada 
 -
-I'm going home. I've had enough of Tom. 
-[start] viudas enfermó desapareció planeó llegaron llegó cambiarme reelecciones retar aprobó rascó acababa nagoya error pegado bombones quemaduras hoteles new cortadora </code></pre>
+The boy is kind. 
+[start] bayas ruegos preguntéis aburría rodeados poderosos sabiamente comerciales dormí romanos argumentación psicológicos reluce esperanzas tirada notado lloraba lloraba ciento detallada </code></pre>
 </div>
 </div>
 <p>Nasza funkcja <code>tf_decode_sentence()</code> jest około 10 razy szybsza od wersji natywnej.</p>
@@ -2306,7 +2306,7 @@ I'm going home. I've had enough of Tom.
 <p><a href="#fig-trans1" class="quarto-xref">Rys.&nbsp;<span>6.14</span></a> przedstawia pełny transformator sekwencja do sekwencji. Przyjrzyjmy się wewnętrznym elementom dekodera. Rozpoznamy, że wygląda on bardzo podobnie do kodera transformera, z wyjątkiem tego, że dodatkowy blok atencji jest wstawiony pomiędzy blok samo-atencji zastosowany do sekwencji docelowej i gęstych warstw bloku wyjściowego.</p>
 <div id="fig-trans1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-trans1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-02-14 o 20.56.12.png" class="lightbox" data-glightbox="description: .lightbox-desc-14" data-gallery="quarto-lightbox-gallery-14"><img src="images/Zrzut ekranu 2024-02-14 o 20.56.12.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="images/Zrzut ekranu 2024-02-14 o 20.56.12.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" data-glightbox="description: .lightbox-desc-14"><img src="images/Zrzut ekranu 2024-02-14 o 20.56.12.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trans1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.14: <code>TransformerDecoder</code> jest podobny do <code>TransformerEncoder</code>, z wyjątkiem tego, że zawiera dodatkowy blok atencji, w którym key i value są sekwencją źródłową zakodowaną przez <code>TransformerEncoder</code>. Razem, koder i dekoder tworzą transformator end-to-end
@@ -2481,85 +2481,85 @@ Rys.&nbsp;6.14: <code>TransformerDecoder</code> jest podobny do <code>Transforme
 <span><span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>-
-Tom is strong. 
-[start] Tom es fuerte. [end] 
-[start] tom está hace [end] 
+Who saw you? 
+[start] ¿Quién te vio? [end] 
+[start] mismo que eres de qué es [end] 
 -
-You don't have to shout at me. 
-[start] No tienes que gritarme. [end] 
-[start] no me es a hora en los ayudar [end] 
+Shall we go together? 
+[start] ¿Vamos juntos? [end] 
+[start] el precio mucho primer dicho mary [end] 
 -
-You should learn how to use your dictionary. 
-[start] Deberías aprender a usar tu diccionario. [end] 
-[start] joven dejar a que hoy [UNK] tu plato [end] 
+I missed you last night. 
+[start] Anoche os eché de menos. [end] 
+[start] te sombrero en boston me sombrero [end] 
 -
-I don't want to marry Mary. 
-[start] No quiero casarme con Mary. [end] 
-[start] no me estoy en casa por aquí [end] 
+That was my choice. 
+[start] Fue mi elección. [end] 
+[start] tres diccionario [end] 
 -
-We've just arrived. 
-[start] Acabamos de llegar. [end] 
-[start] significa ambos lo ambos [end] 
+Do you want to learn to play guitar? 
+[start] ¿Querés aprender a tocar la guitarra? [end] 
+[start] ver finalmente el guitarra sorprendido [end] 
 -
-Foreigners often feel unwelcome here. 
-[start] Los extranjeros a menudo no se sienten bienvenidos aquí. [end] 
-[start] se [UNK] conocen te ambos la [UNK] [end] 
+They feel hungry. 
+[start] Ellos sienten hambre. [end] 
+[start] en hija no es realmente [UNK] [end] 
 -
-I feel as if I were dreaming. 
-[start] Me siento como si estuviese soñando. [end] 
-[start] deberes demasiado a la puerta me [UNK] [end] 
+He came back from China. 
+[start] Él volvió de China. [end] 
+[start] en hija del es mundo mía [end] 
 -
-We set up our tents before dark. 
-[start] Nosotros pusimos las tiendas antes de que oscurezca. [end] 
-[start] mary [UNK] aquí se [UNK] de aquí [end] 
+Are you going home by bus? 
+[start] ¿Vais a casa en autobús? [end] 
+[start] hubiera tienen que pasado [end] 
 -
-He won't be in time for the meeting. 
-[start] No va a llegar a tiempo a la reunión. [end] 
-[start] su se perdí con el puedes [end] 
+Dogs can't distinguish between colors. 
+[start] Los perros no pueden distinguir los colores. [end] 
+[start] [UNK] no mucho [UNK] realmente por detrás de los perdí [end] 
 -
-Where were you Monday night? 
-[start] ¿Dónde estuviste el lunes por la noche? [end] 
-[start] dijo hacer pared como es la fácil [end] 
+Tom isn't my enemy. 
+[start] Tomás no es mi enemigo. [end] 
+[start] tom tiempo llevará he fumar [end] 
 -
-I'll be with you as soon as I can. 
-[start] Estaré con usted tan pronto como pueda. [end] 
-[start] por favor año sobre sola te [UNK] [end] 
+Did you come here alone? 
+[start] ¿Has venido aquí sola? [end] 
+[start] creo [UNK] [end] 
 -
-Never say never. 
-[start] Nunca hay que decir nunca. [end] 
-[start] hice tarde algo [end] 
+This hat cost ten dollars. 
+[start] Este sombrero costó diez dólares. [end] 
+[start] mi debemos con persona a jugar nunca [end] 
 -
-They accepted the offer. 
-[start] Ellos aceptaron la oferta. [end] 
-[start] en esta cuarto haga en llena [end] 
+She didn't want him to leave the room. 
+[start] Ella no quiso que él dejara la habitación. [end] 
+[start] ella vivo que día hablo [end] 
 -
-I'm starting to learn German. 
-[start] Estoy empezando a aprender alemán. [end] 
-[start] no comí de dejar mi cualquiera de dejar [end] 
+All students like holidays. 
+[start] A todos los estudiantes les gustan las vacaciones. [end] 
+[start] sé interesante dije alcanzar [end] 
 -
-Ladies and gentlemen, I'm very happy to be here. 
-[start] Damas y caballeros, estoy muy feliz de estar acá. [end] 
-[start] mi parque veces gusta mucho haber disculpe no [UNK] [end] 
+Tom handed Mary the letter opener. 
+[start] Tom le pasó a Mary el abrecartas. [end] 
+[start] tom donde el nombre en la nuestro es nombre [end] 
 -
-Tom might be wrong. 
-[start] Tom podría estar equivocado. [end] 
-[start] tom mayor con niño se andar [end] 
+I let you win. 
+[start] Yo te dejo ganar. [end] 
+[start] te [UNK] a un estado a ti [end] 
 -
-Philosophy is not a thing one can learn in six months. 
-[start] La filosofía no es algo que se pueda aprender en seis meses. [end] 
-[start] se tiempo sola mucho el [UNK] bien dejar en unos nadie [end] 
+He plays tennis three times a week. 
+[start] Él juega al tenis tres veces por semana. [end] 
+[start] su escribe puso cabeza así tiene visto [end] 
 -
-Don't think I don't like you. 
-[start] No creas que no me gustas. [end] 
-[start] no te culpable entrar y no [end] 
+I am getting a cold. 
+[start] Me estoy resfriando. [end] 
+[start] yo debes estoy decir todo [end] 
 -
-Tom knows what's happening. 
-[start] Tom sabe lo que está pasando. [end] 
-[start] tom en cierto pena pena estudiar cuatro [end] 
+This is plagiarism. 
+[start] Esto es plagio. [end] 
+[start] es mi [UNK] [end] 
 -
-It's OK with me if you take that book. 
-[start] No me molestaría si te llevaras ese libro. [end] 
-[start] es de pobre acuerdo es los casa [end] </code></pre>
+Why did you invite Tom to dinner? 
+[start] ¿Por qué invitaste a Tom a la cena? [end] 
+[start] para ti te [UNK] a tom a puedo a sobre [end] </code></pre>
 </div>
 </div>
 <p>Na tym kończy się ten rozdział o przetwarzaniu języka naturalnego. W ramach niego przeszliśmy od podstaw do w rozwiązania współcześnie używanego, czyli Transformera, który może tłumaczyć zdania z angielskiego na hiszpański.</p>
@@ -3142,7 +3142,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

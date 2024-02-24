@@ -709,7 +709,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 2s - loss: 58.4128 - mae: 6.2125 - 2s/epoch - 6ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2125 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -760,7 +760,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 6ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -806,7 +806,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 11.2176 - mae: 2.6383 - 3s/epoch - 8ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 9ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -934,7 +934,7 @@ Zagrożenie
 <pre><code>[1] "Test MAE: 2.54"</code></pre>
 </div>
 </div>
-<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
+<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
@@ -977,7 +977,7 @@ Rys.&nbsp;6.3
 <pre><code>[1] "Test MAE: 2.45"</code></pre>
 </div>
 </div>
-<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
+<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/jena_gru_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="images/jena_gru_dropout_hist.png" id="fig-gru-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
@@ -1030,7 +1030,7 @@ Rys.&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 7ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 8ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1074,7 +1074,7 @@ Rys.&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 5s - loss: 10.8280 - mae: 2.5962 - 5s/epoch - 13ms/step</code></pre>
+<pre><code>405/405 - 6s - loss: 10.8280 - mae: 2.5962 - 6s/epoch - 14ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
@@ -1698,7 +1698,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.549">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Zaawansowane metody uczenia maszynowego - 7&nbsp; Sieci generatywne</title>
 <style>
 code{white-space: pre-wrap;}
@@ -19,6 +16,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -41,7 +72,6 @@ div.csl-right-inline {
 div.csl-indent {
   margin-left: 2em;
 }</style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -66,8 +96,7 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -93,17 +122,37 @@ div.csl-indent {
     "search-submit-button-title": "Zatwierdź",
     "search-label": "Szukaj"
   }
-}</script>
-
-
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 </head>
-
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -114,22 +163,17 @@ div.csl-indent {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Zaawansowane metody uczenia maszynowego</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/AMLM/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
@@ -146,7 +190,7 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wstęp</span></a>
@@ -201,19 +245,29 @@ div.csl-indent {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+<li>
+<a href="#generowanie-tekstu" id="toc-generowanie-tekstu" class="nav-link active" data-scroll-target="#generowanie-tekstu"><span class="header-section-number">7.1</span> Generowanie tekstu</a>
+  <ul class="collapse">
+<li><a href="#rys-historyczny" id="toc-rys-historyczny" class="nav-link" data-scroll-target="#rys-historyczny"><span class="header-section-number">7.1.1</span> Rys historyczny</a></li>
+  <li><a href="#jak-generowa%C4%87-dane-sekwencyjne" id="toc-jak-generować-dane-sekwencyjne" class="nav-link" data-scroll-target="#jak-generowa%C4%87-dane-sekwencyjne"><span class="header-section-number">7.1.2</span> Jak generować dane sekwencyjne</a></li>
+  <li><a href="#wa%C5%BCno%C5%9B%C4%87-strategii-pr%C3%B3bkowania" id="toc-ważność-strategii-próbkowania" class="nav-link" data-scroll-target="#wa%C5%BCno%C5%9B%C4%87-strategii-pr%C3%B3bkowania"><span class="header-section-number">7.1.3</span> Ważność strategii próbkowania</a></li>
+  <li><a href="#generowanie-tekstu-w-keras" id="toc-generowanie-tekstu-w-keras" class="nav-link" data-scroll-target="#generowanie-tekstu-w-keras"><span class="header-section-number">7.1.4</span> Generowanie tekstu w Keras</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sieci generatywne</span></h1>
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sieci generatywne</span>
+</h1>
 </div>
 
 
@@ -227,52 +281,515 @@ div.csl-indent {
   
 
 
-</header>
-
-
-<p>Potencjał sztucznej inteligencji do naśladowania ludzkich procesów myślowych wykracza poza pasywne zadania, takie jak rozpoznawanie obiektów i zadania w większości reaktywne, takie jak prowadzenie samochodu. Rozciąga się on również na działania kreatywne. Kiedy po raz pierwszy postawiono tezę, że w niezbyt odległej przyszłości większość treści kulturowych, które konsumujemy, będzie tworzona przy znacznej pomocy sztucznej inteligencji, spotkało się to z całkowitym niedowierzaniem, nawet ze strony wieloletnich praktyków uczenia maszynowego. To było w 2014 roku. Kilka lat później niedowierzanie zniknęło w niewiarygodnym tempie. Latem 2015 roku bawił nas algorytm Google DeepDream zamieniający obraz w psychodeliczny bałagan psich oczu i pareidolicznych artefaktów.</p>
+</header><p>Potencjał sztucznej inteligencji do naśladowania ludzkich procesów myślowych wykracza poza pasywne zadania, takie jak rozpoznawanie obiektów i zadania w większości reaktywne, takie jak prowadzenie samochodu. Rozciąga się on również na działania kreatywne. Kiedy po raz pierwszy postawiono tezę, że w niezbyt odległej przyszłości większość treści kulturowych, które konsumujemy, będzie tworzona przy znacznej pomocy sztucznej inteligencji, spotkało się to z całkowitym niedowierzaniem, nawet ze strony wieloletnich praktyków uczenia maszynowego. To było w 2014 roku. Kilka lat później niedowierzanie zniknęło w niewiarygodnym tempie. Latem 2015 roku bawił nas algorytm Google DeepDream zamieniający obraz w psychodeliczny bałagan psich oczu i pareidolicznych artefaktów.</p>
 <div id="fig-dd2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/&quot;Mona_Lisa&quot;_with_DeepDream_effect_using_VGG16_network_trained_on_ImageNet.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="images/&quot;Mona_Lisa&quot;_with_DeepDream_effect_using_VGG16_network_trained_on_ImageNet.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></a>
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/&quot;Mona_Lisa&quot;_with_DeepDream_effect_using_VGG16_network_trained_on_ImageNet.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="images/&quot;Mona_Lisa&quot;_with_DeepDream_effect_using_VGG16_network_trained_on_ImageNet.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;7.1: Efekt DeepDream nałożony na obraz “Mona Lisa”
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 <p>W 2016 roku zaczęliśmy używać aplikacji na smartfony do przekształcania zdjęć w obrazy w różnych stylach. Latem 2016 roku wyreżyserowaliśmy eksperymentalny film krótkometrażowy Sunspring, używając scenariusza napisanego przez LSTM. Być może ostatnio słuchałeś muzyki, która została wygenerowana przez sieć neuronową.</p>
 <div id="fig-dd1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/1663c907b336ac6277e49029c909833edda95392.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="images/1663c907b336ac6277e49029c909833edda95392.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/1663c907b336ac6277e49029c909833edda95392.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="images/1663c907b336ac6277e49029c909833edda95392.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;7.2: Obraz generowany przez Google DeepDream w odpowiedzi na prompt “Riders galloping on horses in wild Texas”
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 <p>Trzeba przyznać, że artystyczne produkcje, które widzieliśmy do tej pory od AI, były dość niskiej jakości. Sztuczna inteligencja nie jest w stanie rywalizować z ludzkimi scenarzystami, malarzami i kompozytorami. Ale zastąpienie ludzi zawsze było poza celem: sztuczna inteligencja nie polega na zastąpieniu naszej własnej inteligencji czymś innym; chodzi o wprowadzenie do naszego życia i pracy większej inteligencji - inteligencji innego rodzaju. W wielu dziedzinach, ale szczególnie w tych kreatywnych, sztuczna inteligencja będzie wykorzystywana przez ludzi jako narzędzie zwiększające ich własne możliwości: bardziej rozszerzona inteligencja niż sztuczna inteligencja.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2O6gD-icUHc?si=A77qICCgwxj2uLIT" title="Muzyuka do filmu, jak i on sam został wygenerowany przez AI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Duża część twórczości artystycznej polega na prostym rozpoznawaniu wzorców i umiejętnościach technicznych. I to jest właśnie ta część procesu, którą wielu uważa za mniej atrakcyjną lub nawet zbędną. Tutaj właśnie wkracza sztuczna inteligencja. Nasze zdolności percepcyjne, język i dzieła sztuki mają strukturę statystyczną. Uczenie się tej struktury jest tym, w czym algorytmy głębokiego uczenia się przodują. Modele uczenia maszynowego mogą uczyć się statystycznej ukrytej przestrzeni obrazów, muzyki i historii, a następnie mogą próbkować z tej przestrzeni, tworząc nowe dzieła sztuki o cechach podobnych do tych, które model widział w swoich danych treningowych. Oczywiście takie próbkowanie samo w sobie nie jest aktem artystycznej kreacji. Jest to zwykła operacja matematyczna: algorytm nie ma podstaw w ludzkim życiu, ludzkich emocjach ani naszym doświadczeniu świata; zamiast tego uczy się z doświadczenia, które ma niewiele wspólnego z naszym. Tylko nasza interpretacja, jako ludzkich widzów, nada znaczenie temu, co wygeneruje model. Jednak w rękach wykwalifikowanego artysty, algorytmiczne generowanie może być sterowane tak, aby stało się znaczące - i piękne. Próbkowanie ukrytej przestrzeni może stać się pędzlem, który wzmacnia artystę, zwiększa nasze możliwości twórcze i rozszerza przestrzeń tego, co możemy sobie wyobrazić. Co więcej, może uczynić twórczość artystyczną bardziej dostępną, eliminując potrzebę umiejętności technicznych i praktyki, tworząc nowe medium czystej ekspresji, oddzielając sztukę od rzemiosła.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/HK6y8DAPN_0?si=fq5N6jez7Sk7VjAq" title="Najnowsze dziecko OpenAI - Sora" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>Iannis Xenakis, wizjonerski pionier muzyki elektronicznej i algorytmicznej, pięknie wyraził tę samą ideę w latach sześćdziesiątych, w kontekście zastosowania technologii automatyzacji do komponowania muzyki<span class="citation" data-cites="xenakis1963musiques">(<a href="references.html#ref-xenakis1963musiques" role="doc-biblioref">Xenakis 1963</a>)</span>.</p>
+<p>Iannis Xenakis, wizjonerski pionier muzyki elektronicznej i algorytmicznej, pięknie wyraził tę samą ideę w latach sześćdziesiątych, w kontekście zastosowania technologii automatyzacji do komponowania muzyki <span class="citation" data-cites="xenakis1963musiques">(<a href="references.html#ref-xenakis1963musiques" role="doc-biblioref">Xenakis 1963</a>)</span>.</p>
 <p>Uwolniony od żmudnych obliczeń, kompozytor jest w stanie poświęcić się ogólnym problemom, jakie stawia nowa forma muzyczna i badać jej zakamarki, modyfikując wartości danych wejściowych. Przykładowo, może on przetestować wszystkie kombinacje instrumentów, od solistów, przez orkiestry kameralne, aż po duże orkiestry. Z pomocą komputerów elektronicznych kompozytor staje się swego rodzaju pilotem: naciska przyciski, wprowadza współrzędne i nadzoruje sterowanie kosmicznym statkiem płynącym w przestrzeni dźwięku, przez dźwiękowe konstelacje i galaktyki, które wcześniej mógł dostrzec tylko jako odległe marzenie.</p>
-<p>W tym rozdziale zbadamy pod różnymi kątami potencjał głębokiego uczenia się do wspomagania szeroko rozumianej twórczości. Dokonamy przeglądu generowania danych sekwencyjnych (które można wykorzystać do generowania tekstu lub muzyki), DeepDream i generowania obrazów przy użyciu zarówno wariacyjnych autoenkoderów, jak i generatywnych sieci przeciwstawnych. Sprawimy, że twój komputer będzie w stanie wymyślać treści, jakich nigdy wcześniej nie widziano; a może sprawimy, że i ty zaczniesz marzyć o fantastycznych możliwościach, jakie kryją się na styku technologii i sztuki. Zaczynajmy.</p>
+<p>W tym rozdziale zbadamy pod różnymi kątami potencjał głębokiego uczenia się do wspomagania szeroko rozumianej twórczości. Dokonamy przeglądu generowania danych sekwencyjnych (które można wykorzystać do generowania tekstu lub muzyki), DeepDream i generowania obrazów przy użyciu zarówno wariacyjnych autoenkoderów, jak i generatywnych sieci przeciwstawnych. Sprawimy, że komputer będzie w stanie wymyślać treści, jakich nigdy wcześniej nie widziano.</p>
+<section id="generowanie-tekstu" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="generowanie-tekstu">
+<span class="header-section-number">7.1</span> Generowanie tekstu</h2>
+<p>W tej sekcji zbadamy, w jaki sposób rekurencyjne sieci neuronowe mogą być wykorzystywane do generowania danych sekwencyjnych. Jako przykładu użyjemy generatora tekstu, ale dokładnie te same techniki można uogólnić na dowolny rodzaj danych sekwencyjnych: można je zastosować do sekwencji nut w celu wygenerowania nowej muzyki, do szeregów czasowych danych pociągnięć pędzla (być może nagranych podczas malowania przez artystę na iPadzie) w celu wygenerowania obrazów pociągnięcie po pociągnięciu i tak dalej.</p>
+<p>Generowanie danych sekwencyjnych nie jest w żaden sposób ograniczone do generowania treści artystycznych. Zostało ono z powodzeniem zastosowane do syntezy mowy i generowania dialogów dla chatbotów. Funkcja <em>Smart Reply</em>, którą Google wypuściło w 2016 roku, zdolna do automatycznego generowania wyboru szybkich odpowiedzi na e-maile lub wiadomości tekstowe, jest zasilana podobnymi technikami.</p>
+<section id="rys-historyczny" class="level3 page-columns page-full" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="rys-historyczny">
+<span class="header-section-number">7.1.1</span> Rys historyczny</h3>
+<p>Pod koniec 2014 roku niewiele osób widziało inicjały LSTM, nawet w społeczności zajmującej się uczeniem maszynowym. Udane zastosowania generatorów danych sekwencyjnych za pomocą sieci rekurencyjnych zaczęły pojawiać się w głównym nurcie dopiero w 2016 roku. Techniki te mają jednak dość długą historię, począwszy od opracowania algorytmu LSTM w 1997 roku. Ten nowy algorytm został wcześnie wykorzystany do generowania tekstu znak po znaku.</p>
+<p>W 2002 roku Douglas Eck, pracujący wówczas w laboratorium Schmidhubera w Szwajcarii, po raz pierwszy zastosował LSTM do generowania muzyki, uzyskując obiecujące wyniki. Eck jest obecnie badaczem w Google Brain, a w 2016 roku założył tam nową grupę badawczą o nazwie Magenta, skupiającą się na zastosowaniu nowoczesnych technik głębokiego uczenia się do tworzenia angażującej muzyki.</p>
+<p>Pod koniec lat 2000 i na początku 2010 Alex Graves wykonał ważną pionierską pracę z wykorzystaniem sieci rekurencyjnych do generowania danych sekwencyjnych. W szczególności jego praca z 2013 roku nad zastosowaniem rekurencyjnych sieci mieszanin gęstości do generowania pisma odręcznego podobnego do ludzkiego przy użyciu szeregów czasowych pozycji pióra jest postrzegana przez niektórych jako punkt zwrotny <span class="citation" data-cites="gravesGeneratingSequencesRecurrent2014">(<a href="references.html#ref-gravesGeneratingSequencesRecurrent2014" role="doc-biblioref">Graves, b.d.</a>)</span>. Graves pozostawił komentarz ukryty w pliku LaTeX z 2013 r. przesłanym na serwer arXiv: “Generowanie sekwencyjnych danych jest najbliższe marzeniom komputerów”. Kilka lat później wiele z tych osiągnięć uważamy za oczywiste, ale w tamtym czasie trudno było oglądać prezentacje Gravesa i nie odchodzić zainspirowanym. W latach 2015-2017 rekurencyjne sieci neuronowe były z powodzeniem wykorzystywane do generowania tekstu i dialogów, generowania muzyki i syntezy mowy.</p>
+<p class="page-columns page-full"><a href="images/gpt.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-3"></a></p><div class="no-row-height column-margin column-container"><a href="images/gpt.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-3"><img src="images/gpt.png" class="img-fluid"></a></div><p></p>
+<p>Następnie, około 2017-2018 roku, architektura Transformer zaczęła przejmować rekurencyjne sieci neuronowe, nie tylko do nadzorowanych zadań przetwarzania języka naturalnego, ale także do generatywnych modeli sekwencyjnych - w szczególności modelowania języka (generowania tekstu na poziomie słów). Najbardziej znanym przykładem generatywnego Transformera był GPT-3<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, model generowania tekstu o 175 miliardach parametrów, wytrenowany przez startup OpenAI na zdumiewająco dużym korpusie tekstowym, obejmującym większość dostępnych cyfrowo książek, Wikipedię i duży ułamek przeszukiwania całego Internetu. GPT-3 trafił na pierwsze strony gazet w 2020 roku ze względu na swoją zdolność do generowania wiarygodnie brzmiących akapitów tekstowych na praktycznie dowolny temat, co podsyciło krótkotrwałą falę szumu godną najbardziej gorącego lata AI.</p>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;ale jak wiadomo już nie jest. GPT-4 znacznie przewyższa go możliwościami, przy jednoczesnym wzroście liczby parametrów - 1.7 tryliarda.</p></div></section><section id="jak-generować-dane-sekwencyjne" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="jak-generować-dane-sekwencyjne">
+<span class="header-section-number">7.1.2</span> Jak generować dane sekwencyjne</h3>
+<p>Uniwersalnym sposobem generowania danych sekwencyjnych w uczeniu głębokim jest trenowanie modelu (zwykle transformera lub RNN) w celu przewidywania następnego tokena lub kilku następnych tokenów w sekwencji, przy użyciu poprzednich tokenów jako danych wejściowych. Na przykład, biorąc pod uwagę dane wejściowe “the cat is on the”, model jest trenowany w celu przewidywania docelowego “mat”. Jak zwykle podczas pracy z danymi tekstowymi, tokeny są zazwyczaj słowami lub znakami, a każda sieć, która może modelować prawdopodobieństwo następnego tokena, biorąc pod uwagę poprzednie, nazywana jest modelem językowym. Model językowy przechwytuje ukrytą przestrzeń języka: jego strukturę statystyczną.</p>
+<p>Gdy mamy już taki wytrenowany model językowy, możemy próbkować z niego (generować nowe sekwencje): podajemy mu początkowy ciąg tekstu (zwany danymi kondycjonującymi), prosimy go o wygenerowanie następnego znaku lub następnego słowa (możemy nawet wygenerować kilka tokenów jednocześnie), dodajemy wygenerowane dane wyjściowe z powrotem do danych wejściowych i powtarzamy proces wiele razy (patrz <a href="#fig-text1" class="quarto-xref">Rys.&nbsp;<span>7.3</span></a>). Ta pętla pozwala generować sekwencje o dowolnej długości, które odzwierciedlają strukturę danych, na których model został przeszkolony: sekwencje, które wyglądają prawie jak zdania napisane przez człowieka.</p>
+<div id="fig-text1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-text1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/Zrzut ekranu 2024-02-24 o 21.49.52.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="images/Zrzut ekranu 2024-02-24 o 21.49.52.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-text1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rys.&nbsp;7.3: Proces generowania tekstu słowo po słowie przy użyciu modelu językowego
+</figcaption></figure>
+</div>
+</section><section id="ważność-strategii-próbkowania" class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="ważność-strategii-próbkowania">
+<span class="header-section-number">7.1.3</span> Ważność strategii próbkowania</h3>
+<p>Podczas generowania tekstu sposób wyboru następnego tokena ma kluczowe znaczenie. Naiwnym podejściem jest zachłanne próbkowanie, polegające na wybieraniu zawsze najbardziej prawdopodobnego następnego znaku. Takie podejście skutkuje powtarzalnymi, przewidywalnymi ciągami znaków, które nie wyglądają jak spójny język. Bardziej interesujące podejście dokonuje nieco bardziej zaskakujących wyborów: wprowadza losowość do procesu próbkowania poprzez próbkowanie z rozkładu prawdopodobieństwa dla następnego znaku. Nazywa się to próbkowaniem stochastycznym (przypomnijmy, że stochastyczność jest tym, co nazywamy losowością w tej dziedzinie). W takim układzie, jeśli słowo ma prawdopodobieństwo 0,3 bycia następnym w zdaniu zgodnie z modelem, wybierzemy je w 30% przypadków. Należy zauważyć, że zachłanne próbkowanie można również traktować jako próbkowanie z rozkładu prawdopodobieństwa: takiego, w którym określone słowo ma prawdopodobieństwo 1, a wszystkie inne mają prawdopodobieństwo 0.</p>
+<p>Próbkowanie probabilistyczne z wyjścia softmax modelu jest celowe: pozwala na próbkowanie nawet mało prawdopodobnych słów przez pewien czas, generując bardziej interesująco wyglądające zdania, a czasem wykazując się kreatywnością, wymyślając nowe, realistycznie brzmiące zdania, które nie występowały w danych treningowych. Jest jednak jeden problem z tą strategią: nie oferuje ona sposobu na kontrolowanie ilości losowości w procesie próbkowania.</p>
+<p>Dlaczego mielibyśmy chcieć większej lub mniejszej losowości? Rozważmy skrajny przypadek: czysto losowe pobieranie próbek, w którym następne słowo jest losowane z jednostajnego rozkładu prawdopodobieństwa, a każde słowo jest równie prawdopodobne. Ten schemat ma maksymalną losowość; innymi słowy, ten rozkład prawdopodobieństwa ma maksymalną entropię. Naturalnie, nie da on niczego interesującego. Na drugim biegunie, zachłanne próbkowanie również nie daje niczego interesującego i nie ma losowości: odpowiadający mu rozkład prawdopodobieństwa ma minimalną entropię. Próbkowanie z “prawdziwego” rozkładu prawdopodobieństwa - rozkładu, który jest wyprowadzany przez funkcję softmax modelu - stanowi punkt pośredni między tymi dwoma skrajnościami. Istnieje jednak wiele innych punktów pośrednich o wyższej lub niższej entropii, które warto zbadać. Mniejsza entropia nada wygenerowanym sekwencjom bardziej przewidywalną strukturę (a tym samym będą one potencjalnie bardziej realistycznie wyglądać), podczas gdy większa entropia spowoduje bardziej zaskakujące i kreatywne sekwencje. Podczas próbkowania z modeli generatywnych zawsze dobrze jest zbadać różne ilości losowości w procesie generowania. Ponieważ to my - ludzie - jesteśmy ostatecznymi sędziami tego, jak interesujące są wygenerowane dane, adekwatność jest wysoce subiektywna i nie można z góry powiedzieć, gdzie leży punkt optymalnej entropii.</p>
+<p>Aby kontrolować poziom stochastyczności w procesie próbkowania, wprowadzimy parametr zwany temperaturą, który charakteryzuje entropię rozkładu prawdopodobieństwa używanego do próbkowania: charakteryzuje on, jak zaskakujący lub przewidywalny będzie wybór następnego słowa. Biorąc pod uwagę wartość temperatury, nowy rozkład prawdopodobieństwa jest obliczany na podstawie oryginalnego prawdopodobieństwa (wyjście softmax modelu) poprzez ponowne ważenie go w następujący sposób.</p>
+<p>Wyższe temperatury skutkują rozkładami próbkowania o wyższej entropii, które wygenerują bardziej zaskakujące i nieustrukturyzowane wygenerowane dane, podczas gdy niższa temperatura spowoduje mniejszą losowość i znacznie bardziej przewidywalne wygenerowane dane (patrz <a href="#fig-text2" class="quarto-xref">Rys.&nbsp;<span>7.4</span></a>).</p>
+<div id="fig-text2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-text2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/Zrzut ekranu 2024-02-24 o 21.50.31.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="images/Zrzut ekranu 2024-02-24 o 21.50.31.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-text2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rys.&nbsp;7.4: Różne wagi rozkładu prawdopodobieństwa: Niska temperatura = bardziej deterministyczny; wysoka temperatura = bardziej losowy
+</figcaption></figure>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/tensorflow">tensorflow</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://t-kalinowski.github.io/tfautograph/">tfautograph</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reweight_distribution</span> <span class="op">&lt;-</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">original_distribution</span>, <span class="va">temperature</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">original_distribution</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">/</span> <span class="va">temperature</span><span class="op">)</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="op">{</span> <span class="va">.</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">}</span></span>
+<span>  <span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="generowanie-tekstu-w-keras" class="level3" data-number="7.1.4"><h3 data-number="7.1.4" class="anchored" data-anchor-id="generowanie-tekstu-w-keras">
+<span class="header-section-number">7.1.4</span> Generowanie tekstu w Keras</h3>
+<p>Pierwszą rzeczą, której potrzebujemy, jest duża ilość danych tekstowych, których możemy użyć do nauki modelu językowego. Możemy użyć dowolnego wystarczająco dużego pliku tekstowego lub zestawu plików tekstowych - Wikipedii, Władcy Pierścieni itp.</p>
+<p>W tym przykładzie będziemy nadal pracować z zestawem danych recenzji filmów IMDB z ostatniego rozdziału i nauczymy się generować nigdy wcześniej nienapisane recenzje filmów. W związku z tym nasz model językowy będzie modelem stylu i tematyki tych recenzji filmowych, a nie ogólnym modelem języka angielskiego.</p>
+<section id="przygotowanie-danych" class="level4" data-number="7.1.4.1"><h4 data-number="7.1.4.1" class="anchored" data-anchor-id="przygotowanie-danych">
+<span class="header-section-number">7.1.4.1</span> Przygotowanie danych</h4>
+<p>Podobnie jak w poprzednim rozdziale, pobierzmy i rozpakujmy zbiór danych z recenzjami filmów IMDB.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"</span></span>
+<span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fl">60</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="co"># 10 minute timeout</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="va">filename</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Znasz już strukturę tych danych: otrzymujemy folder o nazwie <code>aclImdb</code> zawierający dwa podfoldery, jeden dla recenzji filmów o negatywnym wydźwięku i jeden dla recenzji o pozytywnym wydźwięku. Na każdą recenzję przypada jeden plik tekstowy. Wywołamy <code><a href="https://rdrr.io/pkg/keras/man/text_dataset_from_directory.html">text_dataset_from_directory()</a></code> z <code>label_mode = NULL</code>, aby utworzyć zestaw danych TF, który odczyta te pliki i wyświetli zawartość tekstową każdego z nich.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/tfdatasets">tfdatasets</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/text_dataset_from_directory.html">text_dataset_from_directory</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"data/aclImdb"</span>,</span>
+<span>                                       label_mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                                       batch_size <span class="op">=</span> <span class="fl">256</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Found 50006 files belonging to 1 classes.</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">regex_replace</span><span class="op">(</span><span class="va">.x</span>, <span class="st">"&lt;br /&gt;"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Teraz użyjmy funkcji <code><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">layer_text_vectorization()</a></code> do obliczenia słownictwa, z którym będziemy pracować. Użyjemy tylko pierwszych słów o długości sekwencji w każdej recenzji: nasza funkcja <code><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">layer_text_vectorization()</a></code> odetnie wszystko poza tym podczas wektoryzacji tekstu.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sequence_length</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">vocab_size</span> <span class="op">&lt;-</span> <span class="fl">15000</span></span>
+<span><span class="va">text_vectorization</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">layer_text_vectorization</a></span><span class="op">(</span></span>
+<span>  max_tokens <span class="op">=</span> <span class="va">vocab_size</span>,</span>
+<span>  output_mode <span class="op">=</span> <span class="st">"int"</span>,</span>
+<span>  output_sequence_length <span class="op">=</span> <span class="va">sequence_length</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/adapt.html">adapt</a></span><span class="op">(</span><span class="va">text_vectorization</span>, <span class="va">dataset</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Użyjmy tej warstwy do stworzenia zbioru danych modelowania językowego, w którym próbki wejściowe są wektoryzowanymi tekstami, a odpowiadające im cele są tymi samymi tekstami przesuniętymi o jedno słowo.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prepare_lm_dataset</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">text_batch</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">vectorized_sequences</span> <span class="op">&lt;-</span> <span class="fu">text_vectorization</span><span class="op">(</span><span class="va">text_batch</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">vectorized_sequences</span><span class="op">[</span>, <span class="cn">NA</span><span class="op">:</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">vectorized_sequences</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="cn">NA</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">lm_dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tfdatasets/man/dataset_map.html">dataset_map</a></span><span class="op">(</span><span class="va">prepare_lm_dataset</span>, num_parallel_calls <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="model-transformerowy-sekwencja-sekwencja" class="level4" data-number="7.1.4.2"><h4 data-number="7.1.4.2" class="anchored" data-anchor-id="model-transformerowy-sekwencja-sekwencja">
+<span class="header-section-number">7.1.4.2</span> Model transformerowy sekwencja-sekwencja</h4>
+<p>Będziemy trenować model, aby przewidzieć rozkład prawdopodobieństwa następnego słowa w zdaniu, biorąc pod uwagę pewną liczbę początkowych słów. Gdy model zostanie wytrenowany, będziemy podawać mu podpowiedź, próbkować następne słowo, dodawać to słowo z powrotem do podpowiedzi i powtarzać, aż wygenerujemy krótki akapit.</p>
+<p>Podobnie jak w przypadku prognozowania temperatury (dla danych atmosferycznych), możemy wytrenować model, który przyjmuje jako dane wejściowe sekwencję <span class="math inline">\(N\)</span> słów i przewiduje słowo <span class="math inline">\(N+1\)</span>. Istnieje jednak kilka problemów związanych z tą konfiguracją w kontekście generowania sekwencji.</p>
+<p>Po pierwsze, model nauczyłby się generować prognozy tylko wtedy, gdy dostępnych jest <span class="math inline">\(N\)</span> słów, ale przydatna byłaby możliwość rozpoczęcia przewidywania przy mniej niż <span class="math inline">\(N\)</span> słowach. W przeciwnym razie bylibyśmy ograniczeni do używania tylko stosunkowo długich podpowiedzi (w naszej implementacji <span class="math inline">\(N = 100\)</span> słów). W prognozowaniu pogody nie mieliśmy takiej potrzeby.</p>
+<p>Po drugie, wiele z naszych sekwencji treningowych będzie się w większości pokrywać. Rozważmy <span class="math inline">\(N = 4\)</span>. Tekst “A complete sentence must have, at minimum, three things: a subject, verb, and an object” zostałby użyty do wygenerowania następujących sekwencji treningowych:</p>
+<ul>
+<li>“A complete sentence must”</li>
+<li>“complete sentence must have”</li>
+<li>“sentence must have at” ”</li>
+<li>i tak dalej, aż do “verb and an object”.</li>
+</ul>
+<p>Model, który traktuje każdą taką sekwencję jako niezależną próbkę, musiałby wykonać wiele nadmiarowej pracy, ponownie kodując wiele razy sekwencje, które w dużej mierze widział już wcześniej. W modelu z temperaturą nie stanowiło to większego problemu, ponieważ nie mieliśmy zbyt wielu próbek treningowych, a musieliśmy przetestować gęste i splotowe modele, dla których ponowne wykonanie pracy za każdym razem jest jedyną opcją. Moglibyśmy spróbować złagodzić ten problem nadmiarowości, używając kroków do próbkowania naszych sekwencji - pomijając kilka słów między dwiema kolejnymi próbkami. Zmniejszyłoby to jednak liczbę próbek treningowych, zapewniając jedynie częściowe rozwiązanie.</p>
+<p>Aby rozwiązać te dwie kwestie, użyjemy modelu sekwencja-sekwencja: wprowadzimy sekwencje <span class="math inline">\(N\)</span> słów (indeksowanych od 1 do <span class="math inline">\(N\)</span>) do naszego modelu i będziemy przewidywać sekwencję przesuniętą o jeden (od 2 do <span class="math inline">\(N+1\)</span>). Użyjemy maskowania przyczynowego, aby upewnić się, że dla dowolnego <span class="math inline">\(i\)</span>, model użyje tylko słów od 1 do <span class="math inline">\(i\)</span>, aby przewidzieć słowo <span class="math inline">\(i + 1\)</span>. Oznacza to, że jednocześnie trenujemy model, aby rozwiązać <span class="math inline">\(N\)</span> w większości pokrywających się, ale różnych problemów: przewidywanie następnych słów, biorąc pod uwagę sekwencję <span class="math inline">\(1 \leq i \leq N\)</span> wcześniejszych słów (patrz <a href="#fig-text3" class="quarto-xref">Rys.&nbsp;<span>7.5</span></a>). W czasie generowania, nawet jeśli podpowiesz modelowi tylko jedno słowo, będzie on w stanie podać rozkład prawdopodobieństwa dla następnych możliwych słów.</p>
+<div id="fig-text3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-text3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/Zrzut ekranu 2024-02-24 o 22.13.30.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="images/Zrzut ekranu 2024-02-24 o 22.13.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-text3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rys.&nbsp;7.5: W porównaniu do zwykłego przewidywania następnego słowa, modelowanie sekwencja-sekwencja jednocześnie optymalizuje wiele problemów związanych z przewidywaniem.
+</figcaption></figure>
+</div>
+<p>Zauważ, że mogliśmy użyć podobnej konfiguracji sekwencja-sekwencja w naszym problemie prognozowania temperatury: biorąc pod uwagę sekwencję 120 godzinnych punktów danych, naucz się generować sekwencję 120 temperatur przesuniętych o 24 godziny w przyszłości. Rozwiązałoby to nie tylko początkowy problem, ale także 119 powiązanych problemów prognozowania temperatury w ciągu 24 godzin, biorąc pod uwagę <span class="math inline">\(1 \leq i &lt; 120\)</span> wcześniejszych godzinnych punktów danych. Jeśli spróbujemy ponownie wytrenować RNN w konfiguracji sekwencja po sekwencji, przekonamy się, że uzyskamy podobne, ale coraz gorsze wyniki, ponieważ ograniczenie polegające na rozwiązaniu tych dodatkowych 119 powiązanych problemów za pomocą tego samego modelu koliduje nieco z zadaniem, na którym nam faktycznie zależy.</p>
+<p>W poprzednim rozdziale dowiedzieliśmy się o konfiguracji, której można użyć do uczenia sekwencyjnego w ogólnym przypadku: podaj sekwencję źródłową do kodera, a następnie podaj zarówno zakodowaną sekwencję, jak i sekwencję docelową do dekodera, który próbuje przewidzieć tę samą sekwencję docelową, przesuniętą o jeden krok. Podczas generowania tekstu nie ma sekwencji źródłowej: po prostu próbujesz przewidzieć następne tokeny w sekwencji docelowej, biorąc pod uwagę poprzednie tokeny, co możemy zrobić, używając tylko dekodera. Dzięki wypełnianiu przyczynowemu, dekoder będzie patrzył tylko na słowa <span class="math inline">\(1\ldots N\)</span>, aby przewidzieć słowo <span class="math inline">\(N+1\)</span>.</p>
+<p>Zaimplementujmy nasz model - ponownie wykorzystując bloki konstrukcyjne, które stworzyliśmy w poprzednim rozdziale: <code>layer_positional_embedding()</code> i <code>layer_transformer_decoder()</code>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layer_positional_embedding</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/new-classes.html">new_layer_class</a></span><span class="op">(</span></span>
+<span>  classname <span class="op">=</span> <span class="st">"PositionalEmbedding"</span>,</span>
+<span></span>
+<span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">input_dim</span>, <span class="va">output_dim</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">token_embeddings</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="va">input_dim</span>,</span>
+<span>                      output_dim <span class="op">=</span> <span class="va">output_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">position_embeddings</span> <span class="op">&lt;-</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_embedding.html">layer_embedding</a></span><span class="op">(</span>input_dim <span class="op">=</span> <span class="va">sequence_length</span>,</span>
+<span>                      output_dim <span class="op">=</span> <span class="va">output_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">sequence_length</span> <span class="op">&lt;-</span> <span class="va">sequence_length</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">input_dim</span> <span class="op">&lt;-</span> <span class="va">input_dim</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">output_dim</span> <span class="op">&lt;-</span> <span class="va">output_dim</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  call <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">length</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">shape</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="va">positions</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0L</span>, limit <span class="op">=</span> <span class="va">length</span>, delta <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span>    <span class="va">embedded_tokens</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">token_embeddings</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span></span>
+<span>    <span class="va">embedded_positions</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">position_embeddings</span><span class="op">(</span><span class="va">positions</span><span class="op">)</span></span>
+<span>    <span class="va">embedded_tokens</span> <span class="op">+</span> <span class="va">embedded_positions</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  compute_mask <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span>, <span class="va">mask</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">inputs</span> <span class="op">!=</span> <span class="fl">0</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  get_config <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">config</span> <span class="op">&lt;-</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_config</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span><span class="op">(</span><span class="va">name</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"output_dim"</span>, <span class="st">"sequence_length"</span>, <span class="st">"input_dim"</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">config</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="va">config</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">layer_transformer_decoder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/new-classes.html">new_layer_class</a></span><span class="op">(</span></span>
+<span>  classname <span class="op">=</span> <span class="st">"TransformerDecoder"</span>,</span>
+<span></span>
+<span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">embed_dim</span>, <span class="va">dense_dim</span>, <span class="va">num_heads</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">embed_dim</span> <span class="op">&lt;-</span> <span class="va">embed_dim</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">dense_dim</span> <span class="op">&lt;-</span> <span class="va">dense_dim</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="va">num_heads</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">attention_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_multi_head_attention.html">layer_multi_head_attention</a></span><span class="op">(</span>num_heads <span class="op">=</span> <span class="va">num_heads</span>,</span>
+<span>                                                   key_dim <span class="op">=</span> <span class="va">embed_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">attention_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_multi_head_attention.html">layer_multi_head_attention</a></span><span class="op">(</span>num_heads <span class="op">=</span> <span class="va">num_heads</span>,</span>
+<span>                                                   key_dim <span class="op">=</span> <span class="va">embed_dim</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">dense_proj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">dense_dim</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">embed_dim</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">layernorm_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_layer_normalization.html">layer_layer_normalization</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">supports_masking</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  get_config <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">config</span> <span class="op">&lt;-</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_config</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">name</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"embed_dim"</span>, <span class="st">"num_heads"</span>, <span class="st">"dense_dim"</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">config</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="va">config</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  get_causal_attention_mask <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">batch_size</span>, <span class="va">sequence_length</span>, <span class="va">encoding_length</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/zeallot/man/operator.html">%&lt;-%</a></span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="fu">unstack</span><span class="op">(</span><span class="va">tf</span><span class="op">$</span><span class="fu">shape</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="va">sequence_length</span><span class="op">)</span></span>
+<span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span><span class="op">]</span></span>
+<span>    <span class="va">j</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, <span class="op">]</span></span>
+<span>    <span class="va">mask</span> <span class="op">&lt;-</span> <span class="va">tf</span><span class="op">$</span><span class="fu">cast</span><span class="op">(</span><span class="va">i</span> <span class="op">&gt;=</span> <span class="va">j</span>, <span class="st">"int32"</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">tf</span><span class="op">$</span><span class="fu">tile</span><span class="op">(</span><span class="va">mask</span><span class="op">[</span><span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, , <span class="op">]</span>,</span>
+<span>            <span class="va">tf</span><span class="op">$</span><span class="fu">stack</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">batch_size</span>, <span class="fl">1L</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  call <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inputs</span>, <span class="va">encoder_outputs</span>, <span class="va">mask</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="va">causal_mask</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">get_causal_attention_mask</span><span class="op">(</span><span class="va">inputs</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">mask</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">mask</span> <span class="op">&lt;-</span> <span class="va">causal_mask</span></span>
+<span>    <span class="kw">else</span></span>
+<span>      <span class="va">mask</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="op">{</span> <span class="va">tf</span><span class="op">$</span><span class="fu">minimum</span><span class="op">(</span><span class="va">tf</span><span class="op">$</span><span class="fu">cast</span><span class="op">(</span><span class="va">.</span><span class="op">[</span>, <span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, <span class="op">]</span>, <span class="st">"int32"</span><span class="op">)</span>,</span>
+<span>                             <span class="va">causal_mask</span><span class="op">)</span> <span class="op">}</span></span>
+<span></span>
+<span>    <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">attention_1</span><span class="op">(</span>query <span class="op">=</span> <span class="va">.</span>, value <span class="op">=</span> <span class="va">.</span>, key <span class="op">=</span> <span class="va">.</span>,</span>
+<span>                         attention_mask <span class="op">=</span> <span class="va">causal_mask</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_1</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">attention_2</span><span class="op">(</span>query <span class="op">=</span> <span class="va">.</span>,</span>
+<span>                         value <span class="op">=</span> <span class="va">encoder_outputs</span>,</span>
+<span>                         key <span class="op">=</span> <span class="va">encoder_outputs</span>,</span>
+<span>                         attention_mask <span class="op">=</span> <span class="va">mask</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_2</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>      <span class="op">{</span> <span class="va">self</span><span class="op">$</span><span class="fu">dense_proj</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span> <span class="va">.</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">layernorm_3</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">embed_dim</span> <span class="op">&lt;-</span> <span class="fl">256</span></span>
+<span><span class="va">latent_dim</span> <span class="op">&lt;-</span> <span class="fl">2048</span></span>
+<span><span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span></span>
+<span><span class="va">transformer_decoder</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">layer_transformer_decoder</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">embed_dim</span>, <span class="va">latent_dim</span>, <span class="va">num_heads</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html">shape</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>, dtype <span class="op">=</span> <span class="st">"int64"</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">inputs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">layer_positional_embedding</span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">vocab_size</span>, <span class="va">embed_dim</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">transformer_decoder</span><span class="op">(</span><span class="va">.</span>, <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span><span class="va">vocab_size</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span>loss <span class="op">=</span> <span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span>          optimizer <span class="op">=</span> <span class="st">"rmsprop"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="generowania-tekstu-z-próbkowaniem-o-zmiennej-temperaturze" class="level4" data-number="7.1.4.3"><h4 data-number="7.1.4.3" class="anchored" data-anchor-id="generowania-tekstu-z-próbkowaniem-o-zmiennej-temperaturze">
+<span class="header-section-number">7.1.4.3</span> Generowania tekstu z próbkowaniem o zmiennej temperaturze</h4>
+<p>Użyjemy wywołania zwrotnego (ang. <em>callback</em>) do generowania tekstu przy użyciu zakresu różnych temperatur po każdej epoce. Pozwoli to zobaczyć, jak wygenerowany tekst ewoluuje, gdy model zaczyna osiągać zbieżność, a także wpływ temperatury na strategię próbkowania. Aby rozpocząć generowanie tekstu, użyjemy podpowiedzi “this movie” - wszystkie nasze wygenerowane teksty zaczną się od tego.</p>
+<p>Najpierw zdefiniujmy kilka funkcji do generowania zdań. Później użyjemy tych funkcji w wywołaniu zwrotnym.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vocab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_text_vectorization.html">get_vocabulary</a></span><span class="op">(</span><span class="va">text_vectorization</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sample_next</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">predictions</span>, <span class="va">temperature</span> <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">predictions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">reweight_distribution</span><span class="op">(</span><span class="va">temperature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="va">.</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="va">generate_sentence</span> <span class="op">&lt;-</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">model</span>, <span class="va">prompt</span>, <span class="va">generate_length</span>, <span class="va">temperature</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="va">sentence</span> <span class="op">&lt;-</span> <span class="va">prompt</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">generate_length</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>      <span class="va">model_preds</span> <span class="op">&lt;-</span> <span class="va">sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu">text_vectorization</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">.</span><span class="op">)</span></span>
+<span></span>
+<span>      <span class="va">sampled_word</span> <span class="op">&lt;-</span> <span class="va">model_preds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="va">.</span><span class="op">[</span><span class="fl">1</span>, <span class="va">i</span>, <span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu">sample_next</span><span class="op">(</span><span class="va">temperature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="va">vocab</span><span class="op">[</span><span class="va">.</span><span class="op">]</span></span>
+<span></span>
+<span>      <span class="va">sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">sentence</span>, <span class="va">sampled_word</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="va">sentence</span></span>
+<span>  <span class="op">}</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><code>sample_next()</code> i <code>generate_sentence()</code> generują zdania z modelu. Wywołują <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, aby wygenerować predykcje jako tablice R, wywołują <code><a href="https://rdrr.io/r/base/sample.html">sample.int()</a></code>, aby wybrać następny token i budują zdanie jako ciąg R za pomocą <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code>.</p>
+<p>Ponieważ możemy chcieć wygenerować wiele zdań, warto je nieco zoptymalizować. Możemy znacznie przyspieszyć <code>generate_sentence</code> (~25x), przepisując go jako funkcję <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>. Aby to zrobić, wystarczy zastąpić kilka funkcji R odpowiednikami TensorFlow. Zamiast <code>for(i in seq())</code>, możemy napisać <code>for(i in tf$range())</code>. Możemy również zastąpić <code><a href="https://rdrr.io/r/base/sample.html">sample.int()</a></code> przez <code>tf$random$categorical()</code>, <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> przez <code>tf$strings\$join()</code>, a <code>predict(model, .)</code> przez <code>model(.)</code>. Oto jak <code>sample_next()</code> i <code>generate_sentence()</code> wyglądają jako <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code>:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tf_sample_next</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">predictions</span>, <span class="va">temperature</span> <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">predictions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="fu">reweight_distribution</span><span class="op">(</span><span class="va">temperature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">.</span><span class="op">[</span><span class="va">tf</span><span class="op">$</span><span class="va">newaxis</span>, <span class="op">]</span><span class="op">)</span> <span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="va">random</span><span class="op">$</span><span class="fu">categorical</span><span class="op">(</span><span class="fl">1L</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>      <span class="va">tf</span><span class="op">$</span><span class="fu">reshape</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html">shape</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://t-kalinowski.github.io/tfautograph/">tfautograph</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tf_generate_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function</a></span><span class="op">(</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">model</span>, <span class="va">prompt</span>, <span class="va">generate_length</span>, <span class="va">temperature</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_options.html">local_options</a></span><span class="op">(</span>tensorflow.extract.style <span class="op">=</span> <span class="st">"python"</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">vocab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">vocab</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">sentence</span> <span class="op">&lt;-</span> <span class="va">prompt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="fu"><a href="https://t-kalinowski.github.io/tfautograph/reference/ag_loop_vars.html">ag_loop_vars</a></span><span class="op">(</span><span class="va">sentence</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="va">generate_length</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>      <span class="va">model_preds</span> <span class="op">&lt;-</span> <span class="va">sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu">text_vectorization</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu">model</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>      <span class="va">sampled_word</span> <span class="op">&lt;-</span> <span class="va">model_preds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="va">.</span><span class="op">[</span><span class="fl">0</span>, <span class="va">i</span>, <span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="fu">tf_sample_next</span><span class="op">(</span><span class="va">temperature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="va">vocab</span><span class="op">[</span><span class="va">.</span><span class="op">]</span></span>
+<span></span>
+<span>      <span class="va">sentence</span> <span class="op">&lt;-</span> <span class="va">sampled_word</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>        <span class="op">{</span> <span class="va">tf</span><span class="op">$</span><span class="va">strings</span><span class="op">$</span><span class="fu">join</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sentence</span>, <span class="va">.</span><span class="op">)</span>, <span class="st">" "</span><span class="op">)</span> <span class="op">}</span></span>
+<span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="va">sentence</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">tf</span><span class="op">$</span><span class="fu">reshape</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html">shape</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pętla <code>for</code> a <code>autograph</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Podczas używania funkcji <code>tf_function(fn, autograph = TRUE)</code> w R, domyślnie funkcja <code>fn</code> jest przekształcana tak, aby mogła korzystać z dodatkowych możliwości, które oferuje TensorFlow, dzięki mechanizmowi zwanemu Autograph. Autograph przekształca standardowy kod R w ekwiwalentny kod TensorFlow, który może być efektywnie wykonywany na tensorach, co normalnie nie jest możliwe w bazowym R. Na przykład, pętle <code>for</code> w R zwykle nie mogą iterować bezpośrednio po tensorach TensorFlow, ale dzięki Autograph, takie operacje stają się możliwe.</p>
+<p>Jednak wykonywanie funkcji R “chętnie” (czyli natychmiastowo) przed opakowaniem ich za pomocą <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code> może prowadzić do pewnych komplikacji, ponieważ dodatkowe możliwości udostępniane przez <code>autograph = TRUE</code>, takie jak iteracja przez tensory w pętli <code>for</code>, nie są dostępne w standardowym R. Oznacza to, że próba bezpośredniego użycia takich konstrukcji w R bez odpowiedniego przekształcenia przez Autograph zakończyłaby się niepowodzeniem.</p>
+<p>Aby obejść ten problem i nadal móc korzystać z zaawansowanych konstrukcji TensorFlow w kodzie R, można użyć funkcji <code><a href="https://t-kalinowski.github.io/tfautograph/reference/autograph.html">autograph()</a></code> z pakietu <code>tfautograph</code> bezpośrednio. Pozwala to na ręczne przekształcenie wyrażeń R tak, aby mogły one korzystać z możliwości TensorFlow, np. iterować przez tensory w pętli <code>for</code>. Przykład użycia <code><a href="https://t-kalinowski.github.io/tfautograph/reference/autograph.html">tfautograph::autograph()</a></code> bezpośrednio w kodzie R pozwala na chętne (natychmiastowe) wykonanie takich operacji z zachowaniem integracji z TensorFlow. Oto dwa sposoby na to:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://t-kalinowski.github.io/tfautograph/">tfautograph</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://t-kalinowski.github.io/tfautograph/reference/autograph.html">autograph</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="fl">3L</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)</code></pre>
+</div>
+</div>
+<p>albo</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">ag_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://t-kalinowski.github.io/tfautograph/reference/autograph.html">autograph</a></span><span class="op">(</span><span class="va">fn</span><span class="op">)</span></span>
+<span><span class="fu">ag_fn</span><span class="op">(</span><span class="va">tf</span><span class="op">$</span><span class="fu">range</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(0.0, shape=(), dtype=float32)
+tf.Tensor(1.0, shape=(), dtype=float32)
+tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
+</div>
+</div>
+<p>W sesjach interaktywnych można tymczasowo globalnie włączyć <code>if, while</code> i <code>for</code>, aby akceptowały tensory, wywołując <code>tfautograph:::attach_ag_mask()</code>.</p>
+<p>Pętla <code>for()</code>, która iteruje po tensorze w <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code> tworzy <code>tf$while_loop()</code> i dziedziczy wszystkie te same ograniczenia. Każdy tensor śledzony przez pętlę musi mieć stabilny kształt i typ podczas iteracji.</p>
+<p>Wywołanie <code>ag_loop_vars(sentence)</code> daje kompilatorowi <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code> wskazówkę, że jedyną zmienną, którą jesteśmy zainteresowani po pętli <code>for</code> jest <code>sentence</code>. Informuje to kompilator, że inne tensory, takie jak <code>sampled_word</code>, <code>i</code> i <code>model_preds</code>, są zmiennymi lokalnymi pętli i mogą być bezpiecznie zoptymalizowane po pętli.</p>
+<p>Zauważmy, że iteracja po zwykłym obiekcie R, takim jak <code>for(i in seq(0, 49))</code> w <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code> nie spowoduje utworzenia <code>tf$while_loop()</code>, ale zamiast tego dokona oceny za pomocą zwykłej semantyki R i spowoduje, że <code><a href="https://rdrr.io/pkg/tensorflow/man/tf_function.html">tf_function()</a></code> będzie śledzić nierozwiniętą pętlę (co czasami jest preferowane w przypadku krótkich pętli o stałej liczbie iteracji).</p>
+</div>
+</div>
+<p>Oto wywołanie zwrotne, w którym wywołamy <code>tf_generate_sentence()</code>, aby wygenerować tekst podczas treningu:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">callback_text_generator</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/new-classes.html">new_callback_class</a></span><span class="op">(</span></span>
+<span>  classname <span class="op">=</span> <span class="st">"TextGenerator"</span>,</span>
+<span></span>
+<span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">prompt</span>, <span class="va">generate_length</span>,</span>
+<span>                        <span class="va">temperatures</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        <span class="va">print_freq</span> <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">private</span><span class="op">$</span><span class="va">prompt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">prompt</span>, <span class="st">"string"</span><span class="op">)</span></span>
+<span>    <span class="va">private</span><span class="op">$</span><span class="va">generate_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">generate_length</span>, <span class="st">"int32"</span><span class="op">)</span></span>
+<span>    <span class="va">private</span><span class="op">$</span><span class="va">temperatures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">temperatures</span><span class="op">)</span></span>
+<span>    <span class="va">private</span><span class="op">$</span><span class="va">print_freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">print_freq</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  on_epoch_end <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">epoch</span>, <span class="va">logs</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">(</span><span class="va">epoch</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="va">private</span><span class="op">$</span><span class="va">print_freq</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">)</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">temperature</span> <span class="kw">in</span> <span class="va">private</span><span class="op">$</span><span class="va">temperatures</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"== Generating with temperature"</span>, <span class="va">temperature</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span></span>
+<span>      <span class="va">sentence</span> <span class="op">&lt;-</span> <span class="fu">tf_generate_sentence</span><span class="op">(</span></span>
+<span>        <span class="va">self</span><span class="op">$</span><span class="va">model</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">private</span><span class="op">$</span><span class="va">prompt</span>, <span class="st">"string"</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">private</span><span class="op">$</span><span class="va">generate_length</span>, <span class="st">"int32"</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/as_tensor.html">as_tensor</a></span><span class="op">(</span><span class="va">temperature</span>, <span class="st">"float32"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sentence</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">text_gen_callback</span> <span class="op">&lt;-</span> <span class="fu">callback_text_generator</span><span class="op">(</span></span>
+<span>  prompt <span class="op">=</span> <span class="st">"This movie"</span>,</span>
+<span>  generate_length <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  temperatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">1.</span>, <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">lm_dataset</span>,</span>
+<span>      epochs <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>      callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">text_gen_callback</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Oto kilka wybranych przykładów tego, co jesteśmy w stanie wygenerować po 200 epokach treningu. Należy pamiętać, że interpunkcja nie jest częścią naszego słownictwa, więc żaden z wygenerowanych tekstów nie zawiera interpunkcji:</p>
+<ul>
+<li>Z temperaturą=0.2:
+<ul>
+<li>“this movie is a [UNK] of the original movie and the first half hour of the movie is pretty good but it is a very good movie it is a good movie for the time period”,</li>
+<li>“this movie is a [UNK] of the movie it is a movie that is so bad that it is a [UNK] movie it is a movie that is so bad that it makes you laugh and cry at the same time it is not a movie i dont think ive ever seen”</li>
+</ul>
+</li>
+<li>Z temperaturą=0.5:
+<ul>
+<li>“this movie is a [UNK] of the best genre movies of all time and it is not a good movie it is the only good thing about this movie i have seen it for the first time and i still remember it being a [UNK] movie i saw a lot of years”,</li>
+<li>“this movie is a waste of time and money i have to say that this movie was a complete waste of time i was surprised to see that the movie was made up of a good movie and the movie was not very good but it was a waste of time and”</li>
+</ul>
+</li>
+<li>Z temperaturą=0.7:
+<ul>
+<li>“this movie is fun to watch and it is really funny to watch all the characters are extremely hilarious also the cat is a bit like a [UNK] [UNK] and a hat [UNK] the rules of the movie can be told in another scene saves it from being in the back of”,</li>
+<li>“this movie is about [UNK] and a couple of young people up on a small boat in the middle of nowhere one might find themselves being exposed to a [UNK] dentist they are killed by [UNK] i was a huge fan of the book and i havent seen the original so it”,</li>
+</ul>
+</li>
+<li>Z temperaturą=1.0:
+<ul>
+<li>“this movie was entertaining i felt the plot line was loud and touching but on a whole watch a stark contrast to the artistic of the original we watched the original version of england however whereas arc was a bit of a little too ordinary the [UNK] were the present parent [UNK]”,</li>
+<li>“this movie was a masterpiece away from the storyline but this movie was simply exciting and frustrating it really entertains friends like this the actors in this movie try to go straight from the sub thats image and they make it a really good tv show”</li>
+</ul>
+</li>
+<li>Z temperaturą=1.5:
+<ul>
+<li>“this movie was possibly the worst film about that 80 women its as weird insightful actors like barker movies but in great buddies yes no decorated shield even [UNK] land dinosaur ralph ian was must make a play happened falls after miscast [UNK] bach not really not wrestlemania seriously sam didnt exist”,</li>
+<li>“this movie could be so unbelievably lucas himself bringing our country wildly funny things has is for the garish serious and strong performances colin writing more detailed dominated but before and that images gears burning the plate patriotism we you expected dyan bosses devotion to must do your own duty and another”.</li>
+</ul>
+</li>
+</ul>
+<p>Jak widać, niska wartość temperatury skutkuje bardzo nudnym i powtarzalnym tekstem i może czasami powodować utknięcie procesu generowania w pętli. Przy wyższych temperaturach generowany tekst staje się bardziej interesujący, zaskakujący, a nawet kreatywny. Przy bardzo wysokiej temperaturze lokalna struktura zaczyna się rozpadać, a wynik wygląda w dużej mierze losowo. W tym przypadku dobrą temperaturą generowania wydaje się być około 0,7. Zawsze eksperymentuj z wieloma strategiami próbkowania! Mądra równowaga między wyuczoną strukturą a losowością jest tym, co sprawia, że generowanie jest interesujące.</p>
+<p>Należy zauważyć, że trenując większy model, dłużej, na większej ilości danych, można uzyskać wygenerowane próbki, które wyglądają znacznie bardziej spójnie i realistycznie niż ta - wynik modelu takiego jak GPT-4 jest dobrym przykładem tego, co można zrobić z modelami językowymi (GPT-4 jest w rzeczywistości tym samym, co to, co trenowaliśmy w tym przykładzie, ale z głębokim stosem dekoderów Transformer i znacznie większym korpusem treningowym). Nie oczekujmy jednak, że kiedykolwiek wygenerujemy jakikolwiek znaczący tekst, poza przypadkowym przypadkiem i magią własnej interpretacji: wszystko, co robimy, to próbkowanie danych z modelu statystycznego określającego, które słowa następują po których słowach. Modele językowe to tylko forma, bez treści.</p>
+<p>Język naturalny pełni wiele funkcji: jest kanałem komunikacyjnym, narzędziem oddziaływania na świat, elementem budującym relacje społeczne oraz środkiem do formułowania, przechowywania i odzyskiwania myśli, co stanowi o jego znaczeniu. Mimo nazwy, model języka oparty na głębokim uczeniu nie odzwierciedla żadnego z tych kluczowych aspektów języka – nie potrafi komunikować, ponieważ nie ma ani treści do przekazania, ani odbiorcy; nie ma wpływu na rzeczywistość, brak mu samodzielności i intencjonalności; nie jest zdolny do interakcji społecznych ani przetwarzania myśli za pomocą słów. Język, będący systemem operacyjnym umysłu, wymaga do swojego znaczącego użycia obecności umysłu. Model językowy jedynie rejestruje statystyczną strukturę tekstów, jak książki czy recenzje, będącą efektem ludzkiego użycia języka. Zastanawiając się nad hipotetyczną sytuacją, w której języki lepiej kompresowałyby informacje, podobnie do procesów cyfrowych, język nadal pełniłby swoje funkcje, ale pozbawiony byłby wewnętrznej struktury statystycznej, co uniemożliwiłoby jego modelowanie w dotychczasowy sposób.</p>
 
 
 <div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Rys.&nbsp;7.1: Efekt DeepDream nałożony na obraz “Mona Lisa”</span>
 <span class="glightbox-desc lightbox-desc-2">Rys.&nbsp;7.2: Obraz generowany przez Google DeepDream w odpowiedzi na prompt “Riders galloping on horses in wild Texas”</span>
+<span class="glightbox-desc lightbox-desc-4">Rys.&nbsp;7.3: Proces generowania tekstu słowo po słowie przy użyciu modelu językowego</span>
+<span class="glightbox-desc lightbox-desc-5">Rys.&nbsp;7.4: Różne wagi rozkładu prawdopodobieństwa: Niska temperatura = bardziej deterministyczny; wysoka temperatura = bardziej losowy</span>
+<span class="glightbox-desc lightbox-desc-6">Rys.&nbsp;7.5: W porównaniu do zwykłego przewidywania następnego słowa, modelowanie sekwencja-sekwencja jednocześnie optymalizuje wiele problemów związanych z przewidywaniem.</span>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-gravesGeneratingSequencesRecurrent2014" class="csl-entry" role="listitem">
+Graves, Alex. b.d. <span>„Generating Sequences With Recurrent Neural Networks”</span>. <a href="https://doi.org/10.48550/arXiv.1308.0850">https://doi.org/10.48550/arXiv.1308.0850</a>.
+</div>
 <div id="ref-xenakis1963musiques" class="csl-entry" role="listitem">
 Xenakis, I. 1963. <em>Musiques formelles: nouveaux principes formels de composition musicale</em>. Revue musicale. Richard-Masse. <a href="https://books.google.pl/books?id=xfdqswEACAAJ">https://books.google.pl/books?id=xfdqswEACAAJ</a>.
 </div>
 </div>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -802,10 +1319,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./llm.html" class="pagination-link  aria-label=" &lt;span="" językowe&lt;="" span&gt;"="">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./llm.html" class="pagination-link  aria-label=" j="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span>
       </a>          
   </div>
@@ -816,20 +1331,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p>Zaawansowane metody uczenia maszynowego, Dariusz Majerek</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dax44/AMLM/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-</footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
@@ -854,8 +1367,6 @@ window.onload = () => {
 
 };
           </script>
-
-
 
 
 </body></html>
