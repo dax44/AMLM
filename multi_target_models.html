@@ -64,6 +64,9 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -216,6 +219,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./gan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sieci generatywne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Literatura</span></a>
   </div>
@@ -312,7 +321,7 @@ D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\m
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Zrzut ekranu 2024-01-9 o 18.38.32.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><a href="images/Zrzut ekranu 2024-01-9 o 18.38.32.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Single-target stacking"><img src="images/Zrzut ekranu 2024-01-9 o 18.38.32.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Single-target stacking"></a></p>
 <figcaption>Single-target stacking</figcaption>
 </figure>
 </div>
@@ -326,7 +335,7 @@ D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\m
 <p>gdzie <span class="math inline">\(\mathbf{x}'^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, \hat{y}_1^{(l)},\ldots,\hat{y}_d^{(l)} \right)\)</span>. W metodzie MTS istnieją również dwa sposoby składania kolejnych iteracji. Przebiegają one w podobny sposób jak w przypadku STS.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Zrzut ekranu 2024-01-9 o 18.39.01.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><a href="images/Zrzut ekranu 2024-01-9 o 18.39.01.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Multi-target stacking"><img src="images/Zrzut ekranu 2024-01-9 o 18.39.01.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Multi-target stacking"></a></p>
 <figcaption>Multi-target stacking</figcaption>
 </figure>
 </div>
@@ -341,14 +350,14 @@ D_i'=\left\{\left(\mathbf{x}'^{(1)}, \mathbf{y}_i^{(1)}\right), \ldots, \left(\m
 <p>gdzie <span class="math inline">\(\mathbf{x}'^{(l)} =\left(x_1^{(l)},\ldots, x_m^{(l)}, y_1^{(l)},\ldots, y_{i-1}^{(l)} \right)\)</span>. Ten algorytm ma również dwie odmiany (niekumulatywną i kumulatywną) w zależności od kształtu kolejnych iteracji.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Zrzut ekranu 2024-01-9 o 19.10.54.png" class="img-fluid figure-img"></p>
+<p><a href="images/Zrzut ekranu 2024-01-9 o 19.10.54.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="Regressor chains"><img src="images/Zrzut ekranu 2024-01-9 o 19.10.54.png" class="img-fluid figure-img" alt="Regressor chains"></a></p>
 <figcaption>Regressor chains</figcaption>
 </figure>
 </div>
 <p>Ponieważ, jak można się spodziewać wyniki modelowania w znaczny sposób zależą od wylosowanej permutacji, to w metodzie zaproponowanej przez <span class="citation" data-cites="melkiMultitargetSupportVector2017">Melki i in. (<a href="references.html#ref-melkiMultitargetSupportVector2017" role="doc-biblioref">2017</a>)</span> aby uniknąć tego efektu buduje się <span class="math inline">\(k\)</span> modeli dla różnych permutacji i łączy się wyniki w podobny sposób jak w lasach losowych.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p><img src="images/r_vs_python.png" class="img-fluid"></p>
+<p><a href="images/r_vs_python.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/r_vs_python.png" class="img-fluid"></a></p>
 </div></div><div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -454,6 +463,11 @@ Adnotacja
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Single-target stacking</span>
+<span class="glightbox-desc lightbox-desc-2">Multi-target stacking</span>
+<span class="glightbox-desc lightbox-desc-3">Regressor chains</span>
+</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-borchaniSurveyMultioutputRegression2015" class="csl-entry" role="listitem">
 Borchani, Hanen, Gherardo Varando, Concha Bielza, i Pedro Larrañaga. 2015. <span>„A Survey on Multi-Output Regression”</span>. <em>WIREs Data Mining and Knowledge Discovery</em> 5 (5): 216–33. <a href="https://doi.org/10.1002/widm.1157">https://doi.org/10.1002/widm.1157</a>.
@@ -1075,6 +1089,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

@@ -44,6 +44,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -167,6 +170,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./gan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sieci generatywne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Literatura</span></a>
   </div>
@@ -214,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Opublikowano</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">16 lutego 2024</p>
+      <p class="date">24 lutego 2024</p>
     </div>
   </div>
   
@@ -226,9 +235,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-
+<p><a href="images/cover.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/cover.png" title="Zaawansowane metody uczenia maszynowego" class="quarto-cover-image img-fluid"></a></p>
 <section id="wstęp" class="level1 unnumbered">
-<h1 class="unnumbered">Wstęp</h1><p><img src="images/cover.png" title="Zaawansowane metody uczenia maszynowego" class="quarto-cover-image img-fluid"></p>
+<h1 class="unnumbered">Wstęp</h1>
 <p>Książka ta jest napisana na potrzeby prowadzenia zajęć na kierunku <em>Inżynieria i analiza danych</em> z przedmiotu <em>Zaawansowane metody uczenia maszynowego.</em> Jest swego rodzaju autorskim podejściem do tematu, przedstawiającym wybrane metody uczenia maszynowego, które rzadziej występują w opracowaniach na temat uczenia maszynowego.</p>
 <p>Uczenie maszynowe stanowi obszar intensywnego rozwoju, który obejmuje szereg technik umożliwiających bardziej skomplikowane i wydajne modele predykcyjne. Wśród tych metod warto wyróżnić głębokie sieci neuronowe, zwłaszcza konwolucyjne sieci neuronowe (CNN) i rekurencyjne sieci neuronowe (RNN). CNN są wykorzystywane w zadaniach przetwarzania obrazów, gdzie potrafią efektywnie ekstrahować hierarchiczne cechy z danych wejściowych, natomiast RNN są efektywne w analizie sekwencji danych, takich jak język naturalny. Ponadto, metody uczenia maszynowego obejmują techniki transferu wiedzy, uczenie ze wzmocnieniem, generatywne modele, takie jak generatywne sieci przeciwdziedzinowe (GAN), czy też autokodery. Te nowoczesne podejścia umożliwiają modelom uczącym się wykonywanie bardziej złożonych zadań, a także adaptację do różnorodnych danych wejściowych, co sprawia, że są one stosowane w obszarach takich jak rozpoznawanie obrazów, przetwarzanie języka naturalnego, czy nawet w autonomicznych systemach decyzyjnych.</p>
 <p>Ponadto, zaawansowane metody uczenia maszynowego obejmują także techniki regularyzacji, optymalizacji i inżynierię cech. Regularyzacja ma na celu zapobieganie przeuczeniu poprzez kontrolowanie złożoności modelu, natomiast optymalizacja skupia się na dostosowywaniu wag modelu w celu minimalizacji funkcji straty. Inżynieria cech polega na ręcznym lub automatycznym dostosowywaniu danych wejściowych w celu uzyskania lepszych wyników modelu. Dzięki tym zaawansowanym metodom, uczenie maszynowe staje się coraz bardziej potężnym narzędziem w analizie danych i podejmowaniu skomplikowanych decyzji w różnych dziedzinach.</p>
@@ -794,6 +803,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
