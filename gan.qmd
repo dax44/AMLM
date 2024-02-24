@@ -296,3 +296,35 @@ dataset <- text_dataset_from_directory(directory = "data/aclImdb",
 dataset <- dataset %>%
   dataset_map( ~ tf$strings$regex_replace(.x, "<br />", " "))
 ```
+
+Teraz użyjmy funkcji `layer_text_vectorization()` do przetworzenia słownictwa,
+z którym będziemy pracować. Użyjemy tylko pierwszych słów o długości sekwencji
+w każdej recenzji: nasza funkcja `layer_text_vectorization()` odetnie wszystko
+poza tym podczas wektoryzacji tekstu.
+
+```{r}
+sequence_length <- 100
+vocab_size <- 15000
+text_vectorization <- layer_text_vectorization(
+  max_tokens = vocab_size,
+  output_mode = "int",
+  output_sequence_length = sequence_length
+)
+adapt(text_vectorization, dataset)
+```
+
+Użyjmy tej warstwy do stworzenia zbioru danych do modelowania językowego, w
+którym próbki wejściowe są wektoryzowanymi tekstami, a odpowiadające im cele są
+tymi samymi tekstami przesuniętymi o jedno słowo.
+
+```{r}
+prepare_lm_dataset <- function(text_batch) {
+  vectorized_sequences <- text_vectorization(text_batch)
+  x <- vectorized_sequences[, NA:-2]
+  y <- vectorized_sequences[, 2:NA]
+  list(x, y)
+}
+
+lm_dataset <- dataset %>%
+  dataset_map(prepare_lm_dataset, num_parallel_calls = 4)
+```
