@@ -71,23 +71,228 @@ rzemiosła.
 
 Iannis Xenakis, wizjonerski pionier muzyki elektronicznej i algorytmicznej,
 pięknie wyraził tę samą ideę w latach sześćdziesiątych, w kontekście
-zastosowania technologii automatyzacji do komponowania muzyki
-
-Uwolniony od żmudnych obliczeń, kompozytor jest w stanie poświęcić się ogólnym
-problemom, jakie stawia nowa forma muzyczna i badać jej zakamarki, modyfikując
-wartości danych wejściowych. Przykładowo, może on przetestować wszystkie
-kombinacje instrumentów, od solistów, przez orkiestry kameralne, aż po duże
-orkiestry. Z pomocą komputerów elektronicznych kompozytor staje się swego
-rodzaju pilotem: naciska przyciski, wprowadza współrzędne i nadzoruje
-sterowanie kosmicznym statkiem płynącym w przestrzeni dźwięku, przez dźwiękowe
-konstelacje i galaktyki, które wcześniej mógł dostrzec tylko jako odległe
-marzenie.
+zastosowania technologii automatyzacji do komponowania
+muzyki[@xenakis1963musiques]. Uwolniony od żmudnych obliczeń, kompozytor jest
+dziś w stanie poświęcić się ogólnym problemom, jakie stawia nowa forma muzyczna
+i badać jej zakamarki, modyfikując wartości danych wejściowych. Przykładowo,
+może on przetestować wszystkie kombinacje instrumentów, od solistów, przez
+orkiestry kameralne, aż po duże orkiestry. Z pomocą komputerów elektronicznych
+kompozytor staje się swego rodzaju pilotem: naciska przyciski, wprowadza
+współrzędne i nadzoruje sterowanie kosmicznym statkiem płynącym w przestrzeni
+dźwięku, przez dźwiękowe konstelacje i galaktyki, które wcześniej mógł dostrzec
+tylko jako odległe marzenie.
 
 W tym rozdziale zbadamy pod różnymi kątami potencjał głębokiego uczenia się do
-wspomagania twórczości artystycznej. Dokonamy przeglądu generowania danych
-sekwencyjnych (które można wykorzystać do generowania tekstu lub muzyki),
-DeepDream i generowania obrazów przy użyciu zarówno wariacyjnych autoenkoderów,
-jak i generatywnych sieci przeciwstawnych. Sprawimy, że twój komputer będzie w
-stanie wymyślać treści, jakich nigdy wcześniej nie widziano; a może sprawimy,
-że i ty zaczniesz marzyć o fantastycznych możliwościach, jakie kryją się na
-styku technologii i sztuki. Zaczynajmy.
+wspomagania szeroko rozumianej twórczości. Dokonamy przeglądu generatorów
+danych sekwencyjnych (które można wykorzystać do generowania tekstu lub
+muzyki), DeepDream i generatorów obrazów przy użyciu zarówno wariacyjnych
+autoenkoderów, jak i generatywnych sieci przeciwstawnych (ang. *Generative
+Adversarial Networks*). Sprawimy, że komputer będzie w stanie wymyślać treści,
+jakich nigdy wcześniej nie widziano.
+
+## Generowanie tekstu
+
+W tej sekcji zbadamy, w jaki sposób rekurencyjne sieci neuronowe mogą być
+wykorzystywane do generowania danych sekwencyjnych. Jako przykładu użyjemy
+generatora tekstu, ale dokładnie te same techniki można uogólnić na dowolny
+rodzaj danych sekwencyjnych: można je zastosować do sekwencji nut w celu
+wygenerowania nowej muzyki, do szeregów czasowych danych pociągnięć pędzla (być
+może nagranych podczas malowania przez artystę na iPadzie) w celu wygenerowania
+obrazów pociągnięcie po pociągnięciu i tak dalej.
+
+Generowanie danych sekwencyjnych nie jest w żaden sposób ograniczone do
+generowania treści artystycznych. Zostało ono z powodzeniem zastosowane do
+syntezy mowy i generowania dialogów dla chatbotów. Funkcja *Smart Reply*, którą
+Google wypuściło w 2016 roku, zdolna do automatycznego generowania wyboru
+szybkich odpowiedzi na e-maile lub wiadomości tekstowe, jest zasilana podobnymi
+technikami.
+
+### Rys historyczny
+
+Pod koniec 2014 roku niewiele osób widziało inicjały LSTM, nawet w społeczności
+zajmującej się uczeniem maszynowym. Udane zastosowania generowania danych
+sekwencyjnych za pomocą sieci rekurencyjnych zaczęły pojawiać się w głównym
+nurcie dopiero w 2016 roku. Techniki te mają jednak dość długą historię,
+począwszy od opracowania algorytmu LSTM w 1997 roku. Ten nowy algorytm został
+wcześnie wykorzystany do generowania tekstu znak po znaku.
+
+W 2002 roku Douglas Eck, pracujący wówczas w laboratorium Schmidhubera w
+Szwajcarii, po raz pierwszy zastosował LSTM do generowania muzyki, uzyskując
+obiecujące wyniki. Eck jest obecnie badaczem w Google Brain, a w 2016 roku
+założył tam nową grupę badawczą o nazwie Magenta, skupiającą się na
+zastosowaniu nowoczesnych technik głębokiego uczenia się do tworzenia
+angażującej muzyki[^gan-1].
+
+Pod koniec lat 2000 i na początku 2010 Alex Graves wykonał ważną pionierską
+pracę z wykorzystaniem sieci rekurencyjnych do generowania danych
+sekwencyjnych. W szczególności jego praca z 2013 roku nad zastosowaniem sieci
+rekurencyjnych mieszany rozkładów do generowania pisma odręcznego podobnego do
+ludzkiego przy użyciu szeregów czasowych pozycji pióra jest postrzegana przez
+niektórych jako punkt zwrotny [@gravesGeneratingSequencesRecurrent2014]. Graves
+pozostawił komentarz ukryty w pliku LaTeX z 2013 r. przesłanym na serwer arXiv:
+"Generowanie sekwencyjnych danych jest najbliższe marzeniom komputerów". Kilka
+lat później wiele z tych osiągnięć uważamy za oczywiste, ale w tamtym czasie
+trudno było oglądać prezentacje Gravesa i nie odchodzić zainspirowanym
+przedstawionymi możliwościami. W latach 2015-2017 rekurencyjne sieci neuronowe
+były z powodzeniem wykorzystywane do generowania tekstu i dialogów, generowania
+muzyki i syntezy mowy.
+
+Następnie, około 2017-2018 roku, architektura Transformer zaczęła przejmować
+rekurencyjne sieci neuronowe, nie tylko do nadzorowanych zadań przetwarzania
+języka naturalnego, ale także do generatywnych modeli sekwencyjnych - w
+szczególności modelowania języka (generowania tekstu na poziomie słów).
+Najbardziej znanym przykładem generatywnego Transformera jest GPT, model
+generowania tekstu o 1.7 tryliona parametrów, wytrenowany przez startup OpenAI
+na zdumiewająco dużym korpusie tekstowym, obejmującym większość dostępnych
+cyfrowo książek, Wikipedię i duży ułamek przeszukiwania całego Internetu. GPT
+trafił na pierwsze strony gazet w 2020 roku ze względu na swoją zdolność do
+generowania wiarygodnie brzmiących akapitów tekstowych na praktycznie dowolny
+temat, co podsyciło krótkotrwałą falę szumu godną najbardziej gorącego lata AI.
+
+[^gan-1]: Czasami dobre pomysły potrzebują 15 lat, aby je wdrożyć
+
+### Jak wygenerować dane sekwencyjne?
+
+Uniwersalnym sposobem generowania danych sekwencyjnych w uczeniu głębokim jest
+trenowanie modelu (zwykle transformera lub RNN) w celu przewidywania następnego
+tokena lub kilku następnych tokenów w sekwencji, przy użyciu poprzednich
+tokenów jako danych wejściowych. Na przykład, biorąc pod uwagę dane wejściowe
+"the cat is on the", model jest trenowany w celu przewidywania docelowego
+"mat", następnego słowa. Jak zwykle podczas pracy z danymi tekstowymi, tokeny
+są zazwyczaj słowami lub znakami, a każda sieć, która może modelować
+prawdopodobieństwo następnego tokena, biorąc pod uwagę poprzednie, nazywana
+jest modelem językowym. Model językowy przechwytuje ukrytą przestrzeń języka:
+jego strukturę statystyczną.
+
+Gdy mamy już taki wytrenowany model językowy, możemy próbkować z niego
+(generować nowe sekwencje): podajemy mu początkowy ciąg tekstu (zwany danymi
+kondycjonującymi), prosimy go o wygenerowanie następnego znaku lub następnego
+słowa (możemy nawet wygenerować kilka tokenów jednocześnie), dodajemy
+wygenerowane dane wyjściowe z powrotem do danych wejściowych i powtarzamy
+proces wiele razy (patrz @fig-text1). Ta pętla pozwala generować sekwencje o
+dowolnej długości, które odzwierciedlają strukturę danych, na których model
+został przeszkolony: sekwencje, które wyglądają prawie jak zdania napisane
+przez człowieka.
+
+![Proces generowania tekstu słowo po słowie przy użyciu modelu
+językowego](images/Zrzut ekranu 2024-02-24 o 20.19.14.png){#fig-text1
+fig-align="center" width="600"}
+
+### Znaczenie strategii pobierania próbek
+
+Podczas generowania tekstu sposób wyboru następnego tokena ma kluczowe
+znaczenie. Naiwnym podejściem jest zachłanne próbkowanie, polegające na
+wybieraniu zawsze najbardziej prawdopodobnego następnego znaku. Takie podejście
+skutkuje powtarzalnymi, przewidywalnymi ciągami znaków, które nie wyglądają jak
+spójny język. Bardziej interesujące podejście dokonuje nieco bardziej
+zaskakujących wyborów: wprowadza losowość do procesu próbkowania poprzez
+próbkowanie z rozkładu prawdopodobieństwa dla następnego tokena. Nazywa się to
+próbkowaniem stochastycznym (przypomnijmy, że stochastyczność jest tym, co
+nazywamy losowością w tej dziedzinie). W takim układzie, jeśli słowo ma
+prawdopodobieństwo 0,3 bycia następnym w zdaniu zgodnie z modelem, wybierzemy
+je w 30% przypadków. Należy zauważyć, że zachłanne próbkowanie można również
+traktować jako próbkowanie z rozkładu prawdopodobieństwa: takiego, w którym
+określone słowo ma prawdopodobieństwo 1, a wszystkie inne mają
+prawdopodobieństwo 0.
+
+Próbkowanie probabilistyczne za pomocą funkcji softmax modelu jest celowe:
+pozwala na próbkowanie nawet mało prawdopodobnych słów przez pewien czas,
+generując bardziej interesująco wyglądające zdania, a czasem wykazując się
+kreatywnością, wymyślając nowe, realistycznie brzmiące zdania, które nie
+występowały w danych treningowych. Jest jednak jeden problem z tą strategią:
+nie oferuje ona sposobu na kontrolowanie poziomu losowości w procesie
+próbkowania.
+
+Dlaczego mielibyśmy chcieć większej lub mniejszej losowości? Rozważmy skrajny
+przypadek: czysto losowe pobieranie próbek, w którym następne słowo jest
+losowane z jednostajnego rozkładu prawdopodobieństwa, a każde słowo jest równie
+prawdopodobne. Ten schemat ma maksymalną losowość; innymi słowy, ten rozkład
+prawdopodobieństwa ma maksymalną entropię. Naturalnie, nie da on niczego
+interesującego. Na drugim biegunie, zachłanne próbkowanie również nie daje
+niczego interesującego i nie ma losowości: odpowiadający mu rozkład
+prawdopodobieństwa ma minimalną entropię. Próbkowanie z "prawdziwego" rozkładu
+prawdopodobieństwa - rozkładu, który jest wyprowadzany przez funkcję softmax
+modelu - stanowi punkt pośredni między tymi dwoma skrajnościami. Istnieje
+jednak wiele innych punktów pośrednich o wyższej lub niższej entropii, które
+warto zbadać. Mniejsza entropia nada wygenerowanym sekwencjom bardziej
+przewidywalną strukturę (a tym samym będą one potencjalnie bardziej
+realistycznie wyglądać), podczas gdy większa entropia spowoduje bardziej
+zaskakujące i kreatywne sekwencje. Podczas próbkowania z modeli generatywnych
+zawsze dobrze jest zbadać różne ilości losowości w procesie generowania.
+Ponieważ to my - ludzie - jesteśmy ostatecznymi sędziami tego, jak interesujące
+są wygenerowane dane, ciekawość jest wysoce subiektywna i nie można z góry
+powiedzieć, gdzie leży punkt optymalnej entropii.
+
+Aby kontrolować ilość stochastyczności w procesie próbkowania, wprowadzimy
+parametr zwany temperaturą softmax, który charakteryzuje entropię rozkładu
+prawdopodobieństwa używanego do próbkowania - charakteryzuje on, jak
+zaskakujący lub przewidywalny będzie wybór następnego słowa. Biorąc pod uwagę
+wartość temperatury, nowy rozkład prawdopodobieństwa jest obliczany na
+podstawie oryginalnego prawdopodobieństwa (wyjście softmax modelu), poprzez
+ponowne ważenie go w następujący sposób.
+
+Wyższe temperatury skutkują rozkładami próbkowania o wyższej entropii, które
+wygenerują bardziej zaskakujące i nieustrukturyzowane wygenerowane dane,
+podczas gdy niższa temperatura spowoduje mniejszą losowość i znacznie bardziej
+przewidywalne wygenerowane dane (patrz @fig-text2).
+
+```{r}
+library(keras)
+library(tensorflow)
+library(tfautograph)
+
+reweight_distribution <-
+  function(original_distribution, temperature = 0.5) {
+    original_distribution %>%
+      { exp(log(.) / temperature) } %>%
+      { . / sum(.) }
+  }
+```
+
+![Różne ważenia jednego rozkładu prawdopodobieństwa: Niska temperatura =
+bardziej deterministyczny; wysoka temperatura = bardziej
+losowy](images/Zrzut ekranu 2024-02-24 o 20.30.27.png){#fig-text2
+fig-align="center" width="600"}
+
+### Implementacja generowania tekstu za pomocą Keras
+
+Zastosujmy te pomysły w praktyce z implementacją w Keras. Pierwszą rzeczą,
+której potrzebujemy, jest duża ilość danych tekstowych, których możemy użyć do
+nauki modelu językowego. Możemy użyć dowolnego wystarczająco dużego pliku
+tekstowego lub zestawu plików tekstowych. W tym przykładzie będziemy nadal
+pracować z zestawem danych recenzji filmów IMDB z ostatniego rozdziału i
+nauczymy się generować nigdy wcześniej nieprzeczytane recenzje filmów. W
+związku z tym nasz model językowy będzie modelem stylu i tematyki tych recenzji
+filmowych, a nie ogólnym modelem języka angielskiego.
+
+#### Przygotowanie danych
+
+Podobnie jak w poprzednim rozdziale, pobierzmy i rozpakujmy zbiór danych z
+recenzjami filmów IMDB.
+
+```{r}
+#| eval: false
+
+url <- "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
+filename <- basename(url)
+options(timeout = 60*10) # 10 minute timeout
+download.file(url, destfile = filename)
+untar(filename)
+```
+
+Znamy już strukturę danych: otrzymujemy folder o nazwie `aclImdb` zawierający
+dwa podfoldery, jeden dla recenzji filmów o negatywnym wydźwięku i jeden dla
+recenzji o pozytywnym wydźwięku. Na każdą recenzję przypada jeden plik
+tekstowy. Wywołamy `text_dataset_from_directory()` z `label_mode = NULL`, aby
+utworzyć zestaw danych TF, który odczyta te pliki i wyświetli zawartość
+tekstową każdego z nich.
+
+```{r}
+library(tfdatasets)
+
+dataset <- text_dataset_from_directory(directory = "data/aclImdb",
+                                       label_mode = NULL,
+                                       batch_size = 256)
+dataset <- dataset %>%
+  dataset_map( ~ tf$strings$regex_replace(.x, "<br />", " "))
+```
