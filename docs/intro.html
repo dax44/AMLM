@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -44,6 +44,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -75,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -143,6 +146,36 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Przykłady - metody klasyczne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Przykłady NN</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">DNN dla danych sekwencyjnych</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sieci generatywne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Literatura</span></a>
   </div>
@@ -156,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -179,7 +212,10 @@ ul.task-list li input[type="checkbox"] {
 
 <p>Witam w świecie zaawansowanych metod uczenia maszynowego 🤖, prezentowanej w niniejszej publikacji. Książka ta skupia się na trzech głównych obszarach, zaczynając od wielowymiarowych problemów predykcyjnych, przechodząc przez kompleksowe modele głębokich sieci neuronowych, a kończąc na zaawansowanych modelach językowych. Koncepcyjnie rozpoczniemy od omówienia <em>multiple target regression and classification</em>, gdzie przedstawimy skomplikowane zadania predykcyjne wymagające jednoczesnej prognozy wielu zmiennych. Przeanalizujemy praktyczne zastosowania tych modeli w obszarach, takich jak nauki społeczne, biologia i finanse.</p>
 <p>Następnie poświęcimy uwagę głębokim sieciom neuronowym, głównemu filarowi nowoczesnej sztucznej inteligencji. Omówimy ewolucję od konwolucyjnych sieci neuronowych (CNN) do rekurencyjnych sieci neuronowych (RNN), zwracając uwagę na ich zdolność do efektywnego przetwarzania obrazów, sekwencji danych i rozwiązania bardziej złożonych problemów. W ramach tego obszaru, przyjrzymy się również technikom transferu wiedzy, uczenia ze wzmocnieniem oraz generatywnym modelom, takim jak generatywne sieci przeciwdziedzinowe (GAN), które poszerzają granice możliwości maszynowego uczenia się.</p>
-<p>Trzeci kluczowy obszar, który będzie przedmiotem analizy, to modele językowe. Rozważania rozpoczniemy od głębokich sieci neuronowych, a następnie skoncentrujemy się na transformatorach, które rewolucjonizują przetwarzanie języka naturalnego 👅. Przedstawimy praktyczne zastosowania tych modeli, zwłaszcza w tłumaczeniu maszynowym, generowaniu tekstu i analizie sentymentu. Ponadto, omówimy pre-trenowane modele językowe, takie jak BERT czy GPT, jako kluczowe narzędzia adaptacyjne, zdolne do fine-tuningu w zależności od konkretnego zadania.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/vader.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/vader.jpeg" class="img-fluid"></a></p>
+</div></div><p>Trzeci kluczowy obszar, który będzie przedmiotem analizy, to modele językowe. Rozważania rozpoczniemy od głębokich sieci neuronowych, a następnie skoncentrujemy się na transformatorach, które rewolucjonizują przetwarzanie języka naturalnego 👅. Przedstawimy praktyczne zastosowania tych modeli, zwłaszcza w tłumaczeniu maszynowym, generowaniu tekstu i analizie sentymentu. Ponadto, omówimy pre-trenowane modele językowe, takie jak BERT czy GPT, jako kluczowe narzędzia adaptacyjne, zdolne do fine-tuningu w zależności od konkretnego zadania.</p>
 <p>Każdy podejmowany temat będzie wzbogacony o implementację analizowanych metod w realnych scenariuszach. Omówimy kroki od obróbki danych, przez dostosowywanie architektury modelu, aż po ocenę wyników. W tym kontekście poruszymy także aspekty etyczne i wyzwania związane z zastosowaniem zaawansowanych modeli uczenia maszynowego.</p>
 
 
@@ -490,7 +526,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -737,6 +778,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

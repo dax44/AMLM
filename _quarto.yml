@@ -30,13 +30,20 @@ book:
     - index.qmd
     - intro.qmd
     - multi_target_models.qmd
+    - examples.qmd
+    - examples2.qmd
+    - rnn.qmd
+    - llm.qmd
+    - gan.qmd
     - references.qmd
 
 bibliography: references.bib
 reference-location: margin
+lightbox: true
 
 format:
   html:
+    reference-location: margin
     grid:
       sidebar-width: 300px
       body-width: 1400px
@@ -49,6 +56,12 @@ format:
     code-link: true
     code-fold: show
     fig-align: center
+    crossref:
+      fig-title: Rys.     # (default is "Figure")
+      tbl-title: Tab.     # (default is "Table")
+      fig-prefix: Rys.
+      tbl-prefix: Tab.
+
 
 execute: 
   warning: false

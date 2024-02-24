@@ -1,0 +1,93 @@
+---
+code-fold: show
+editor_options: 
+  chunk_output_type: console
+---
+
+# Sieci generatywne
+
+Potencjał sztucznej inteligencji do naśladowania ludzkich procesów myślowych
+wykracza poza pasywne zadania, takie jak rozpoznawanie obiektów i zadania w
+większości reaktywne, takie jak prowadzenie samochodu. Rozciąga się on również
+na działania kreatywne. Kiedy po raz pierwszy postawiono tezę, że w niezbyt
+odległej przyszłości większość treści kulturowych, które konsumujemy, będzie
+tworzona przy znacznej pomocy sztucznej inteligencji, spotkało się to z
+całkowitym niedowierzaniem, nawet ze strony wieloletnich praktyków uczenia
+maszynowego. To było w 2014 roku. Kilka lat później niedowierzanie zniknęło w
+niewiarygodnym tempie. Latem 2015 roku bawił nas algorytm Google DeepDream
+zamieniający obraz w psychodeliczny bałagan psich oczu i pareidolicznych
+artefaktów.
+
+![Efekt DeepDream nałożony na obraz "Mona
+Lisa"](images/%22Mona_Lisa%22_with_DeepDream_effect_using_VGG16_network_trained_on_ImageNet.jpg){#fig-dd2
+fig-align="center" width="400"}
+
+W 2016 roku zaczęliśmy używać aplikacji na smartfony do przekształcania zdjęć w
+obrazy w różnych stylach. Latem 2016 roku wyreżyserowaliśmy eksperymentalny
+film krótkometrażowy Sunspring, używając scenariusza napisanego przez LSTM. Być
+może ostatnio słuchałeś muzyki, która została wygenerowana przez sieć
+neuronową.
+
+![Obraz generowany przez Google DeepDream w odpowiedzi na prompt "Riders
+galloping on horses in wild
+Texas"](images/1663c907b336ac6277e49029c909833edda95392.jpg){#fig-dd1
+fig-align="center" width="500"}
+
+Trzeba przyznać, że artystyczne produkcje, które widzieliśmy do tej pory od AI,
+były dość niskiej jakości. Sztuczna inteligencja nie jest w stanie rywalizować
+z ludzkimi scenarzystami, malarzami i kompozytorami. Ale zastąpienie ludzi
+zawsze było poza celem: sztuczna inteligencja nie polega na zastąpieniu naszej
+własnej inteligencji czymś innym; chodzi o wprowadzenie do naszego życia i
+pracy większej inteligencji - inteligencji innego rodzaju. W wielu dziedzinach,
+ale szczególnie w tych kreatywnych, sztuczna inteligencja będzie wykorzystywana
+przez ludzi jako narzędzie zwiększające ich własne możliwości: bardziej
+rozszerzona inteligencja niż sztuczna inteligencja.
+
+{{< video https://youtu.be/2O6gD-icUHc?si=A77qICCgwxj2uLIT title="Muzyuka do filmu, jak i on sam został wygenerowany przez AI" >}}
+
+Duża część twórczości artystycznej polega na prostym rozpoznawaniu wzorców i
+umiejętnościach technicznych. I to jest właśnie ta część procesu, którą wielu
+uważa za mniej atrakcyjną lub nawet zbędną. Tutaj właśnie wkracza sztuczna
+inteligencja. Nasze zdolności percepcyjne, język i dzieła sztuki mają strukturę
+statystyczną. Uczenie się tej struktury jest tym, w czym algorytmy głębokiego
+uczenia się przodują. Modele uczenia maszynowego mogą uczyć się statystycznej
+ukrytej przestrzeni obrazów, muzyki i historii, a następnie mogą próbkować z
+tej przestrzeni, tworząc nowe dzieła sztuki o cechach podobnych do tych, które
+model widział w swoich danych treningowych. Oczywiście takie próbkowanie samo w
+sobie nie jest aktem artystycznej kreacji. Jest to zwykła operacja
+matematyczna: algorytm nie ma podstaw w ludzkim życiu, ludzkich emocjach ani
+naszym doświadczeniu świata; zamiast tego uczy się z doświadczenia, które ma
+niewiele wspólnego z naszym. Tylko nasza interpretacja, jako ludzkich widzów,
+nada znaczenie temu, co wygeneruje model. Jednak w rękach wykwalifikowanego
+artysty, algorytmiczne generowanie może być sterowane tak, aby stało się
+znaczące - i piękne. Próbkowanie ukrytej przestrzeni może stać się pędzlem,
+który wzmacnia artystę, zwiększa nasze możliwości twórcze i rozszerza
+przestrzeń tego, co możemy sobie wyobrazić. Co więcej, może uczynić twórczość
+artystyczną bardziej dostępną, eliminując potrzebę umiejętności technicznych i
+praktyki, tworząc nowe medium czystej ekspresji, oddzielając sztukę od
+rzemiosła.
+
+{{< video https://youtu.be/HK6y8DAPN_0?si=fq5N6jez7Sk7VjAq title="Najnowsze dziecko OpenAI - Sora" >}}
+
+Iannis Xenakis, wizjonerski pionier muzyki elektronicznej i algorytmicznej,
+pięknie wyraził tę samą ideę w latach sześćdziesiątych, w kontekście
+zastosowania technologii automatyzacji do komponowania muzyki
+
+Uwolniony od żmudnych obliczeń, kompozytor jest w stanie poświęcić się ogólnym
+problemom, jakie stawia nowa forma muzyczna i badać jej zakamarki, modyfikując
+wartości danych wejściowych. Przykładowo, może on przetestować wszystkie
+kombinacje instrumentów, od solistów, przez orkiestry kameralne, aż po duże
+orkiestry. Z pomocą komputerów elektronicznych kompozytor staje się swego
+rodzaju pilotem: naciska przyciski, wprowadza współrzędne i nadzoruje
+sterowanie kosmicznym statkiem płynącym w przestrzeni dźwięku, przez dźwiękowe
+konstelacje i galaktyki, które wcześniej mógł dostrzec tylko jako odległe
+marzenie.
+
+W tym rozdziale zbadamy pod różnymi kątami potencjał głębokiego uczenia się do
+wspomagania twórczości artystycznej. Dokonamy przeglądu generowania danych
+sekwencyjnych (które można wykorzystać do generowania tekstu lub muzyki),
+DeepDream i generowania obrazów przy użyciu zarówno wariacyjnych autoenkoderów,
+jak i generatywnych sieci przeciwstawnych. Sprawimy, że twój komputer będzie w
+stanie wymyślać treści, jakich nigdy wcześniej nie widziano; a może sprawimy,
+że i ty zaczniesz marzyć o fantastycznych możliwościach, jakie kryją się na
+styku technologii i sztuki. Zaczynajmy.

@@ -1,0 +1,283 @@
+---
+jupyter: python3
+---
+
+# Przykłady - metody klasyczne
+
+W tym rozdziale przyjrzymy się możliwościom realizacji zadań predykcyjnych z
+wieloma wyjściami. Skupimy się głównie na zastosowaniu sieci neuronowych ale
+pokazane będą również przykłady wykorzystania lasów losowych z wieloma
+wyjściami.
+
+## Przykład 1
+
+Najpierw sformułujemy problem badawczy wymagający zastosowania modeli z wieloma
+wyjściami.
+
+::: {#exm-1}
+Dane do zadania wygenerujemy za pomocą funkcji `make_regression()` z pakietu
+`sklern.dataset`[^examples-1]. Wygenerujemy 700 obserwacji z 10 predyktorami i
+3 zmiennymi zależnymi.
+:::
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from sklearn.datasets import make_regression
+```
+
+```{python}
+# generowanie danych do zadania
+X, y = make_regression(n_samples=700, n_features=10, n_informative = 8, n_targets=3, random_state=4)
+```
+
+```{python}
+# łączenie ich w ramki danych
+X_df = pd.DataFrame(i for i in X)
+X_df.columns = ["X"+ str(i) for i in range(1,11)]
+y_df = pd.DataFrame(i for i in y)
+y_df.columns = ["y"+str(i) for i in range(1,4)]
+
+df = pd.concat([X_df,y_df], axis=1)
+df.head()
+```
+
+```{python}
+df_X_boxplot = pd.melt(X_df)
+sns.boxplot(data = df_X_boxplot, x = "variable", y = "value")
+plt.show()
+```
+
+```{python}
+df_y_boxplot = pd.melt(y_df)
+sns.boxplot(data = df_y_boxplot, x = "variable", y = "value")
+plt.show()
+```
+
+Zarówno zmienne X, jak i y mają zbliżone rozkłady.
+
+```{python}
+sns.set_theme(style="white")
+g = sns.PairGrid(y_df, diag_sharey=False)
+g.map_upper(sns.scatterplot, s=7)
+g.map_lower(sns.kdeplot)
+g.map_diag(sns.histplot)
+plt.show()
+```
+
+Jak widać z powyższego wykresu zmienne `y1,y2,y3` wykazują pewne wzajemne
+zależności, dlatego budowa oddzielnych modeli dla każdej ze zmiennych powinna
+dawać gorsze predykcje niż modele wiążące wszystkie zmiennej w jednym modelu.
+Można też zauważyć, że rozkłady są zbliżone do normalnego.
+
+```{python}
+cor = df.corr()
+plt.figure(figsize = (12,10))
+sns.heatmap(cor, 
+            xticklabels=cor.columns.values,
+            yticklabels=cor.columns.values,
+            annot = True, fmt = '.2f')
+plt.show()
+```
+
+Jak widać z powyższej macierzy korelacji, przynajmniej 8 spośród 10 zmiennych X
+koreluje istotnie ze zmiennymi y.
+
+[^examples-1]: Nie znam R-owego odpowiednika
+
+## Rozwiązanie
+
+Na potrzeby porównania różnych rozwiązań zbudujemy następujące konfiguracje
+modeli:
+
+-   trzy lasy losowe dla każdej zmiennej y niezależnie;
+-   model lasu losowego z wykorzystaniem reguły *Regression Chains* jako
+    transformacji modelu*;*
+-   las losowy dla trzech zmiennych wynikowych jednocześnie (adaptacja modelu)
+
+Rozwiązania te porównamy pod względem dopasowania.
+
+### Niezależne lasy losowe
+
+Funkcja `MultiOutputRegressor` nałożona na model lasu losowego takie
+rozwiązanie tworzy.
+
+```{python}
+from sklearn.model_selection import train_test_split
+from sklearn.multioutput import MultiOutputRegressor
+from sklearn.multioutput import RegressorChain
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 4)
+```
+
+```{python}
+rf_meta = RandomForestRegressor(random_state=4)
+rf_indep = MultiOutputRegressor(rf_meta)
+print(rf_indep)
+```
+
+```{python}
+rf_indep.fit(X_train, y_train)
+r2_indep= rf_indep.score(X_test, y_test)
+pred_indep = rf_indep.predict(X_test)
+rmse_indep = mean_squared_error(y_test, pred_indep, squared = False)
+
+print(f'R2 on test samples: {r2_indep:.2f}')
+print(f'RMSE on test samples: {rmse_indep:.1f}')
+```
+
+### Regressor Chains RF
+
+```{python}
+rf_chains = RegressorChain(rf_meta)
+print(rf_chains)
+```
+
+```{python}
+rf_chains.fit(X_train, y_train)
+r2_chains= rf_chains.score(X_test, y_test)
+pred_chains = rf_chains.predict(X_test)
+rmse_chains = mean_squared_error(y_test, pred_chains, squared = False)
+
+print(f'R2 on test samples: {r2_chains:.2f}')
+print(f'RMSE on test samples: {rmse_chains:.1f}')
+```
+
+### Adaptacja modelu RF
+
+```{python}
+print(rf_meta)
+```
+
+```{python}
+rf_meta.fit(X_train, y_train)
+r2_meta= rf_meta.score(X_test, y_test)
+pred_meta = rf_meta.predict(X_test)
+rmse_meta = mean_squared_error(y_test, pred_meta, squared = False)
+
+print(f'R2 on test samples: {r2_meta:.2f}')
+print(f'RMSE on test samples: {rmse_meta:.1f}')
+```
+
+### Podsumowanie
+
+Biorąc pod uwagę miary dopasowania najlepiej poradził sobie z tym zadaniem
+model składający się z trzech niezależnych modeli RF, potem model RF w wersji
+*Regressor Chains*, a najgorzej (o dziwo) radzi sobie z predykcją model
+korzystający adaptacji drzew decyzyjnych do wersji wielowyjściowej.
+
+## Przykład 2
+
+Tym razem sformułujemy problem z wieloma wyjściami ale klasyfikacyjny i również
+dopasujemy trzy wersje modelu lasu losowego:
+
+-   lasy losowe dla każdej zmiennej y niezależnie;
+-   model lasu losowego z wykorzystaniem reguły *Classifier Chains* jako
+    transformacji modelu
+-   las losowy dla wszystkich zmiennych wynikowych jednocześnie (adaptacja
+    modelu).
+
+Analizowany problem będzie prawdziwy i będzie dotyczył klasyfikacji enzymów na
+podstawie cech charakterystycznych substratów. Pierwszych 31 zmiennych stanowi
+zmienne objaśniające, a 6 pozostałych zmienne kodujące przynależność do danej
+grupy enzymów.
+
+```{python}
+dt = pd.read_csv("data/original.csv", index_col = "id")
+dt.head()
+```
+
+```{python}
+dt.info()
+```
+
+Sprawdzimy na ile niezbalansowane są poszczególne klasy wynikowe.
+
+```{python}
+dt_deps = dt.loc[:,'EC1':'EC6']
+dt_deps = dt_deps.melt()
+dt_deps = dt_deps[dt_deps.value == 1]
+sns.countplot(data = dt_deps, x = 'variable')
+```
+
+Niestety nie wszystkie klasy występują jednakowo często i może pojawić się
+zjawisko, że kombinacja enzymów będzie występowała bardzo rzadko (np. raz). Jak
+widać z poniższej tabeli faktycznie tak się dzieje. To nie pozwala
+przeprowadzić uczenia. Dlatego musimy połączyć pewne klasy enzymów aby
+uniemożliwić taką sytuację.
+
+```{python}
+dt.loc[:,'EC1':'EC6'].value_counts()
+```
+
+Usuniemy zatem takie kombinacje, które występują bardzo rzadko w danych.
+
+```{python}
+combinations = dt.loc[:,'EC1':'EC6'].value_counts().index.to_numpy()
+idx = dt.loc[:,'EC1':'EC6'].value_counts().to_numpy()
+bad_combinations = combinations[idx<10]
+idx = []
+for i in range(len(dt)):
+  idx.append(True)
+  for j in range(len(bad_combinations)):
+    if all(dt.iloc[i, 31:] == bad_combinations[j]):
+      idx[i]=False
+
+dt = dt.iloc[idx,:]
+```
+
+```{python}
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.multioutput import MultiOutputClassifier, ClassifierChain
+y = dt.iloc[:,31:].to_numpy()
+X = dt.iloc[:,:31].to_numpy()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 44)
+```
+
+### Niezależne lasy losowe
+
+```{python}
+rf_meta = RandomForestClassifier(random_state=4)
+rf_indep = MultiOutputClassifier(rf_meta)
+print(rf_indep)
+
+rf_indep.fit(X_train, y_train)
+acc_indep= rf_indep.score(X_test, y_test)
+pred_indep = rf_indep.predict(X_test)
+
+print(f'Accuracy on test samples: {acc_indep:.3f}')
+```
+
+### Classifier Chains
+
+```{python}
+rf_chains = ClassifierChain(rf_meta)
+print(rf_chains)
+
+rf_chains.fit(X_train, y_train)
+acc_chains= rf_chains.score(X_test, y_test)
+pred_chains = rf_chains.predict(X_test)
+
+print(f'Accuracy on test samples: {acc_chains:.3f}')
+```
+
+### Adaptacja modelu RF
+
+```{python}
+rf_meta.fit(X_train, y_train)
+acc_meta= rf_meta.score(X_test, y_test)
+pred_meta = rf_meta.predict(X_test)
+
+print(f'Accuracy on test samples: {acc_meta:.3f}')
+```
+
+### Podsumowanie
+
+Również i tym razem nie widać wyraźnych różnic pomiędzy jakością dopasowania
+modeli. Model adaptowanego lasu losowego poradził sobie z zadanie najlepiej
+(19% poprawności trafień), Classifier Chains dał 18,7%, a niezależne lasy
+losowe 17,2%.

@@ -11,3 +11,7 @@ Encoding: UTF-8
 
 RnwWeave: knitr
 LaTeX: pdfLaTeX
+
+PythonType: conda
+PythonVersion: 3.11.7
+PythonPath: ~/miniconda3/envs/tf/bin/python3.11
