@@ -71,8 +71,8 @@ rzemiosła.
 
 Iannis Xenakis, wizjonerski pionier muzyki elektronicznej i algorytmicznej,
 pięknie wyraził tę samą ideę w latach sześćdziesiątych, w kontekście
-zastosowania technologii automatyzacji do komponowania
-muzyki[@xenakis1963musiques].
+zastosowania technologii automatyzacji do komponowania muzyki
+[@xenakis1963musiques].
 
 Uwolniony od żmudnych obliczeń, kompozytor jest w stanie poświęcić się ogólnym
 problemom, jakie stawia nowa forma muzyczna i badać jej zakamarki, modyfikując
@@ -88,7 +88,762 @@ W tym rozdziale zbadamy pod różnymi kątami potencjał głębokiego uczenia si
 wspomagania szeroko rozumianej twórczości. Dokonamy przeglądu generowania
 danych sekwencyjnych (które można wykorzystać do generowania tekstu lub
 muzyki), DeepDream i generowania obrazów przy użyciu zarówno wariacyjnych
-autoenkoderów, jak i generatywnych sieci przeciwstawnych. Sprawimy, że twój
-komputer będzie w stanie wymyślać treści, jakich nigdy wcześniej nie widziano;
-a może sprawimy, że i ty zaczniesz marzyć o fantastycznych możliwościach, jakie
-kryją się na styku technologii i sztuki. Zaczynajmy.
+autoenkoderów, jak i generatywnych sieci przeciwstawnych. Sprawimy, że komputer
+będzie w stanie wymyślać treści, jakich nigdy wcześniej nie widziano.
+
+## Generowanie tekstu
+
+W tej sekcji zbadamy, w jaki sposób rekurencyjne sieci neuronowe mogą być
+wykorzystywane do generowania danych sekwencyjnych. Jako przykładu użyjemy
+generatora tekstu, ale dokładnie te same techniki można uogólnić na dowolny
+rodzaj danych sekwencyjnych: można je zastosować do sekwencji nut w celu
+wygenerowania nowej muzyki, do szeregów czasowych danych pociągnięć pędzla (być
+może nagranych podczas malowania przez artystę na iPadzie) w celu wygenerowania
+obrazów pociągnięcie po pociągnięciu i tak dalej.
+
+Generowanie danych sekwencyjnych nie jest w żaden sposób ograniczone do
+generowania treści artystycznych. Zostało ono z powodzeniem zastosowane do
+syntezy mowy i generowania dialogów dla chatbotów. Funkcja *Smart Reply*, którą
+Google wypuściło w 2016 roku, zdolna do automatycznego generowania wyboru
+szybkich odpowiedzi na e-maile lub wiadomości tekstowe, jest zasilana podobnymi
+technikami.
+
+### Rys historyczny
+
+Pod koniec 2014 roku niewiele osób widziało inicjały LSTM, nawet w społeczności
+zajmującej się uczeniem maszynowym. Udane zastosowania generatorów danych
+sekwencyjnych za pomocą sieci rekurencyjnych zaczęły pojawiać się w głównym
+nurcie dopiero w 2016 roku. Techniki te mają jednak dość długą historię,
+począwszy od opracowania algorytmu LSTM w 1997 roku. Ten nowy algorytm został
+wcześnie wykorzystany do generowania tekstu znak po znaku.
+
+W 2002 roku Douglas Eck, pracujący wówczas w laboratorium Schmidhubera w
+Szwajcarii, po raz pierwszy zastosował LSTM do generowania muzyki, uzyskując
+obiecujące wyniki. Eck jest obecnie badaczem w Google Brain, a w 2016 roku
+założył tam nową grupę badawczą o nazwie Magenta, skupiającą się na
+zastosowaniu nowoczesnych technik głębokiego uczenia się do tworzenia
+angażującej muzyki.
+
+Pod koniec lat 2000 i na początku 2010 Alex Graves wykonał ważną pionierską
+pracę z wykorzystaniem sieci rekurencyjnych do generowania danych
+sekwencyjnych. W szczególności jego praca z 2013 roku nad zastosowaniem
+rekurencyjnych sieci mieszanin gęstości do generowania pisma odręcznego
+podobnego do ludzkiego przy użyciu szeregów czasowych pozycji pióra jest
+postrzegana przez niektórych jako punkt zwrotny
+[@gravesGeneratingSequencesRecurrent2014]. Graves pozostawił komentarz ukryty w
+pliku LaTeX z 2013 r. przesłanym na serwer arXiv: "Generowanie sekwencyjnych
+danych jest najbliższe marzeniom komputerów". Kilka lat później wiele z tych
+osiągnięć uważamy za oczywiste, ale w tamtym czasie trudno było oglądać
+prezentacje Gravesa i nie odchodzić zainspirowanym. W latach 2015-2017
+rekurencyjne sieci neuronowe były z powodzeniem wykorzystywane do generowania
+tekstu i dialogów, generowania muzyki i syntezy mowy.
+
+![](images/gpt.png){.column-margin}
+
+Następnie, około 2017-2018 roku, architektura Transformer zaczęła przejmować
+rekurencyjne sieci neuronowe, nie tylko do nadzorowanych zadań przetwarzania
+języka naturalnego, ale także do generatywnych modeli sekwencyjnych - w
+szczególności modelowania języka (generowania tekstu na poziomie słów).
+Najbardziej znanym przykładem generatywnego Transformera był GPT-3[^gan-1],
+model generowania tekstu o 175 miliardach parametrów, wytrenowany przez startup
+OpenAI na zdumiewająco dużym korpusie tekstowym, obejmującym większość
+dostępnych cyfrowo książek, Wikipedię i duży ułamek przeszukiwania całego
+Internetu. GPT-3 trafił na pierwsze strony gazet w 2020 roku ze względu na
+swoją zdolność do generowania wiarygodnie brzmiących akapitów tekstowych na
+praktycznie dowolny temat, co podsyciło krótkotrwałą falę szumu godną
+najbardziej gorącego lata AI.
+
+[^gan-1]: ale jak wiadomo już nie jest. GPT-4 znacznie przewyższa go
+    możliwościami, przy jednoczesnym wzroście liczby parametrów - 1.7
+    tryliarda.
+
+### Jak generować dane sekwencyjne
+
+Uniwersalnym sposobem generowania danych sekwencyjnych w uczeniu głębokim jest
+trenowanie modelu (zwykle transformera lub RNN) w celu przewidywania następnego
+tokena lub kilku następnych tokenów w sekwencji, przy użyciu poprzednich
+tokenów jako danych wejściowych. Na przykład, biorąc pod uwagę dane wejściowe
+"the cat is on the", model jest trenowany w celu przewidywania docelowego
+"mat". Jak zwykle podczas pracy z danymi tekstowymi, tokeny są zazwyczaj
+słowami lub znakami, a każda sieć, która może modelować prawdopodobieństwo
+następnego tokena, biorąc pod uwagę poprzednie, nazywana jest modelem
+językowym. Model językowy przechwytuje ukrytą przestrzeń języka: jego strukturę
+statystyczną.
+
+Gdy mamy już taki wytrenowany model językowy, możemy próbkować z niego
+(generować nowe sekwencje): podajemy mu początkowy ciąg tekstu (zwany danymi
+kondycjonującymi), prosimy go o wygenerowanie następnego znaku lub następnego
+słowa (możemy nawet wygenerować kilka tokenów jednocześnie), dodajemy
+wygenerowane dane wyjściowe z powrotem do danych wejściowych i powtarzamy
+proces wiele razy (patrz @fig-text1). Ta pętla pozwala generować sekwencje o
+dowolnej długości, które odzwierciedlają strukturę danych, na których model
+został przeszkolony: sekwencje, które wyglądają prawie jak zdania napisane
+przez człowieka.
+
+![Proces generowania tekstu słowo po słowie przy użyciu modelu
+językowego](images/Zrzut%20ekranu%202024-02-24%20o%2021.49.52.png){#fig-text1
+fig-align="center" width="600"}
+
+### Ważność strategii próbkowania
+
+Podczas generowania tekstu sposób wyboru następnego tokena ma kluczowe
+znaczenie. Naiwnym podejściem jest zachłanne próbkowanie, polegające na
+wybieraniu zawsze najbardziej prawdopodobnego następnego znaku. Takie podejście
+skutkuje powtarzalnymi, przewidywalnymi ciągami znaków, które nie wyglądają jak
+spójny język. Bardziej interesujące podejście dokonuje nieco bardziej
+zaskakujących wyborów: wprowadza losowość do procesu próbkowania poprzez
+próbkowanie z rozkładu prawdopodobieństwa dla następnego znaku. Nazywa się to
+próbkowaniem stochastycznym (przypomnijmy, że stochastyczność jest tym, co
+nazywamy losowością w tej dziedzinie). W takim układzie, jeśli słowo ma
+prawdopodobieństwo 0,3 bycia następnym w zdaniu zgodnie z modelem, wybierzemy
+je w 30% przypadków. Należy zauważyć, że zachłanne próbkowanie można również
+traktować jako próbkowanie z rozkładu prawdopodobieństwa: takiego, w którym
+określone słowo ma prawdopodobieństwo 1, a wszystkie inne mają
+prawdopodobieństwo 0.
+
+Próbkowanie probabilistyczne z wyjścia softmax modelu jest celowe: pozwala na
+próbkowanie nawet mało prawdopodobnych słów przez pewien czas, generując
+bardziej interesująco wyglądające zdania, a czasem wykazując się kreatywnością,
+wymyślając nowe, realistycznie brzmiące zdania, które nie występowały w danych
+treningowych. Jest jednak jeden problem z tą strategią: nie oferuje ona sposobu
+na kontrolowanie ilości losowości w procesie próbkowania.
+
+Dlaczego mielibyśmy chcieć większej lub mniejszej losowości? Rozważmy skrajny
+przypadek: czysto losowe pobieranie próbek, w którym następne słowo jest
+losowane z jednostajnego rozkładu prawdopodobieństwa, a każde słowo jest równie
+prawdopodobne. Ten schemat ma maksymalną losowość; innymi słowy, ten rozkład
+prawdopodobieństwa ma maksymalną entropię. Naturalnie, nie da on niczego
+interesującego. Na drugim biegunie, zachłanne próbkowanie również nie daje
+niczego interesującego i nie ma losowości: odpowiadający mu rozkład
+prawdopodobieństwa ma minimalną entropię. Próbkowanie z "prawdziwego" rozkładu
+prawdopodobieństwa - rozkładu, który jest wyprowadzany przez funkcję softmax
+modelu - stanowi punkt pośredni między tymi dwoma skrajnościami. Istnieje
+jednak wiele innych punktów pośrednich o wyższej lub niższej entropii, które
+warto zbadać. Mniejsza entropia nada wygenerowanym sekwencjom bardziej
+przewidywalną strukturę (a tym samym będą one potencjalnie bardziej
+realistycznie wyglądać), podczas gdy większa entropia spowoduje bardziej
+zaskakujące i kreatywne sekwencje. Podczas próbkowania z modeli generatywnych
+zawsze dobrze jest zbadać różne ilości losowości w procesie generowania.
+Ponieważ to my - ludzie - jesteśmy ostatecznymi sędziami tego, jak interesujące
+są wygenerowane dane, adekwatność jest wysoce subiektywna i nie można z góry
+powiedzieć, gdzie leży punkt optymalnej entropii.
+
+Aby kontrolować poziom stochastyczności w procesie próbkowania, wprowadzimy
+parametr zwany temperaturą, który charakteryzuje entropię rozkładu
+prawdopodobieństwa używanego do próbkowania: charakteryzuje on, jak zaskakujący
+lub przewidywalny będzie wybór następnego słowa. Biorąc pod uwagę wartość
+temperatury, nowy rozkład prawdopodobieństwa jest obliczany na podstawie
+oryginalnego prawdopodobieństwa (wyjście softmax modelu) poprzez ponowne
+ważenie go w następujący sposób.
+
+Wyższe temperatury skutkują rozkładami próbkowania o wyższej entropii, które
+wygenerują bardziej zaskakujące i nieustrukturyzowane wygenerowane dane,
+podczas gdy niższa temperatura spowoduje mniejszą losowość i znacznie bardziej
+przewidywalne wygenerowane dane (patrz @fig-text2).
+
+![Różne wagi rozkładu prawdopodobieństwa: Niska temperatura = bardziej
+deterministyczny; wysoka temperatura = bardziej
+losowy](images/Zrzut%20ekranu%202024-02-24%20o%2021.50.31.png){#fig-text2
+fig-align="center" width="600"}
+
+```{r}
+library(keras)
+library(tensorflow)
+library(tfautograph)
+
+reweight_distribution <-
+  function(original_distribution, temperature = 0.5) {
+    original_distribution %>%
+      { exp(log(.) / temperature) } %>%
+      { . / sum(.) }
+  }
+```
+
+### Generowanie tekstu w Keras
+
+Pierwszą rzeczą, której potrzebujemy, jest duża ilość danych tekstowych,
+których możemy użyć do nauki modelu językowego. Możemy użyć dowolnego
+wystarczająco dużego pliku tekstowego lub zestawu plików tekstowych -
+Wikipedii, Władcy Pierścieni itp.
+
+W tym przykładzie będziemy nadal pracować z zestawem danych recenzji filmów
+IMDB z ostatniego rozdziału i nauczymy się generować nigdy wcześniej
+nienapisane recenzje filmów. W związku z tym nasz model językowy będzie modelem
+stylu i tematyki tych recenzji filmowych, a nie ogólnym modelem języka
+angielskiego.
+
+#### Przygotowanie danych
+
+Podobnie jak w poprzednim rozdziale, pobierzmy i rozpakujmy zbiór danych z
+recenzjami filmów IMDB.
+
+```{r}
+#| eval: false
+url <- "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
+filename <- basename(url)
+options(timeout = 60*10) # 10 minute timeout
+download.file(url, destfile = filename)
+untar(filename)
+```
+
+Znasz już strukturę tych danych: otrzymujemy folder o nazwie `aclImdb`
+zawierający dwa podfoldery, jeden dla recenzji filmów o negatywnym wydźwięku i
+jeden dla recenzji o pozytywnym wydźwięku. Na każdą recenzję przypada jeden
+plik tekstowy. Wywołamy `text_dataset_from_directory()` z `label_mode = NULL`,
+aby utworzyć zestaw danych TF, który odczyta te pliki i wyświetli zawartość
+tekstową każdego z nich.
+
+```{r}
+library(tfdatasets)
+
+dataset <- text_dataset_from_directory(directory = "data/aclImdb",
+                                       label_mode = NULL,
+                                       batch_size = 256)
+dataset <- dataset %>%
+  dataset_map( ~ tf$strings$regex_replace(.x, "<br />", " "))
+```
+
+Teraz użyjmy funkcji `layer_text_vectorization()` do obliczenia słownictwa, z
+którym będziemy pracować. Użyjemy tylko pierwszych słów o długości sekwencji w
+każdej recenzji: nasza funkcja `layer_text_vectorization()` odetnie wszystko
+poza tym podczas wektoryzacji tekstu.
+
+```{r}
+sequence_length <- 100
+vocab_size <- 15000
+text_vectorization <- layer_text_vectorization(
+  max_tokens = vocab_size,
+  output_mode = "int",
+  output_sequence_length = sequence_length
+)
+adapt(text_vectorization, dataset)
+```
+
+Użyjmy tej warstwy do stworzenia zbioru danych modelowania językowego, w którym
+próbki wejściowe są wektoryzowanymi tekstami, a odpowiadające im cele są tymi
+samymi tekstami przesuniętymi o jedno słowo.
+
+```{r}
+prepare_lm_dataset <- function(text_batch) {
+  vectorized_sequences <- text_vectorization(text_batch)
+  x <- vectorized_sequences[, NA:-2]
+  y <- vectorized_sequences[, 2:NA]
+  list(x, y)
+}
+
+lm_dataset <- dataset %>%
+  dataset_map(prepare_lm_dataset, num_parallel_calls = 4)
+```
+
+#### Model transformerowy sekwencja-sekwencja
+
+Będziemy trenować model, aby przewidzieć rozkład prawdopodobieństwa następnego
+słowa w zdaniu, biorąc pod uwagę pewną liczbę początkowych słów. Gdy model
+zostanie wytrenowany, będziemy podawać mu podpowiedź, próbkować następne słowo,
+dodawać to słowo z powrotem do podpowiedzi i powtarzać, aż wygenerujemy krótki
+akapit.
+
+Podobnie jak w przypadku prognozowania temperatury (dla danych
+atmosferycznych), możemy wytrenować model, który przyjmuje jako dane wejściowe
+sekwencję $N$ słów i przewiduje słowo $N+1$. Istnieje jednak kilka problemów
+związanych z tą konfiguracją w kontekście generowania sekwencji.
+
+Po pierwsze, model nauczyłby się generować prognozy tylko wtedy, gdy dostępnych
+jest $N$ słów, ale przydatna byłaby możliwość rozpoczęcia przewidywania przy
+mniej niż $N$ słowach. W przeciwnym razie bylibyśmy ograniczeni do używania
+tylko stosunkowo długich podpowiedzi (w naszej implementacji $N = 100$ słów). W
+prognozowaniu pogody nie mieliśmy takiej potrzeby.
+
+Po drugie, wiele z naszych sekwencji treningowych będzie się w większości
+pokrywać. Rozważmy $N = 4$. Tekst "A complete sentence must have, at minimum,
+three things: a subject, verb, and an object" zostałby użyty do wygenerowania
+następujących sekwencji treningowych:
+
+-   "A complete sentence must"
+-   "complete sentence must have"
+-   "sentence must have at" "
+-   i tak dalej, aż do “verb and an object”.
+
+Model, który traktuje każdą taką sekwencję jako niezależną próbkę, musiałby
+wykonać wiele nadmiarowej pracy, ponownie kodując wiele razy sekwencje, które w
+dużej mierze widział już wcześniej. W modelu z temperaturą nie stanowiło to
+większego problemu, ponieważ nie mieliśmy zbyt wielu próbek treningowych, a
+musieliśmy przetestować gęste i splotowe modele, dla których ponowne wykonanie
+pracy za każdym razem jest jedyną opcją. Moglibyśmy spróbować złagodzić ten
+problem nadmiarowości, używając kroków do próbkowania naszych sekwencji -
+pomijając kilka słów między dwiema kolejnymi próbkami. Zmniejszyłoby to jednak
+liczbę próbek treningowych, zapewniając jedynie częściowe rozwiązanie.
+
+Aby rozwiązać te dwie kwestie, użyjemy modelu sekwencja-sekwencja: wprowadzimy
+sekwencje $N$ słów (indeksowanych od 1 do $N$) do naszego modelu i będziemy
+przewidywać sekwencję przesuniętą o jeden (od 2 do $N+1$). Użyjemy maskowania
+przyczynowego, aby upewnić się, że dla dowolnego $i$, model użyje tylko słów od
+1 do $i$, aby przewidzieć słowo $i + 1$. Oznacza to, że jednocześnie trenujemy
+model, aby rozwiązać $N$ w większości pokrywających się, ale różnych problemów:
+przewidywanie następnych słów, biorąc pod uwagę sekwencję $1 \leq i \leq N$
+wcześniejszych słów (patrz @fig-text3). W czasie generowania, nawet jeśli
+podpowiesz modelowi tylko jedno słowo, będzie on w stanie podać rozkład
+prawdopodobieństwa dla następnych możliwych słów.
+
+![W porównaniu do zwykłego przewidywania następnego słowa, modelowanie
+sekwencja-sekwencja jednocześnie optymalizuje wiele problemów związanych z
+przewidywaniem.](images/Zrzut%20ekranu%202024-02-24%20o%2022.13.30.png){#fig-text3
+fig-align="center" width="600"}
+
+Zauważ, że mogliśmy użyć podobnej konfiguracji sekwencja-sekwencja w naszym
+problemie prognozowania temperatury: biorąc pod uwagę sekwencję 120 godzinnych
+punktów danych, naucz się generować sekwencję 120 temperatur przesuniętych o 24
+godziny w przyszłości. Rozwiązałoby to nie tylko początkowy problem, ale także
+119 powiązanych problemów prognozowania temperatury w ciągu 24 godzin, biorąc
+pod uwagę $1 \leq i < 120$ wcześniejszych godzinnych punktów danych. Jeśli
+spróbujemy ponownie wytrenować RNN w konfiguracji sekwencja po sekwencji,
+przekonamy się, że uzyskamy podobne, ale coraz gorsze wyniki, ponieważ
+ograniczenie polegające na rozwiązaniu tych dodatkowych 119 powiązanych
+problemów za pomocą tego samego modelu koliduje nieco z zadaniem, na którym nam
+faktycznie zależy.
+
+W poprzednim rozdziale dowiedzieliśmy się o konfiguracji, której można użyć do
+uczenia sekwencyjnego w ogólnym przypadku: podaj sekwencję źródłową do kodera,
+a następnie podaj zarówno zakodowaną sekwencję, jak i sekwencję docelową do
+dekodera, który próbuje przewidzieć tę samą sekwencję docelową, przesuniętą o
+jeden krok. Podczas generowania tekstu nie ma sekwencji źródłowej: po prostu
+próbujesz przewidzieć następne tokeny w sekwencji docelowej, biorąc pod uwagę
+poprzednie tokeny, co możemy zrobić, używając tylko dekodera. Dzięki
+wypełnianiu przyczynowemu, dekoder będzie patrzył tylko na słowa $1\ldots N$,
+aby przewidzieć słowo $N+1$.
+
+Zaimplementujmy nasz model - ponownie wykorzystując bloki konstrukcyjne, które
+stworzyliśmy w poprzednim rozdziale: `layer_positional_embedding()` i
+`layer_transformer_decoder()`.
+
+```{r}
+layer_positional_embedding <- new_layer_class(
+  classname = "PositionalEmbedding",
+
+  initialize = function(sequence_length, input_dim, output_dim, ...) {
+    super$initialize(...)
+    self$token_embeddings <-
+      layer_embedding(input_dim = input_dim,
+                      output_dim = output_dim)
+    self$position_embeddings <-
+      layer_embedding(input_dim = sequence_length,
+                      output_dim = output_dim)
+    self$sequence_length <- sequence_length
+    self$input_dim <- input_dim
+    self$output_dim <- output_dim
+  },
+
+  call = function(inputs) {
+    length <- tf$shape(inputs)[-1]
+    positions <- tf$range(start = 0L, limit = length, delta = 1L)
+    embedded_tokens <- self$token_embeddings(inputs)
+    embedded_positions <- self$position_embeddings(positions)
+    embedded_tokens + embedded_positions
+  },
+
+  compute_mask = function(inputs, mask = NULL) {
+    inputs != 0
+  },
+
+  get_config = function() {
+    config <- super$get_config()
+    for(name in c("output_dim", "sequence_length", "input_dim"))
+      config[[name]] <- self[[name]]
+    config
+  }
+)
+
+layer_transformer_decoder <- new_layer_class(
+  classname = "TransformerDecoder",
+
+  initialize = function(embed_dim, dense_dim, num_heads, ...) {
+    super$initialize(...)
+    self$embed_dim <- embed_dim
+    self$dense_dim <- dense_dim
+    self$num_heads <- num_heads
+    self$attention_1 <- layer_multi_head_attention(num_heads = num_heads,
+                                                   key_dim = embed_dim)
+    self$attention_2 <- layer_multi_head_attention(num_heads = num_heads,
+                                                   key_dim = embed_dim)
+    self$dense_proj <- keras_model_sequential() %>%
+      layer_dense(dense_dim, activation = "relu") %>%
+      layer_dense(embed_dim)
+
+    self$layernorm_1 <- layer_layer_normalization()
+    self$layernorm_2 <- layer_layer_normalization()
+    self$layernorm_3 <- layer_layer_normalization()
+    self$supports_masking <- TRUE
+  },
+
+  get_config = function() {
+    config <- super$get_config()
+    for (name in c("embed_dim", "num_heads", "dense_dim"))
+      config[[name]] <- self[[name]]
+    config
+  },
+
+  get_causal_attention_mask = function(inputs) {
+    c(batch_size, sequence_length, encoding_length) %<-%
+      tf$unstack(tf$shape(inputs))
+
+    x <- tf$range(sequence_length)
+    i <- x[, tf$newaxis]
+    j <- x[tf$newaxis, ]
+    mask <- tf$cast(i >= j, "int32")
+
+    tf$tile(mask[tf$newaxis, , ],
+            tf$stack(c(batch_size, 1L, 1L)))
+  },
+
+  call = function(inputs, encoder_outputs, mask = NULL) {
+
+    causal_mask <- self$get_causal_attention_mask(inputs)
+
+    if (is.null(mask))
+      mask <- causal_mask
+    else
+      mask %<>% { tf$minimum(tf$cast(.[, tf$newaxis, ], "int32"),
+                             causal_mask) }
+
+    inputs %>%
+      { self$attention_1(query = ., value = ., key = .,
+                         attention_mask = causal_mask) + . } %>%
+      self$layernorm_1() %>%
+
+      { self$attention_2(query = .,
+                         value = encoder_outputs,
+                         key = encoder_outputs,
+                         attention_mask = mask) + . } %>%
+      self$layernorm_2() %>%
+
+      { self$dense_proj(.) + . } %>%
+      self$layernorm_3()
+
+  }
+)
+```
+
+```{r}
+embed_dim <- 256
+latent_dim <- 2048
+num_heads <- 2
+
+transformer_decoder <-
+  layer_transformer_decoder(NULL, embed_dim, latent_dim, num_heads)
+
+inputs <- layer_input(shape(NA), dtype = "int64")
+outputs <- inputs %>%
+  layer_positional_embedding(sequence_length, vocab_size, embed_dim) %>%
+  transformer_decoder(., .) %>%
+  layer_dense(vocab_size, activation = "softmax")
+
+model <-
+  keras_model(inputs, outputs) %>%
+  compile(loss = "sparse_categorical_crossentropy",
+          optimizer = "rmsprop")
+```
+
+#### Generowania tekstu z próbkowaniem o zmiennej temperaturze
+
+Użyjemy wywołania zwrotnego (ang. *callback*) do generowania tekstu przy użyciu
+zakresu różnych temperatur po każdej epoce. Pozwoli to zobaczyć, jak
+wygenerowany tekst ewoluuje, gdy model zaczyna osiągać zbieżność, a także wpływ
+temperatury na strategię próbkowania. Aby rozpocząć generowanie tekstu, użyjemy
+podpowiedzi "this movie" - wszystkie nasze wygenerowane teksty zaczną się od
+tego.
+
+Najpierw zdefiniujmy kilka funkcji do generowania zdań. Później użyjemy tych
+funkcji w wywołaniu zwrotnym.
+
+```{r}
+vocab <- get_vocabulary(text_vectorization)
+
+sample_next <- function(predictions, temperature = 1.0) {
+  predictions %>%
+    reweight_distribution(temperature) %>%
+    sample.int(length(.), 1, prob = .)
+}
+
+
+generate_sentence <-
+  function(model, prompt, generate_length, temperature) {
+
+    sentence <- prompt
+    for (i in seq(generate_length)) {
+
+      model_preds <- sentence %>%
+        array(dim = c(1, 1)) %>%
+        text_vectorization() %>%
+        predict(model, .)
+
+      sampled_word <- model_preds %>%
+        .[1, i, ] %>%
+        sample_next(temperature) %>%
+        vocab[.]
+
+      sentence <- paste(sentence, sampled_word)
+
+    }
+
+    sentence
+  }
+```
+
+`sample_next()` i `generate_sentence()` generują zdania z modelu. Wywołują
+`predict()`, aby wygenerować predykcje jako tablice R, wywołują `sample.int()`,
+aby wybrać następny token i budują zdanie jako ciąg R za pomocą `paste()`.
+
+Ponieważ możemy chcieć wygenerować wiele zdań, warto je nieco zoptymalizować.
+Możemy znacznie przyspieszyć `generate_sentence` (\~25x), przepisując go jako
+funkcję `tf_function()`. Aby to zrobić, wystarczy zastąpić kilka funkcji R
+odpowiednikami TensorFlow. Zamiast `for(i in seq())`, możemy napisać
+`for(i in tf$range())`. Możemy również zastąpić `sample.int()` przez
+`tf$random$categorical()`, `paste()` przez `tf$strings\$join()`, a
+`predict(model, .)` przez `model(.)`. Oto jak `sample_next()` i
+`generate_sentence()` wyglądają jako `tf_function()`:
+
+```{r}
+tf_sample_next <- function(predictions, temperature = 1.0) {
+    predictions %>%
+      reweight_distribution(temperature) %>%
+      { log(.[tf$newaxis, ]) } %>%
+      tf$random$categorical(1L) %>%
+      tf$reshape(shape())
+  }
+
+library(tfautograph)
+
+tf_generate_sentence <- tf_function(
+  function(model, prompt, generate_length, temperature) {
+
+    withr::local_options(tensorflow.extract.style = "python")
+
+    vocab <- as_tensor(vocab)
+
+    sentence <- prompt %>% as_tensor(shape = c(1, 1))
+
+    ag_loop_vars(sentence)
+    for (i in tf$range(generate_length)) {
+
+      model_preds <- sentence %>%
+        text_vectorization() %>%
+        model()
+
+      sampled_word <- model_preds %>%
+        .[0, i, ] %>%
+        tf_sample_next(temperature) %>%
+        vocab[.]
+
+      sentence <- sampled_word %>%
+        { tf$strings$join(c(sentence, .), " ") }
+
+    }
+
+    sentence %>% tf$reshape(shape())
+  }
+)
+```
+
+::: callout-tip
+# Pętla `for` a `autograph`
+
+Podczas używania funkcji `tf_function(fn, autograph = TRUE)` w R, domyślnie
+funkcja `fn` jest przekształcana tak, aby mogła korzystać z dodatkowych
+możliwości, które oferuje TensorFlow, dzięki mechanizmowi zwanemu Autograph.
+Autograph przekształca standardowy kod R w ekwiwalentny kod TensorFlow, który
+może być efektywnie wykonywany na tensorach, co normalnie nie jest możliwe w
+bazowym R. Na przykład, pętle `for` w R zwykle nie mogą iterować bezpośrednio
+po tensorach TensorFlow, ale dzięki Autograph, takie operacje stają się
+możliwe.
+
+Jednak wykonywanie funkcji R "chętnie" (czyli natychmiastowo) przed opakowaniem
+ich za pomocą `tf_function()` może prowadzić do pewnych komplikacji, ponieważ
+dodatkowe możliwości udostępniane przez `autograph = TRUE`, takie jak iteracja
+przez tensory w pętli `for`, nie są dostępne w standardowym R. Oznacza to, że
+próba bezpośredniego użycia takich konstrukcji w R bez odpowiedniego
+przekształcenia przez Autograph zakończyłaby się niepowodzeniem.
+
+Aby obejść ten problem i nadal móc korzystać z zaawansowanych konstrukcji
+TensorFlow w kodzie R, można użyć funkcji `autograph()` z pakietu `tfautograph`
+bezpośrednio. Pozwala to na ręczne przekształcenie wyrażeń R tak, aby mogły one
+korzystać z możliwości TensorFlow, np. iterować przez tensory w pętli `for`.
+Przykład użycia `tfautograph::autograph()` bezpośrednio w kodzie R pozwala na
+chętne (natychmiastowe) wykonanie takich operacji z zachowaniem integracji z
+TensorFlow. Oto dwa sposoby na to:
+
+```{r}
+library(tfautograph)
+autograph({
+  for(i in tf$range(3L))
+    print(i)
+})
+```
+
+albo
+
+```{r}
+fn <- function(x) {
+  for(i in x) print(i)
+}
+ag_fn <- autograph(fn)
+ag_fn(tf$range(3))
+```
+
+W sesjach interaktywnych można tymczasowo globalnie włączyć `if, while` i
+`for`, aby akceptowały tensory, wywołując `tfautograph:::attach_ag_mask()`.
+
+Pętla `for()`, która iteruje po tensorze w `tf_function()` tworzy
+`tf$while_loop()` i dziedziczy wszystkie te same ograniczenia. Każdy tensor
+śledzony przez pętlę musi mieć stabilny kształt i typ podczas iteracji.
+
+Wywołanie `ag_loop_vars(sentence)` daje kompilatorowi `tf_function()`
+wskazówkę, że jedyną zmienną, którą jesteśmy zainteresowani po pętli `for` jest
+`sentence`. Informuje to kompilator, że inne tensory, takie jak `sampled_word`,
+`i` i `model_preds`, są zmiennymi lokalnymi pętli i mogą być bezpiecznie
+zoptymalizowane po pętli.
+
+Zauważmy, że iteracja po zwykłym obiekcie R, takim jak `for(i in seq(0, 49))` w
+`tf_function()` nie spowoduje utworzenia `tf$while_loop()`, ale zamiast tego
+dokona oceny za pomocą zwykłej semantyki R i spowoduje, że `tf_function()`
+będzie śledzić nierozwiniętą pętlę (co czasami jest preferowane w przypadku
+krótkich pętli o stałej liczbie iteracji).
+:::
+
+Oto wywołanie zwrotne, w którym wywołamy `tf_generate_sentence()`, aby
+wygenerować tekst podczas treningu:
+
+```{r}
+callback_text_generator <- new_callback_class(
+  classname = "TextGenerator",
+
+  initialize = function(prompt, generate_length,
+                        temperatures = 1,
+                        print_freq = 1L) {
+    private$prompt <- as_tensor(prompt, "string")
+    private$generate_length <- as_tensor(generate_length, "int32")
+    private$temperatures <- as.numeric(temperatures)
+    private$print_freq <- as.integer(print_freq)
+  },
+
+  on_epoch_end = function(epoch, logs = NULL) {
+    if ((epoch %% private$print_freq) != 0 )
+      return()
+
+    for (temperature in private$temperatures) {
+      cat("== Generating with temperature", temperature, "\n")
+
+      sentence <- tf_generate_sentence(
+        self$model,
+        as_tensor(private$prompt, "string"),
+        as_tensor(private$generate_length, "int32"),
+        as_tensor(temperature, "float32")
+      )
+      cat(as.character(sentence), "\n")
+    }
+  }
+)
+
+
+text_gen_callback <- callback_text_generator(
+  prompt = "This movie",
+  generate_length = 50,
+  temperatures = c(0.2, 0.5, 0.7, 1., 1.5)
+)
+```
+
+```{r}
+#| eval: false
+model %>%
+  fit(lm_dataset,
+      epochs = 200,
+      callbacks = list(text_gen_callback))
+```
+
+Oto kilka wybranych przykładów tego, co jesteśmy w stanie wygenerować po 200
+epokach treningu. Należy pamiętać, że interpunkcja nie jest częścią naszego
+słownictwa, więc żaden z wygenerowanych tekstów nie zawiera interpunkcji:
+
+-   Z temperaturą=0.2:
+    -   "this movie is a \[UNK\] of the original movie and the first half hour
+        of the movie is pretty good but it is a very good movie it is a good
+        movie for the time period",
+    -   "this movie is a \[UNK\] of the movie it is a movie that is so bad that
+        it is a \[UNK\] movie it is a movie that is so bad that it makes you
+        laugh and cry at the same time it is not a movie i dont think ive ever
+        seen"
+-   Z temperaturą=0.5:
+    -   "this movie is a \[UNK\] of the best genre movies of all time and it is
+        not a good movie it is the only good thing about this movie i have seen
+        it for the first time and i still remember it being a \[UNK\] movie i
+        saw a lot of years",
+    -   "this movie is a waste of time and money i have to say that this movie
+        was a complete waste of time i was surprised to see that the movie was
+        made up of a good movie and the movie was not very good but it was a
+        waste of time and"
+-   Z temperaturą=0.7:
+    -   "this movie is fun to watch and it is really funny to watch all the
+        characters are extremely hilarious also the cat is a bit like a \[UNK\]
+        \[UNK\] and a hat \[UNK\] the rules of the movie can be told in another
+        scene saves it from being in the back of",
+    -   "this movie is about \[UNK\] and a couple of young people up on a small
+        boat in the middle of nowhere one might find themselves being exposed
+        to a \[UNK\] dentist they are killed by \[UNK\] i was a huge fan of the
+        book and i havent seen the original so it",
+-   Z temperaturą=1.0:
+    -   "this movie was entertaining i felt the plot line was loud and touching
+        but on a whole watch a stark contrast to the artistic of the original
+        we watched the original version of england however whereas arc was a
+        bit of a little too ordinary the \[UNK\] were the present parent
+        \[UNK\]",
+    -   "this movie was a masterpiece away from the storyline but this movie
+        was simply exciting and frustrating it really entertains friends like
+        this the actors in this movie try to go straight from the sub thats
+        image and they make it a really good tv show"
+-   Z temperaturą=1.5:
+    -   "this movie was possibly the worst film about that 80 women its as
+        weird insightful actors like barker movies but in great buddies yes no
+        decorated shield even \[UNK\] land dinosaur ralph ian was must make a
+        play happened falls after miscast \[UNK\] bach not really not
+        wrestlemania seriously sam didnt exist",
+    -   "this movie could be so unbelievably lucas himself bringing our country
+        wildly funny things has is for the garish serious and strong
+        performances colin writing more detailed dominated but before and that
+        images gears burning the plate patriotism we you expected dyan bosses
+        devotion to must do your own duty and another".
+
+Jak widać, niska wartość temperatury skutkuje bardzo nudnym i powtarzalnym
+tekstem i może czasami powodować utknięcie procesu generowania w pętli. Przy
+wyższych temperaturach generowany tekst staje się bardziej interesujący,
+zaskakujący, a nawet kreatywny. Przy bardzo wysokiej temperaturze lokalna
+struktura zaczyna się rozpadać, a wynik wygląda w dużej mierze losowo. W tym
+przypadku dobrą temperaturą generowania wydaje się być około 0,7. Zawsze
+eksperymentuj z wieloma strategiami próbkowania! Mądra równowaga między
+wyuczoną strukturą a losowością jest tym, co sprawia, że generowanie jest
+interesujące.
+
+Należy zauważyć, że trenując większy model, dłużej, na większej ilości danych,
+można uzyskać wygenerowane próbki, które wyglądają znacznie bardziej spójnie i
+realistycznie niż ta - wynik modelu takiego jak GPT-4 jest dobrym przykładem
+tego, co można zrobić z modelami językowymi (GPT-4 jest w rzeczywistości tym
+samym, co to, co trenowaliśmy w tym przykładzie, ale z głębokim stosem
+dekoderów Transformer i znacznie większym korpusem treningowym). Nie oczekujmy
+jednak, że kiedykolwiek wygenerujemy jakikolwiek znaczący tekst, poza
+przypadkowym przypadkiem i magią własnej interpretacji: wszystko, co robimy, to
+próbkowanie danych z modelu statystycznego określającego, które słowa następują
+po których słowach. Modele językowe to tylko forma, bez treści.
+
+Język naturalny pełni wiele funkcji: jest kanałem komunikacyjnym, narzędziem
+oddziaływania na świat, elementem budującym relacje społeczne oraz środkiem do
+formułowania, przechowywania i odzyskiwania myśli, co stanowi o jego znaczeniu.
+Mimo nazwy, model języka oparty na głębokim uczeniu nie odzwierciedla żadnego z
+tych kluczowych aspektów języka – nie potrafi komunikować, ponieważ nie ma ani
+treści do przekazania, ani odbiorcy; nie ma wpływu na rzeczywistość, brak mu
+samodzielności i intencjonalności; nie jest zdolny do interakcji społecznych
+ani przetwarzania myśli za pomocą słów. Język, będący systemem operacyjnym
+umysłu, wymaga do swojego znaczącego użycia obecności umysłu. Model językowy
+jedynie rejestruje statystyczną strukturę tekstów, jak książki czy recenzje,
+będącą efektem ludzkiego użycia języka. Zastanawiając się nad hipotetyczną
+sytuacją, w której języki lepiej kompresowałyby informacje, podobnie do
+procesów cyfrowych, język nadal pełniłby swoje funkcje, ale pozbawiony byłby
+wewnętrznej struktury statystycznej, co uniemożliwiłoby jego modelowanie w
+dotychczasowy sposób.

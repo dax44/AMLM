@@ -318,7 +318,7 @@ window.Quarto = {
 <li>wiele do wielu - problemy sekwencji wiele do wielu obejmują sekwencję wejść i sekwencję wyjść. Na przykład, ceny akcji z 7 dni jako dane wejściowe i ceny akcji z kolejnych 7 dni jako dane wyjściowe. Chatboty są również przykładem problemów sekwencji wiele do wielu, gdzie sekwencja tekstowa jest wejściem, a inna sekwencja tekstowa jest wyjściem.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600" alt="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"></a></p>
+<figure class="figure"><p><a href="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600" alt="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"></a></p>
 <figcaption>Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe</figcaption></figure>
 </div>
 </section><section id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych">
@@ -391,7 +391,7 @@ Wskazówka
 </details><div class="cell-output-display">
 <div id="fig-szereg1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rnn_files/figure-html/fig-szereg1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="rnn_files/figure-html/fig-szereg1-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;5.1: Przebieg szeregu czasowego temperatury
@@ -405,7 +405,7 @@ Rys.&nbsp;5.1: Przebieg szeregu czasowego temperatury
 </details><div class="cell-output-display">
 <div id="fig-szereg2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rnn_files/figure-html/fig-szereg2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="rnn_files/figure-html/fig-szereg2-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
@@ -709,7 +709,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2125 - 3s/epoch - 7ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2124 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -806,7 +806,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 11.2176 - mae: 2.6383 - 3s/epoch - 7ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 11.2176 - mae: 2.6383 - 3s/epoch - 8ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -827,7 +827,7 @@ Ważne
 <p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="llm.html#fig-rnn1" class="quarto-xref">Rys.&nbsp;<span>6.13</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
 <div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
+<a href="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.1: Zasada działania sieci RNN
@@ -873,7 +873,7 @@ Rys.&nbsp;6.1: Zasada działania sieci RNN
 <p>Ta warstwa jest wariantem <code>layer_simple_rnn</code>, wzbogaconym o sposób na przenoszenie informacji przez wiele kroków czasowych. Wyobraź sobie taśmę transportową biegnącą równolegle do sekwencji, którą przetwarzasz. Informacja z sekwencji może wskoczyć na taśmę w dowolnym punkcie, zostać przetransportowana do późniejszego kroku czasowego i wyskoczyć z niej, nienaruszona, kiedy jej potrzebujesz. To jest zasadniczo to, co robi LSTM: zapisuje informacje na później, zapobiegając w ten sposób stopniowemu znikaniu starszych sygnałów podczas przetwarzania.</p>
 <div id="fig-lstm1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a>
+<a href="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.2: Schemat sieci LSTM
@@ -934,9 +934,9 @@ Zagrożenie
 <pre><code>[1] "Test MAE: 2.54"</code></pre>
 </div>
 </div>
-<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
+<a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.3
@@ -977,9 +977,9 @@ Rys.&nbsp;6.3
 <pre><code>[1] "Test MAE: 2.45"</code></pre>
 </div>
 </div>
-<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" width="500" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/jena_gru_dropout_hist.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="images/jena_gru_dropout_hist.png" id="fig-gru-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
+<a href="images/jena_gru_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="images/jena_gru_dropout_hist.png" id="fig-gru-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.4
@@ -1698,7 +1698,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
