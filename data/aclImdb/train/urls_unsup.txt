@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-version https://git-lfs.github.com/spec/v1
-oid sha256:407b53030460107ba7bbe6b944036162f7568442acfe215aa795a8699920b9bd
-size 2450000
-=======
 http://www.imdb.com/title/tt0018515/usercomments
 http://www.imdb.com/title/tt0018515/usercomments
 http://www.imdb.com/title/tt0018515/usercomments
@@ -50003,4 +49998,3 @@ http://www.imdb.com/title/tt0492486/usercomments
 http://www.imdb.com/title/tt0861701/usercomments
 http://www.imdb.com/title/tt0861701/usercomments
 http://www.imdb.com/title/tt0861701/usercomments
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10

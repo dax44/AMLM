@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:856b904a189dc7d61b2d5de01c8ba4ea510568b6c074ff3ff0bf11e4da590d60
-size 301
+This is the definitive movie version of Hamlet. Branagh cuts nothing, but there are no wasted moments.

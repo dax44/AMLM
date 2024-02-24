@@ -2,11 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<<<<<<< HEAD
 <meta name="generator" content="quarto-1.4.549">
-=======
-<meta name="generator" content="quarto-1.4.537">
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Zaawansowane metody uczenia maszynowego - 5&nbsp; DNN dla danych sekwencyjnych</title>
 <style>
@@ -84,11 +80,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<<<<<<< HEAD
 <link href="./llm.html" rel="next">
-=======
-<link href="./references.html" rel="next">
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <link href="./examples2.html" rel="prev">
 <link href="./images/cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -101,14 +93,10 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<<<<<<< HEAD
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
-=======
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -240,7 +228,6 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-<<<<<<< HEAD
   <a href="./llm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span></a>
   </div>
@@ -253,8 +240,6 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-=======
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Literatura</span></a>
   </div>
@@ -333,11 +318,7 @@ window.Quarto = {
 <li>wiele do wielu - problemy sekwencji wiele do wielu obejmują sekwencję wejść i sekwencję wyjść. Na przykład, ceny akcji z 7 dni jako dane wejściowe i ceny akcji z kolejnych 7 dni jako dane wyjściowe. Chatboty są również przykładem problemów sekwencji wiele do wielu, gdzie sekwencja tekstowa jest wejściem, a inna sekwencja tekstowa jest wyjściem.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
-<<<<<<< HEAD
 <figure class="figure"><p><a href="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600" alt="Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe"></a></p>
-=======
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-04-5 o 19.16.30.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <figcaption>Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe</figcaption></figure>
 </div>
 </section><section id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="zastosowanie-sieci-rekurencyjnych-w-szeregach-czasowych">
@@ -357,11 +338,7 @@ window.Quarto = {
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span></span>
 <span> <span class="st">"https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
-<<<<<<< HEAD
 <span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/zip/reference/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
-=======
-<span><span class="fu">zip</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zip/man/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv.zip"</span>,</span>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <span>          files <span class="op">=</span> <span class="st">"jena_climate_2009_2016.csv"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -414,51 +391,29 @@ Wskazówka
 </details><div class="cell-output-display">
 <div id="fig-szereg1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<<<<<<< HEAD
 <a href="rnn_files/figure-html/fig-szereg1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;5.1: Przebieg szeregu czasowego temperatury
-=======
-<img src="rnn_files/figure-html/fig-szereg1-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;5.1: Przebieg szeregu czasowego temperatury
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figcaption></figure>
 </div>
 </div>
 </div>
-<<<<<<< HEAD
 <p><a href="#fig-szereg1" class="quarto-xref">Rys.&nbsp;<span>5.1</span></a> przedstawia wykres temperatury (w stopniach Celsjusza) w czasie. Na tym wykresie wyraźnie widać roczną okresowość temperatury - dane obejmują 8 lat.</p>
-=======
-<p><a href="#fig-szereg1" class="quarto-xref">Rysunek&nbsp;<span>5.1</span></a> przedstawia wykres temperatury (w stopniach Celsjusza) w czasie. Na tym wykresie wyraźnie widać roczną okresowość temperatury - dane obejmują 8 lat.</p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">`T (degC)`</span> <span class="op">~</span> <span class="va">`Date Time`</span>, data <span class="op">=</span> <span class="va">full_df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1440</span>, <span class="op">]</span>, type <span class="op">=</span> <span class="st">'l'</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-szereg2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<<<<<<< HEAD
 <a href="rnn_files/figure-html/fig-szereg2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
-=======
-<img src="rnn_files/figure-html/fig-szereg2-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-szereg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figcaption></figure>
 </div>
 </div>
 </div>
-<<<<<<< HEAD
 <p><a href="#fig-szereg2" class="quarto-xref">Rys.&nbsp;<span>5.2</span></a> przedstawia węższy wykres danych temperatury z pierwszych 10 dni. Ponieważ dane są rejestrowane co 10 minut, otrzymujemy 24 × 6 = 144 punkty danych dziennie. Zauważ też, że ten 10-dniowy okres musi pochodzić z dość zimnego zimowego miesiąca. Gdybyś próbował przewidzieć średnią temperaturę na następny miesiąc biorąc pod uwagę kilka miesięcy danych z przeszłości, problem byłby łatwy, ze względu na okresowość danych w skali roku. Ale patrząc na dane w skali dni, temperatura wygląda o wiele bardziej chaotycznie. Czy ten szereg czasowy jest przewidywalny w skali dziennej? Przekonajmy się.</p>
-=======
-<p><a href="#fig-szereg2" class="quarto-xref">Rysunek&nbsp;<span>5.2</span></a> przedstawia węższy wykres danych temperatury z pierwszych 10 dni. Ponieważ dane są rejestrowane co 10 minut, otrzymujemy 24 × 6 = 144 punkty danych dziennie. Zauważ też, że ten 10-dniowy okres musi pochodzić z dość zimnego zimowego miesiąca. Gdybyś próbował przewidzieć średnią temperaturę na następny miesiąc biorąc pod uwagę kilka miesięcy danych z przeszłości, problem byłby łatwy, ze względu na okresowość danych w skali roku. Ale patrząc na dane w skali dni, temperatura wygląda o wiele bardziej chaotycznie. Czy ten szereg czasowy jest przewidywalny w skali dziennej? Przekonajmy się.</p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <p>We wszystkich naszych eksperymentach wykorzystamy pierwsze 50% danych do szkolenia, kolejne 25% do walidacji, a ostatnie 25% do testowania. Podczas pracy z danymi szeregów czasowych ważne jest, aby używać danych walidacyjnych i testowych, które są nowsze niż dane treningowe, ponieważ próbujemy przewidzieć przyszłość na podstawie przeszłości, a nie odwrotnie, a podziały walidacyjne / testowe powinny to odzwierciedlać.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">num_train_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span> <span class="op">*</span> <span class="fl">.5</span><span class="op">)</span></span>
@@ -754,11 +709,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
 <pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2125 - 3s/epoch - 7ms/step</code></pre>
-=======
-<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 10ms/step</code></pre>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -767,11 +718,7 @@ Ważne
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span>, metrics <span class="op">=</span> <span class="st">"mae"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<<<<<<< HEAD
 <figure class="figure"><p><a href="rnn_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="rnn_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></a></p>
-=======
-<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figure>
 </div>
 </div>
@@ -813,11 +760,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
 <pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 7ms/step</code></pre>
-=======
-<pre><code>405/405 - 4s - loss: 18.9587 - mae: 3.4415 - 4s/epoch - 10ms/step</code></pre>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -825,11 +768,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<<<<<<< HEAD
 <figure class="figure"><p><a href="rnn_files/figure-html/unnamed-chunk-16-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="rnn_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></a></p>
-=======
-<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figure>
 </div>
 </div>
@@ -867,11 +806,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
 <pre><code>405/405 - 3s - loss: 11.2176 - mae: 2.6383 - 3s/epoch - 7ms/step</code></pre>
-=======
-<pre><code>405/405 - 5s - loss: 11.2176 - mae: 2.6383 - 5s/epoch - 11ms/step</code></pre>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -879,11 +814,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<<<<<<< HEAD
 <figure class="figure"><p><a href="rnn_files/figure-html/unnamed-chunk-18-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="rnn_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></a></p>
-=======
-<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figure>
 </div>
 </div>
@@ -893,7 +824,6 @@ Ważne
 <span class="header-section-number">6</span> Sieci rekurencyjne</h1>
 <p>Główną cechą wszystkich sieci neuronowych, które do tej pory widzieliśmy, takich jak sieci gęsto połączone i sieci splotowe, jest to, że nie mają one pamięci. Każde pokazane im wejście jest przetwarzane niezależnie, bez zachowania stanu pomiędzy wejściami. W takich sieciach, aby przetworzyć sekwencję czasową, musisz pokazać sieci całą sekwencję na raz: czyli zamienić ją w pojedynczy punkt danych. Takie sieci nazywane są sieciami typu <em>feedforward</em>.</p>
 <p>Przetwarzając szeregi czasowe chcielibyśmy przetwarzać je w sekwencji następstw zdarzeń jakie możemy zaobserwować w danych. Biologiczna inteligencja przetwarza informacje przyrostowo, utrzymując wewnętrzny model tego, co przetwarza, zbudowany na podstawie informacji z przeszłości i stale aktualizowany w miarę napływu nowych informacji.</p>
-<<<<<<< HEAD
 <p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="llm.html#fig-rnn1" class="quarto-xref">Rys.&nbsp;<span>6.13</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
 <div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -901,15 +831,6 @@ Ważne
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.1: Zasada działania sieci RNN
-=======
-<p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="#fig-rnn1" class="quarto-xref">Rysunek&nbsp;<span>6.1</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
-<div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.1: Zasada działania sieci RNN
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figcaption></figure>
 </div>
 <p><code>keras</code> ma również swoją implementację tego rodzaju sieci poprzez <code><a href="https://rdrr.io/pkg/keras/man/layer_simple_rnn.html">layer_simple_rnn()</a></code>. Przyjmuje on dane wejściowe o kształcie <code>(batch_size, timesteps, input_features)</code>. Podobnie jak wszystkie warstwy rekurencyjne w <code>keras,</code> <code>layer_simple_rnn</code> może być uruchomiona w dwóch różnych trybach: może zwrócić albo pełne sekwencje kolejnych wyjść dla każdego kroku czasowego (tensor 3D o kształcie <code>(batch_size, timesteps, output_features)</code>) lub tylko ostatnie wyjście dla każdej sekwencji wejściowej (tensor 2D o kształcie <code>(batch_size, output_features)</code>). Te dwa tryby są kontrolowane przez argument <code>return_sequences</code>.</p>
@@ -952,17 +873,10 @@ Rysunek&nbsp;6.1: Zasada działania sieci RNN
 <p>Ta warstwa jest wariantem <code>layer_simple_rnn</code>, wzbogaconym o sposób na przenoszenie informacji przez wiele kroków czasowych. Wyobraź sobie taśmę transportową biegnącą równolegle do sekwencji, którą przetwarzasz. Informacja z sekwencji może wskoczyć na taśmę w dowolnym punkcie, zostać przetransportowana do późniejszego kroku czasowego i wyskoczyć z niej, nienaruszona, kiedy jej potrzebujesz. To jest zasadniczo to, co robi LSTM: zapisuje informacje na później, zapobiegając w ten sposób stopniowemu znikaniu starszych sygnałów podczas przetwarzania.</p>
 <div id="fig-lstm1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<<<<<<< HEAD
 <a href="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.2: Schemat sieci LSTM
-=======
-<img src="images/Zrzut ekranu 2024-01-25 o 21.04.57.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.2: Schemat sieci LSTM
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figcaption></figure>
 </div>
 <p>Typowa jednostka LSTM składa się z komórki (ang. <em>cell</em>), bramki wejściowej (ang. <em>input gate</em>), bramki wyjściowej (ang. <em>output gate</em>) i bramki zapomnienia (ang. <em>forget gate</em>). Komórka zapamiętuje wartości w dowolnych odstępach czasu, a trzy bramki regulują przepływ informacji do i z komórki. Bramki zapominania decydują o tym, jakie informacje z poprzedniego stanu należy odrzucić, przypisując poprzedniemu stanowi, w porównaniu z bieżącym wejściem, wartość z przedziału od 0 do 1. Wartość 1 oznacza zachowanie informacji, a wartość 0 - jej odrzucenie. Bramki wejściowe decydują, które kawałki nowej informacji zapisać w bieżącym stanie, używając tego samego systemu co bramki zapomnienia. Bramki wyjściowe kontrolują, które fragmenty informacji z bieżącego stanu należy wypisać, przypisując im wartość od 0 do 1, biorąc pod uwagę stan poprzedni i bieżący. Selektywne wyprowadzanie odpowiednich informacji z bieżącego stanu pozwala sieci LSTM zachować użyteczne, długoterminowe zależności, pozwalające na dokonywanie przewidywań, zarówno w bieżących, jak i przyszłych krokach czasowych.</p>
@@ -1022,7 +936,6 @@ Zagrożenie
 </div>
 <div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<<<<<<< HEAD
 <a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1030,15 +943,6 @@ Rys.&nbsp;6.3
 </figcaption></figure>
 </div>
 <p><a href="#fig-lstm-dropout" class="quarto-xref">Rys.&nbsp;<span>6.3</span></a> przedstawia wyniki uczenia. Usunięto przeuczenie (do co najmniej 20 epoki). Osiągamy MAE walidacji na poziomie zaledwie 2,37 stopnia (2,5% poprawa w stosunku do modelu bazowego bez uczenia) i testowy MAE na poziomie 2,54 stopnia (3% poprawa w stosunku do lini bazowej).</p>
-=======
-<img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.3
-</figcaption></figure>
-</div>
-<p><a href="#fig-lstm-dropout" class="quarto-xref">Rysunek&nbsp;<span>6.3</span></a> przedstawia wyniki uczenia. Usunięto przeuczenie (do co najmniej 20 epoki). Osiągamy MAE walidacji na poziomie zaledwie 2,37 stopnia (2,5% poprawa w stosunku do modelu bazowego bez uczenia) i testowy MAE na poziomie 2,54 stopnia (3% poprawa w stosunku do lini bazowej).</p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <p>Ponieważ <em>overfitting</em> nie jest już tak wyraźnym problemem, ale wydaje się, że trafiliśmy na wąskie gardło wydajności, powinniśmy rozważyć zwiększenie pojemności i mocy obliczeniowej sieci. Przypomnijmy sobie opis uniwersalnego przepływu pracy uczenia maszynowego: generalnie dobrym pomysłem jest zwiększenie pojemności modelu, dopóki <em>overfitting</em> nie stanie się głównym problemem.</p>
 <p>Zwiększenie pojemności sieci odbywa się zazwyczaj poprzez zwiększenie liczby neuronów w warstwach lub dodanie większej liczby warstw. Składanie warstw rekurencyjnych to klasyczny sposób budowania potężniejszych sieci rekurencyjnych. Aby układać warstwy rekurencyjne jedna na drugiej w Kerasie, wszystkie warstwy pośrednie powinny zwracać pełną sekwencję swoich wyjść (tensor rangi 3), a nie swoje wyjście w ostatnim kroku czasowym. Jak już się dowiedzieliśmy, odbywa się to poprzez ustawienie flagi <code>return_ sequences = TRUE</code>.</p>
 <p>W poniższym przykładzie wypróbujemy stos dwóch warstw rekurencyjnych z regularyzacją <em>dropout</em>. Dla odmiany użyjemy warstw Gated Recurrent Unit (GRU) zamiast LSTM. GRU jest bardzo podobny do LSTM - można o nim myśleć jako o nieco prostszej, usprawnionej wersji architektury LSTM. Została ona wprowadzona w 2014 roku przez <span class="citation" data-cites="choPropertiesNeuralMachine2014">Cho i in. (<a href="references.html#ref-choPropertiesNeuralMachine2014" role="doc-biblioref">b.d.</a>)</span>, gdy sieci rekurencyjne dopiero zaczynały na nowo zyskiwać zainteresowanie w niewielkiej wówczas społeczności badawczej.</p>
@@ -1073,7 +977,6 @@ Rysunek&nbsp;6.3
 <pre><code>[1] "Test MAE: 2.45"</code></pre>
 </div>
 </div>
-<<<<<<< HEAD
 <div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/jena_gru_dropout_hist.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="images/jena_gru_dropout_hist.png" id="fig-gru-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
@@ -1083,17 +986,6 @@ Rys.&nbsp;6.4
 </figcaption></figure>
 </div>
 <p><a href="#fig-gru-dropout" class="quarto-xref">Rys.&nbsp;<span>6.4</span></a> przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na poziomie 2,45 stopnia (poprawa o 6,5% w stosunku do linii bazowej). Widać, że dodana warstwa nieco poprawia wyniki, choć nie dramatycznie, zatem można zaobserwować malejące zyski ze zwiększania pojemności sieci.</p>
-=======
-<div id="fig-gru_dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/jena_gru_dropout_hist.png" id="fig-gru_dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gru_dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.4
-</figcaption></figure>
-</div>
-<p><span class="quarto-unresolved-ref">?fig-gru-dropout</span> przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na poziomie 2,45 stopnia (poprawa o 6,5% w stosunku do linii bazowej). Widać, że dodana warstwa nieco poprawia wyniki, choć nie dramatycznie, zatem można zaobserwować malejące zyski ze zwiększania pojemności sieci.</p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </section><section id="dwukierunkowe-sieci-rekurencyjne" class="level2 page-columns page-full" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="dwukierunkowe-sieci-rekurencyjne">
 <span class="header-section-number">6.3</span> Dwukierunkowe sieci rekurencyjne</h2>
 <p>Ostatnią techniką, której przyjrzymy się w tej sekcji, jest dwukierunkowa sieć RNN. Dwukierunkowy RNN jest powszechnym wariantem RNN, który może oferować większą wydajność niż zwykły RNN w niektórych zadaniach. Jest często używany w przetwarzaniu języka naturalnego - można go nazwać szwajcarskim scyzorykiem głębokiego uczenia się do przetwarzania języka naturalnego.</p>
@@ -1138,11 +1030,7 @@ Rysunek&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
 <pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 7ms/step</code></pre>
-=======
-<pre><code>405/405 - 4s - loss: 22.8799 - mae: 3.8075 - 4s/epoch - 11ms/step</code></pre>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1150,31 +1038,15 @@ Rysunek&nbsp;6.4
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<<<<<<< HEAD
 <figure class="figure"><p><a href="rnn_files/figure-html/unnamed-chunk-29-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="rnn_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></a></p>
-=======
-<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figure>
 </div>
 </div>
 </div>
 <p>LSTM z odwróconym czasem silnie ustępuje nawet zdroworozsądkowemu poziomowi bazowemu, wskazując, że w tym przypadku przetwarzanie chronologiczne jest ważne dla powodzenia tego podejścia. Ma to sens: warstwa LSTM zazwyczaj lepiej zapamiętuje niedawną przeszłość niż odległą przeszłość, a naturalnie bardziej aktualne dane pogodowe niosą w sobie więcej informacji niż starsze dane (to właśnie sprawia, że zdroworozsądkowa linia bazowa jest dość silna). Tak więc chronologiczna wersja sieci z pewnością przewyższy wersję z odwróconym porządkiem.</p>
 <p>Nie jest to jednak prawdą w przypadku wielu innych problemów, w tym języka naturalnego: intuicyjnie, znaczenie słowa w zrozumieniu zdania zwykle nie zależy od jego pozycji w zdaniu. W przypadku danych tekstowych, przetwarzanie w odwróconej kolejności działa równie dobrze jak przetwarzanie chronologiczne - można czytać tekst od tyłu. Chociaż kolejność słów ma znaczenie dla zrozumienia języka, to kolejność, której używamy, nie jest kluczowa. Co ważne, RNN wytrenowana na odwróconych sekwencjach nauczy się innych reprezentacji niż ta wytrenowana na oryginalnych sekwencjach, podobnie jak w prawdziwym świecie mielibyśmy inne modele mentalne, gdyby czas płynął wstecz - gdybyśmy żyli życiem, w którym umieramy pierwszego dnia i rodzimy się ostatniego. W uczeniu maszynowym reprezentacje, które są użyteczne, są zawsze warte wykorzystania, a im bardziej się różnią, tym lepiej, bo oferują nowy kąt, z którego można spojrzeć na dane, wychwytując aspekty danych, które zostały pominięte przez inne podejścia, a tym samym mogą pomóc zwiększyć wydajność zadania.</p>
-<<<<<<< HEAD
 <p>Dwukierunkowa sieć RNN wykorzystuje ten pomysł, aby poprawić wydajność sieci RNN z porządkiem chronologicznym. Analizuje sekwencję wejściową w obie strony (patrz <span class="quarto-unresolved-ref">?fig-bidirectional</span>), uzyskując potencjalnie bogatsze reprezentacje i wychwytując wzorce, które mogły zostać pominięte przez samą wersję chronologiczną.</p>
 <p><img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid" alt="Zasada działania warstw dwukierunkowych">{#fig-bidirectional dwukierunkowych fig-align=“center” width=“300”}</p>
-=======
-<p>Dwukierunkowa sieć RNN wykorzystuje ten pomysł, aby poprawić wydajność sieci RNN z porządkiem chronologicznym. Analizuje sekwencję wejściową w obie strony (patrz <a href="#fig-bidirectional" class="quarto-xref">Rysunek&nbsp;<span>6.5</span></a>), uzyskując potencjalnie bogatsze reprezentacje i wychwytując wzorce, które mogły zostać pominięte przez samą wersję chronologiczną.</p>
-<div id="fig-bidirectional" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-bidirectional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bidirectional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
-</figcaption></figure>
-</div>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <p>Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code>, które jako pierwszy argument przyjmują instancję warstwy rekurencyjnej. <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code> tworzy drugą, oddzielną instancję tej warstwy rekurencyjnej i wykorzystuje jedną instancję do przetwarzania sekwencji wejściowych w porządku chronologicznym, a drugą instancję do przetwarzania sekwencji wejściowych w porządku odwróconym.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
@@ -1202,11 +1074,7 @@ Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
 <pre><code>405/405 - 5s - loss: 10.8280 - mae: 2.5962 - 5s/epoch - 13ms/step</code></pre>
-=======
-<pre><code>405/405 - 7s - loss: 10.8280 - mae: 2.5962 - 7s/epoch - 18ms/step</code></pre>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
@@ -1214,11 +1082,7 @@ Rysunek&nbsp;6.5: Zasada działania warstw dwukierunkowych
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<<<<<<< HEAD
 <figure class="figure"><p><a href="rnn_files/figure-html/unnamed-chunk-31-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="rnn_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></a></p>
-=======
-<figure class="figure"><p><img src="rnn_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 </figure>
 </div>
 </div>
@@ -1261,7 +1125,6 @@ Ostrzeżenie
 </div>
 
 
-<<<<<<< HEAD
 <div class="no-row-height column-margin column-container"><p><sup>3</sup>&nbsp;patrzenie w lusterko wsteczne nie jest najlepszą metodą prowadzenia auta 🙉 🤔</p></div><div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe</span>
 <span class="glightbox-desc lightbox-desc-2">Rys.&nbsp;5.1: Przebieg szeregu czasowego temperatury</span>
@@ -1272,9 +1135,6 @@ Ostrzeżenie
 <span class="glightbox-desc lightbox-desc-10">Rys.&nbsp;6.4: </span>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-=======
-<div class="no-row-height column-margin column-container"><p><sup>3</sup>&nbsp;patrzenie w lusterko wsteczne nie jest najlepszą metodą prowadzenia auta 🙉 🤔</p></div><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 <div id="ref-bengio1994" class="csl-entry" role="listitem">
 Bengio, Y., P. Simard, i P. Frasconi. 1994. <span>„Learning long-term dependencies with gradient descent is difficult”</span>. <em>IEEE Transactions on Neural Networks</em> 5 (2): 157–66. <a href="https://doi.org/10.1109/72.279181">https://doi.org/10.1109/72.279181</a>.
 </div>
@@ -1590,16 +1450,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-<<<<<<< HEAD
       // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
         return note.innerHTML;
       }
-=======
-      return note.innerHTML;
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1825,13 +1681,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-<<<<<<< HEAD
       <a href="./llm.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Modele językowe</span>">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modele językowe</span></span> <i class="bi bi-arrow-right-short"></i>
-=======
-      <a href="./references.html" class="pagination-link" aria-label="Literatura">
-        <span class="nav-page-text">Literatura</span> <i class="bi bi-arrow-right-short"></i>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
       </a>
   </div>
 </nav>
@@ -1847,7 +1698,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-<<<<<<< HEAD
 </footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
@@ -1873,9 +1723,6 @@ window.onload = () => {
 
 };
           </script>
-=======
-</footer>
->>>>>>> 4a6fb746c31100fd88dd168c9c07ac4fd9a97a10
 
 
 </body></html>

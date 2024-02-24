@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e04686f568ff0dac4f09b7355cfd7525cd68a32fd08b875e05cce38e8c266dab
-size 464
+A very comical but down to earth look into the behind the scene workings of an Australian bowling club. The way they deal with various problems such as takeovers, memberships and general running of the club, not to mention the car parking dilemma was well scripted.
