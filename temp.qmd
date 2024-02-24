@@ -1,0 +1,149 @@
+---
+title: "Untitled"
+---
+
+<div>
+
+Dokładne sformułowanie problemu będzie następujące: biorąc pod uwagę dane
+sięgające tak daleko wstecz jak `lookback` (krok czasowy to 10 minut) i
+próbkowane co `steps`, czy możesz przewidzieć temperaturę na `delay` kroków
+czasowych? Użyjemy następujących wartości parametrów:
+
+-   `lookback` = 720 - obserwacje do 5 dni wstecz.
+-   `steps` = 6 - obserwacje będą próbkowane z częstotliwością jednego punktu
+    na godzinę.
+-   `delay` = 144 - celem będą 24 godziny na przód.
+
+Aby rozpocząć, musimy zrobić dwie rzeczy:
+
+-   Wstępnie przetworzyć dane do formatu, który może przyjąć sieć neuronowa. To
+    jest łatwe: dane są już numeryczne, więc nie musisz robić żadnej
+    wektoryzacji. Ale każdy szereg czasowy w danych jest w innej skali (na
+    przykład, temperatura jest zwykle między -20 i +30, ale ciśnienie, mierzone
+    w mbar, jest około 1000). Musimy znormalizować każdy krok czasowy
+    niezależnie, aby wszystkie przyjmowały małe wartości w podobnej skali.
+-   Napiszemy funkcję generatora, która przyjmuje bieżącą tablicę danych
+    (float) i zwraca partie danych z niedawnej przeszłości wraz z docelową
+    temperaturą w przyszłości. Ponieważ próbki w zbiorze danych są wysoce
+    redundantne (próbka $N$ i próbka $N + 1$ będą miały większość swoich kroków
+    czasowych wspólnych), byłoby marnotrawstwem jawne przydzielanie każdej
+    próbki. Zamiast tego wygenerujemy próbki w locie, używając oryginalnych
+    danych.
+
+Najpierw przekonwertujemy ramkę danych, którą odczytaliśmy wcześniej, na
+macierz wartości zmiennoprzecinkowych (odrzucimy pierwszą kolumnę, która
+zawierała tekstowy znacznik czasu):
+
+```{r}
+full_df <- data.matrix(full_df[,-1])
+```
+
+Następnie wstępnie przetworzymy dane odejmując średnią każdego szeregu
+czasowego i dzieląc przez odchylenie standardowe. Będziemy używać pierwszych
+200000 przebiegów czasowych jako danych treningowych, więc obliczymy średnią i
+odchylenie standardowe dla normalizacji tylko na tej części danych.
+
+```{r}
+train_data <- data[1:200000,]
+mean <- apply(train_data, 2, mean)
+std <- apply(train_data, 2, sd)
+data <- scale(data, center = mean, scale = std)
+```
+
+Następnie stworzymy generator danych. Będzie on generował listę
+`(sample, targets)`, gdzie `sample` to jedna partia danych wejściowych, a
+`targets` to odpowiednia tablica temperatur docelowych. Generator przyjmuje
+następujące argumenty:
+
+-   `data` - oryginalna tablica danych, którą znormalizowaliśmy.
+-   `lookback` - ile kroków czasowych wstecz zostanie użytych jako dane
+    wejściowe.
+-   `delay` - ile kroków czasowych w ma przewidywać model.
+-   `min_index` i `max_index` - wskaźniki w tablicy danych, które określają, z
+    których kroków czasowych należy czerpać. Jest to przydatne w przypadku
+    utrzymywania jednego segmentu danych do walidacji, a drugiego do
+    testowania.
+-   `shuffle` - czy próbki mają być permutowane czy losowane w kolejności
+    chronologicznej.
+-   `batch_size` - liczba próbek w partii.
+-   `step` - okres, w krokach czasowych, w którym pobierane są próbki danych.
+    Ustawiamy 6, aby co godzinę pobierać jeden punkt danych.
+
+```{r}
+generator <- function(data, lookback, delay, min_index, max_index,
+                      shuffle = FALSE, batch_size = 128, step = 6) {
+  if (is.null(max_index))
+    max_index <- nrow(data) - delay - 1
+  i <- min_index + lookback
+  function() {
+    if (shuffle) {
+      rows <- sample(c((min_index+lookback):max_index), size = batch_size)
+    } else {
+      if (i + batch_size >= max_index)
+        i <<- min_index + lookback
+      rows <- c(i:min(i+batch_size, max_index))
+      i <<- i + length(rows)
+}
+    samples <- array(0, dim = c(length(rows),
+                                lookback / step,
+                                dim(data)[[-1]]))
+    targets <- array(0, dim = c(length(rows)))
+    for (j in 1:length(rows)) {
+      indices <- seq(rows[[j]] - lookback, rows[[j]],
+                     length.out = dim(samples)[[2]])
+      samples[j,,] <- data[indices,]
+      targets[[j]] <- data[rows[[j]] + delay,2]
+    }
+    list(samples, targets)
+  }
+}
+```
+
+Teraz użyjmy funkcji generatora do zainicjowania trzech generatorów: jednego do
+treningu, jednego do walidacji i jednego do testowania. Każdy z nich będzie
+patrzył na różne segmenty czasowe oryginalnych danych: generator treningowy
+patrzy na pierwsze 200000 kroków czasowych, generator walidacyjny patrzy na
+kolejne 100000, a generator testowy patrzy na resztę.
+
+```{r}
+lookback <- 1440
+step <- 6
+delay <- 144
+batch_size <- 128
+
+train_gen <- generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 1,
+  max_index = 200000,
+  shuffle = TRUE,
+step = step,
+  batch_size = batch_size
+)
+
+val_gen = generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 200001,
+  max_index = 300000,
+  step = step,
+  batch_size = batch_size
+)
+
+test_gen <- generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 300001,
+  max_index = NULL,
+  step = step,
+  batch_size = batch_size
+)
+
+val_steps <- (300000 - 200001 - lookback) / batch_size
+test_steps <- (nrow(data) - 300001 - lookback) / batch_size
+```
+
+</div>
