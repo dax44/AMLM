@@ -709,7 +709,7 @@ Ważne
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/save_model_tf.html">load_model_tf</a></span><span class="op">(</span><span class="st">"models/jena_dense.keras"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 58.4128 - mae: 6.2125 - 3s/epoch - 7ms/step</code></pre>
+<pre><code>405/405 - 4s - loss: 58.4128 - mae: 6.2125 - 4s/epoch - 9ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 6.21"</code></pre>
@@ -760,7 +760,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_conv1D_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 7ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 18.9587 - mae: 3.4415 - 3s/epoch - 8ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.44"</code></pre>
@@ -806,7 +806,7 @@ Ważne
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_history.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 4s - loss: 11.2176 - mae: 2.6383 - 4s/epoch - 9ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 11.2176 - mae: 2.6383 - 3s/epoch - 8ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.64"</code></pre>
@@ -824,12 +824,12 @@ Ważne
 <span class="header-section-number">6</span> Sieci rekurencyjne</h1>
 <p>Główną cechą wszystkich sieci neuronowych, które do tej pory widzieliśmy, takich jak sieci gęsto połączone i sieci splotowe, jest to, że nie mają one pamięci. Każde pokazane im wejście jest przetwarzane niezależnie, bez zachowania stanu pomiędzy wejściami. W takich sieciach, aby przetworzyć sekwencję czasową, musisz pokazać sieci całą sekwencję na raz: czyli zamienić ją w pojedynczy punkt danych. Takie sieci nazywane są sieciami typu <em>feedforward</em>.</p>
 <p>Przetwarzając szeregi czasowe chcielibyśmy przetwarzać je w sekwencji następstw zdarzeń jakie możemy zaobserwować w danych. Biologiczna inteligencja przetwarza informacje przyrostowo, utrzymując wewnętrzny model tego, co przetwarza, zbudowany na podstawie informacji z przeszłości i stale aktualizowany w miarę napływu nowych informacji.</p>
-<p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="llm.html#fig-rnn1" class="quarto-xref">Rys.&nbsp;<span>6.13</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
-<div id="fig-rnn1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p>Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz <a href="#fig-rnn-1" class="quarto-xref">Rys.&nbsp;<span>6.1</span></a>). Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.</p>
+<div id="fig-rnn-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rnn-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="https://editor.analyticsvidhya.com/uploads/17464JywniHv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Rys.&nbsp;6.1: Zasada działania sieci RNN
 </figcaption></figure>
 </div>
@@ -934,12 +934,12 @@ Zagrożenie
 <pre><code>[1] "Test MAE: 2.54"</code></pre>
 </div>
 </div>
-<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-lstm-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="images/jena_lstm_dropout_hist.png" id="fig-lstm-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
+<a href="images/jena_lstm_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="images/jena_lstm_dropout_hist.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rys.&nbsp;6.3
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lstm-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rys.&nbsp;6.3: Krzywa uczenia sieci LSTM
 </figcaption></figure>
 </div>
 <p><a href="#fig-lstm-dropout" class="quarto-xref">Rys.&nbsp;<span>6.3</span></a> przedstawia wyniki uczenia. Usunięto przeuczenie (do co najmniej 20 epoki). Osiągamy MAE walidacji na poziomie zaledwie 2,37 stopnia (2,5% poprawa w stosunku do modelu bazowego bez uczenia) i testowy MAE na poziomie 2,54 stopnia (3% poprawa w stosunku do lini bazowej).</p>
@@ -977,12 +977,12 @@ Rys.&nbsp;6.3
 <pre><code>[1] "Test MAE: 2.45"</code></pre>
 </div>
 </div>
-<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="500">
+<div id="fig-gru-dropout" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/jena_gru_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="images/jena_gru_dropout_hist.png" id="fig-gru-dropout" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="500"></a>
+<a href="images/jena_gru_dropout_hist.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="images/jena_gru_dropout_hist.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Rys.&nbsp;6.4
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gru-dropout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rys.&nbsp;6.4: Krzywa uczenia sieci GRU
 </figcaption></figure>
 </div>
 <p><a href="#fig-gru-dropout" class="quarto-xref">Rys.&nbsp;<span>6.4</span></a> przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na poziomie 2,45 stopnia (poprawa o 6,5% w stosunku do linii bazowej). Widać, że dodana warstwa nieco poprawia wyniki, choć nie dramatycznie, zatem można zaobserwować malejące zyski ze zwiększania pojemności sieci.</p>
@@ -1030,7 +1030,7 @@ Rys.&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_rev_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 8ms/step</code></pre>
+<pre><code>405/405 - 3s - loss: 22.8799 - mae: 3.8075 - 3s/epoch - 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 3.81"</code></pre>
@@ -1046,7 +1046,7 @@ Rys.&nbsp;6.4
 <p>LSTM z odwróconym czasem silnie ustępuje nawet zdroworozsądkowemu poziomowi bazowemu, wskazując, że w tym przypadku przetwarzanie chronologiczne jest ważne dla powodzenia tego podejścia. Ma to sens: warstwa LSTM zazwyczaj lepiej zapamiętuje niedawną przeszłość niż odległą przeszłość, a naturalnie bardziej aktualne dane pogodowe niosą w sobie więcej informacji niż starsze dane (to właśnie sprawia, że zdroworozsądkowa linia bazowa jest dość silna). Tak więc chronologiczna wersja sieci z pewnością przewyższy wersję z odwróconym porządkiem.</p>
 <p>Nie jest to jednak prawdą w przypadku wielu innych problemów, w tym języka naturalnego: intuicyjnie, znaczenie słowa w zrozumieniu zdania zwykle nie zależy od jego pozycji w zdaniu. W przypadku danych tekstowych, przetwarzanie w odwróconej kolejności działa równie dobrze jak przetwarzanie chronologiczne - można czytać tekst od tyłu. Chociaż kolejność słów ma znaczenie dla zrozumienia języka, to kolejność, której używamy, nie jest kluczowa. Co ważne, RNN wytrenowana na odwróconych sekwencjach nauczy się innych reprezentacji niż ta wytrenowana na oryginalnych sekwencjach, podobnie jak w prawdziwym świecie mielibyśmy inne modele mentalne, gdyby czas płynął wstecz - gdybyśmy żyli życiem, w którym umieramy pierwszego dnia i rodzimy się ostatniego. W uczeniu maszynowym reprezentacje, które są użyteczne, są zawsze warte wykorzystania, a im bardziej się różnią, tym lepiej, bo oferują nowy kąt, z którego można spojrzeć na dane, wychwytując aspekty danych, które zostały pominięte przez inne podejścia, a tym samym mogą pomóc zwiększyć wydajność zadania.</p>
 <p>Dwukierunkowa sieć RNN wykorzystuje ten pomysł, aby poprawić wydajność sieci RNN z porządkiem chronologicznym. Analizuje sekwencję wejściową w obie strony (patrz <span class="quarto-unresolved-ref">?fig-bidirectional</span>), uzyskując potencjalnie bogatsze reprezentacje i wychwytując wzorce, które mogły zostać pominięte przez samą wersję chronologiczną.</p>
-<p><img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid" alt="Zasada działania warstw dwukierunkowych">{#fig-bidirectional dwukierunkowych fig-align=“center” width=“300”}</p>
+<p><img src="images/Zrzut ekranu 2024-01-27 o 13.51.49.png" class="img-fluid" width="400" alt="Zasada działania warstw dwukierunkowych">{#fig-bidirectional fig-align=“center” width=“300”}</p>
 <p>Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code>, które jako pierwszy argument przyjmują instancję warstwy rekurencyjnej. <code><a href="https://rdrr.io/pkg/keras/man/bidirectional.html">bidirectional()</a></code> tworzy drugą, oddzielną instancję tej warstwy rekurencyjnej i wykorzystuje jedną instancję do przetwarzania sekwencji wejściowych w porządku chronologicznym, a drugą instancję do przetwarzania sekwencji wejściowych w porządku odwróconym.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sequence_length</span>, <span class="va">ncol_input_data</span><span class="op">)</span><span class="op">)</span></span>
@@ -1074,7 +1074,7 @@ Rys.&nbsp;6.4
 <span><span class="va">history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"models/jena_lstm_bi_hist.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Test MAE: %.2f"</span>, <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_dataset</span><span class="op">)</span><span class="op">[</span><span class="st">"mae"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>405/405 - 6s - loss: 10.8280 - mae: 2.5962 - 6s/epoch - 14ms/step</code></pre>
+<pre><code>405/405 - 5s - loss: 10.8280 - mae: 2.5962 - 5s/epoch - 13ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test MAE: 2.60"</code></pre>
@@ -1131,8 +1131,8 @@ Ostrzeżenie
 <span class="glightbox-desc lightbox-desc-3">Rys.&nbsp;5.2: Wycinek przebiegu szeregu czasowego temperatury</span>
 <span class="glightbox-desc lightbox-desc-7">Rys.&nbsp;6.1: Zasada działania sieci RNN</span>
 <span class="glightbox-desc lightbox-desc-8">Rys.&nbsp;6.2: Schemat sieci LSTM</span>
-<span class="glightbox-desc lightbox-desc-9">Rys.&nbsp;6.3: </span>
-<span class="glightbox-desc lightbox-desc-10">Rys.&nbsp;6.4: </span>
+<span class="glightbox-desc lightbox-desc-9">Rys.&nbsp;6.3: Krzywa uczenia sieci LSTM</span>
+<span class="glightbox-desc lightbox-desc-10">Rys.&nbsp;6.4: Krzywa uczenia sieci GRU</span>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-bengio1994" class="csl-entry" role="listitem">
@@ -1698,7 +1698,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
