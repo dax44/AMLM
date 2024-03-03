@@ -1,0 +1,384 @@
+---
+title: "Abalone"
+format: html
+execute: 
+  warning: false
+editor: visual
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Cel zadania
+
+Celem zadania jest przygotowanie modelu uczenia maszynowego służącego do
+przewidywania wieku uchowców na podstawie pomiarów fizycznych. W tym celu
+zgromadzono dane w ilości 4177 obserwacji, w tym 8 predyktorów i jedna zmienna
+wynikowa.
+
+## Analiza opisowa
+
+Aby przystąpić do budowania modelu należy dokonać analizy opisowej
+poszczególnych predyktorów oraz zmiennej wynikowej.
+
+```{r}
+#| column: page
+library(tidyverse)
+library(skimr)
+library(gt)
+
+df <- read_csv("abalone.csv")
+df <- df[,-1]
+
+df |> 
+  skim() 
+```
+
+Aby sprawdzić częstość występowania poszczególnych płci wykreślono wykres
+słupkowy.
+
+```{r}
+df |> 
+  ggplot(aes(sex))+
+  geom_bar()
+```
+
+Jak widać mamy w miarę zbalansowaną zmienną płci. Dla zilustrowania rozkładów
+zmiennych ilościowych wykorzystamy histogramy.
+
+```{r}
+df |> 
+  pivot_longer(cols = where(is.numeric)) |> 
+  ggplot(aes(x = value))+
+  geom_histogram()+
+  facet_wrap(~name, scales= "free")
+```
+
+Jak widać z powyższych wykresów część zmiennych charakteryzuje się prawostronną
+asymetrią (jak zmienna zależna oraz zmienne wyrażające wagę), natomiast zmienne
+takie jak `diameter` i `length` mają asymetrię lewostronną. Dla lepszego
+działania modeli jądrowych takich jak SVM proponuję transformację zmiennych do
+rozkładów normalnych.
+
+Sprawdzone zostaną również korelacje pomiędzy zmiennymi.
+
+```{r}
+library(ggcorrplot)
+r <- df |> 
+  select(-sex) |> 
+  cor()
+p <- df |> 
+  select(-sex) |> 
+  cor_pmat()
+
+ggcorrplot(r, hc.order = F, lab = T, p.mat = p)
+```
+
+Pobieżna analiza wyników macierzy korelacji każe się domyślać, że zależności
+pomiędzy predyktoramy są ściśle liniowe. W związku z tym trzeba się poważnie
+zastanowić nad usunięciem tych nadmiarowości (niektóre korelacje sięgają 0.99).
+Ponieważ macierz korelacji pokazuje związki liniowe, to do redukcji
+nadmiarowości mozna użyć PCA.
+
+## Przygotowanie danych
+
+W kolejnych korkach preprocessingu podzielimy dane na zbiór uczący i testowy,
+dokonamy transformacji rozkładów predyktorów do rozkładu normalnego,
+standaryzacji predyktorów oraz redukcji wymiarów do tylu składowych aby poziom
+wyjaśnionej wariancji wynosił co najmniej 95%. Ponieważ planuję sprawdzić
+cztery modele, a każdy z nich wymaga nieco innego preprocessingu, to przygotuję
+różne formuły transformacji danych - odpowiednie dla poszczególnych modeli.
+
+```{r}
+library(tidymodels)
+library(bestNormalize)
+library(multilevelmod)
+library(poissonreg)
+library(agua)
+
+set.seed(44)
+split <- initial_split(df, prop = 0.8, strata = "number_of_rings")
+df_train <- training(split)
+df_test <- testing(split)
+
+base_rec <- recipe(number_of_rings ~ ., data = df_train)
+
+# do modelu null nie potrzeba nic więcej
+rec_null <- base_rec |> 
+  step_dummy(sex)
+
+rec_rf <- base_rec |> 
+  step_pca(all_numeric_predictors(), threshold = 0.95)
+
+rec_svm <- base_rec |> 
+  step_best_normalize(all_numeric_predictors()) |> 
+  step_pca(all_numeric_predictors()) |> 
+  step_normalize(all_numeric_predictors())
+
+rec_pois <- rec_svm |> 
+  step_dummy(sex)
+```
+
+## Budowa modelu
+
+Najpierw wyznaczymy tzw. linię bazową (lub model bazowy), która oznacza model
+przewidujący zmienną wynikową jako średnią zmiennej `number_of_rings`. Używa
+się tego modelu do sprawdzenia czy modele uczenia maszynowego faktycznie
+przewyższają dopasowaniem model bazowy. Tylko wtedy warto je rozważać.
+
+Do oceny jakości dopasowania użyjemy dwóch miar RMSE i R^2^. Oceny dopasowania
+dokonamy z wykorzystaniem sprawdzianu krzyżowego 10-krotnego bez powtórzeń.
+
+```{r}
+set.seed(44)
+folds <- vfold_cv(df_train, v = 10)
+
+metric <- metric_set(rmse, rsq)
+
+null_regression <- null_model() |> 
+  set_mode("regression") |> 
+  set_engine("parsnip")
+
+null_wf <- workflow() |> 
+  add_recipe(rec_null) |> 
+  add_model(null_regression)
+
+# w przypadku modelu, który zwraca tylko 1 wartość nie da się policzyć r2
+null_res <- fit_resamples(null_wf, resamples = folds, metrics = metric_set(rmse))
+  
+collect_metrics(null_res)
+```
+
+```{r}
+svm <- svm_rbf(mode = "regression", 
+               engine = "kernlab")
+
+rf <- rand_forest(mode = "regression",
+                  engine = "ranger")
+
+pois <- poisson_reg(mode = "regression", 
+                    engine = "glm")
+
+models <- workflow_set(preproc = list(rec_svm, rec_rf, rec_pois), 
+                       models = list(svm = svm, rf=rf, pois=pois), 
+                       cross = F)
+models
+```
+
+```{r}
+models <- 
+  models %>% 
+  workflow_map("fit_resamples", 
+               # Options to `workflow_map()`: 
+               verbose = TRUE,
+               # Options to `fit_resamples()`: 
+               resamples = folds,
+               metrics = metric)
+
+collect_metrics(models)
+```
+
+Model SVM okazał się najlepszy do tego zadania spośród modeli, które były
+testowane. Jednocześnie należy zaznaczyć, że przewyższa jakością dopasowania
+model bazowy. W dalszej części będziemy się starali optymalizować parametry
+modelu. Do optymalizacji wykorzystamy metodę bayesowską.
+
+## Tuning modelu
+
+```{r}
+svm <- svm_rbf(mode = "regression", 
+               engine = "kernlab", 
+               cost = tune(), 
+               rbf_sigma = tune(), 
+               margin = tune())
+
+# wszystkie parametry są gotowe do tuningu
+svm_param <- extract_parameter_set_dials(svm)
+svm_param
+
+svm_wf <- workflow() |> 
+  add_recipe(rec_svm) |> 
+  add_model(svm)
+```
+
+```{r}
+#| eval: false
+
+library(doParallel)
+cl <- makePSOCKcluster(4)
+registerDoParallel(cl)
+
+set.seed(44)
+svm_bo <-
+  svm_wf |> 
+  tune_bayes(
+    resamples = folds,
+    metrics = metric,
+    initial = 4,
+    param_info = svm_param,
+    iter = 25
+  )
+
+stopCluster(cl)
+saveRDS(svm_bo, "svm_bo.rds")
+```
+
+Poniżej można zobaczyć miarę dopasowania w zależności od poszczególnych
+zestawów parametrów.
+
+```{r}
+svm_bo <- readRDS("svm_bo.rds")
+autoplot(svm_bo, type = 'marginals', metric = 'rmse')
+```
+
+I jeszcze jak to się zmieniało w kolejnych iteracjach.
+
+```{r}
+autoplot(svm_bo, type = 'performance', metric = 'rmse')
+```
+
+```{r}
+show_best(svm_bo)
+```
+
+Najlepsza okazała się kombinacja: `cost=2.14`, `rbf_sigma=0.0385`,
+`margin=0.198`. Taką kombinację użyjemy do uczenia ostatecznego modelu.
+
+## Ocena dopasowania modelu końcowego
+
+```{r}
+best_params <- select_best(svm_bo, metric = "rmse")
+
+final_wf <- svm_wf |> 
+  finalize_workflow(best_params) 
+
+final_wf
+```
+
+```{r}
+final_fit <- final_wf |> 
+  last_fit(split)
+
+final_fit$.metrics
+```
+
+Jak widać model został poprawiony w stosunku do modelu SVM z domyślnymi
+parametrami.
+
+```{r}
+final_fit$.predictions[[1]] |> 
+  ggplot(aes(x = number_of_rings, y = .pred))+
+  geom_point(alpha=0.5)+
+  geom_abline(slope = 1, intercept = 0)+
+  labs(y = "Predicted", x = "Observed")
+```
+
+Widać, że model niedoszacowuje wartości dla większej liczby ringów. Można
+spróbować poradzić sobie z tym problemem poprzez transformację zmiennej
+wynikowej (do tej pory była nie zmieniana).
+
+## Alternatywne rozwiązanie
+
+Jako transformację wybierzemy $f(y)=\log(y)$ ponieważ powinien on zmniejszyć
+nieco asymetrię prawostronną zmiennej $y$ i jednocześnie usunąć
+heterogeniczność modelu.
+
+```{r}
+library(patchwork)
+p1 <- df |> 
+  ggplot(aes(number_of_rings))+
+  geom_histogram(bins = 18, color='white')
+p2 <- df |> 
+  ggplot(aes(log(number_of_rings)))+
+  geom_histogram(bins = 18, color='white')
+
+p1/p2
+```
+
+```{r}
+rec_svm2 <- rec_svm |> 
+  step_log(all_outcomes())
+
+svm <- svm_rbf(mode = "regression", 
+               engine = "kernlab", 
+               cost = tune(), 
+               rbf_sigma = tune(), 
+               margin = tune())
+
+# wszystkie parametry są gotowe do tuningu
+svm_param <- extract_parameter_set_dials(svm)
+svm_param
+
+svm_wf2 <- workflow() |> 
+  add_recipe(rec_svm2) |> 
+  add_model(svm)
+```
+
+```{r}
+#| eval: false
+cl <- makePSOCKcluster(4)
+registerDoParallel(cl)
+
+set.seed(44)
+svm_bo <-
+  svm_wf2 |> 
+  tune_bayes(
+    resamples = folds,
+    metrics = metric,
+    initial = 4,
+    param_info = svm_param,
+    iter = 25
+  )
+
+stopCluster(cl)
+saveRDS(svm_bo, "svm_bo2.rds")
+```
+
+```{r}
+svm_bo <- readRDS("svm_bo2.rds")
+show_best(svm_bo, metric = "rmse")
+```
+
+```{r}
+best_params <- select_best(svm_bo, metric = "rmse")
+
+final_wf <- svm_wf2 |> 
+  finalize_workflow(best_params) 
+
+final_wf
+```
+
+```{r}
+final_fit <- final_wf |> 
+  last_fit(split)
+
+final_fit$.metrics
+```
+
+Ponieważ zmienna $y$ została transformowana, to trudno porównywać miary RMSE
+czy R^2^. Aby to zrobić należy najpierw przekształcić zmienne.
+
+```{r}
+res <- final_fit$.predictions[[1]] |> 
+  mutate(pred = exp(.pred), obs = exp(number_of_rings))
+
+res |> metric(truth = obs, estimate = pred)
+```
+
+Jak widać dopasowanie jest bardzo podobne (wcale tak być nie musiało).
+
+```{r}
+final_fit$.predictions[[1]] |> 
+  ggplot(aes(x = exp(number_of_rings), y = exp(.pred))) +
+  geom_point(alpha=0.5)+
+  geom_abline(slope = 1, intercept = 0)+
+  labs(y = "Predicted", x = "Observed")
+```
+
+# Podsumowanie
+
+Model (nawet ten po transformacji) charakteryzuje się przeciętnym dopasowanie.
+Z pewnością można byłoby dalej szukać optymalnych modeli do opisu tego
+zjawiska. Przy okazji modelu z transformacją zmiennej $y$ należy pamiętać, że
+chcąc uzyskać predykcje liczby ringów dla poszczególnych osobników należy na
+predykcję z modelu z transformacją nałożyć funkcję $\exp$.

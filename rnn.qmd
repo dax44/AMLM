@@ -664,14 +664,14 @@ Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, c
 w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po
 elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z
 tym, co widziała do tej pory. W efekcie RNN jest rodzajem sieci neuronowej,
-która posiada wewnętrzną pętlę (patrz @fig-rnn1). Stan sieci RNN jest zerowany
+która posiada wewnętrzną pętlę (patrz @fig-rnn-1). Stan sieci RNN jest zerowany
 pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji, więc nadal
 traktujemy jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do
 sieci. Zmienia się to, że ten punkt danych nie jest już przetwarzany w
 pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.
 
 ![Zasada działania sieci
-RNN](https://editor.analyticsvidhya.com/uploads/17464JywniHv.png){#fig-rnn1
+RNN](https://editor.analyticsvidhya.com/uploads/17464JywniHv.png){#fig-rnn-1
 fig-align="center" width="600"}
 
 `keras` ma również swoją implementację tego rodzaju sieci poprzez
@@ -882,7 +882,7 @@ model <- load_model_tf("models/jena_lstm_dropout.keras")
 sprintf("Test MAE: %.2f", evaluate(model, test_dataset)["mae"])
 ```
 
-![](images/jena_lstm_dropout_hist.png){#fig-lstm-dropout fig-align="center"
+![Krzywa uczenia sieci LSTM](images/jena_lstm_dropout_hist.png){#fig-lstm-dropout fig-align="center"
 width="500"}
 
 @fig-lstm-dropout przedstawia wyniki uczenia. Usunięto przeuczenie (do co
@@ -942,7 +942,7 @@ model <- load_model_tf("models/jena_gru_dropout.keras")
 sprintf("Test MAE: %.2f", evaluate(model, test_dataset)["mae"])
 ```
 
-![](images/jena_gru_dropout_hist.png){#fig-gru-dropout fig-align="center"
+![Krzywa uczenia sieci GRU](images/jena_gru_dropout_hist.png){#fig-gru-dropout fig-align="center"
 width="500"}
 
 @fig-gru-dropout przedstawia wyniki uczenia. Osiągnęliśmy testowy MAE na
@@ -1052,9 +1052,7 @@ RNN z porządkiem chronologicznym. Analizuje sekwencję wejściową w obie stron
 wychwytując wzorce, które mogły zostać pominięte przez samą wersję
 chronologiczną.
 
-![Zasada działania warstw
-dwukierunkowych](images/Zrzut%20ekranu%202024-01-27%20o%2013.51.49.png){#fig-bidirectional
-dwukierunkowych fig-align="center" width="300"}
+![Zasada działania warstw dwukierunkowych](images/Zrzut ekranu 2024-01-27 o 13.51.49.png){width="400"}{#fig-bidirectional fig-align="center" width="300"}
 
 Aby utworzyć instancję dwukierunkowej RNN w Keras, należy użyć warstw
 `bidirectional()`, które jako pierwszy argument przyjmują instancję warstwy

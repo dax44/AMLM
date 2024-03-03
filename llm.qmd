@@ -793,7 +793,7 @@ binary_2gram_test_ds <- test_ds %>% dataset_vectorize()
 #| eval: false
 model <- get_model()
 model
-callbacks = list(callback_model_checkpoint("models/binary_2gram.keras",
+callbacks = list(callback_model_checkpoint("models/binary_2gram",
                                            save_best_only = TRUE))
 
 model %>% fit(
@@ -805,7 +805,7 @@ model %>% fit(
 ```
 
 ```{r}
-model <- load_model_tf("models/binary_2gram.keras")
+model <- load_model_tf("models/binary_2gram")
 evaluate(model, binary_2gram_test_ds)["accuracy"] %>%
   sprintf("Test acc: %.3f\n", .) %>% cat()
 ```
@@ -1198,7 +1198,7 @@ model %>%
           metrics = "accuracy")
 model
 
-callbacks = list(callback_model_checkpoint("models/embeddings_bidir_lstm.keras",
+callbacks = list(callback_model_checkpoint("models/embeddings_bidir_lstm",
                                            save_best_only = TRUE))
 ```
 
@@ -1212,14 +1212,14 @@ model %>%
 ```
 
 ```{r}
-model <- load_model_tf("models/embeddings_bidir_lstm.keras")
+model <- load_model_tf("models/embeddings_bidir_lstm")
 evaluate(model, int_test_ds)["accuracy"] %>%
   sprintf("Test acc: %.3f\n", .) %>% cat("\n")
 ```
 
 Model ten uczy się znacznie szybciej niż model *one-hot* (ponieważ LSTM musi
 przetwarzać tylko 256-wymiarowe wektory zamiast 20 000-wymiarowych), a jego
-dokładność na zbiorze testowym jest porównywalna (86,0%). Jednak wciąż jesteśmy
+dokładność na zbiorze testowym jest porównywalna (86,4%). Jednak wciąż jesteśmy
 daleko od wyników naszego podstawowego modelu bigramowego. Częściowo wynika to
 z faktu, że model ten analizuje nieco mniej danych: model bigramowy przetwarza
 pełne recenzje, podczas gdy nasz model sekwencji obcina sekwencje po 600
@@ -1292,7 +1292,7 @@ model %>% compile(optimizer = "rmsprop",
 model
 
 callbacks = list(
-  callback_model_checkpoint("models/embeddings_bidir_lstm_with_masking.keras",
+  callback_model_checkpoint("models/embeddings_bidir_lstm_with_masking",
                             save_best_only = TRUE)
 )
 ```
@@ -1309,7 +1309,7 @@ model %>% fit(
 
 ```{r}
 #| eval: false
-model <- load_model_tf("models/embeddings_bidir_lstm_with_masking.keras")
+model <- load_model_tf("models/embeddings_bidir_lstm_with_masking")
 cat(sprintf("Test acc: %.3f\n",
             evaluate(model, int_test_ds)["accuracy"]))
 ```
@@ -1450,7 +1450,7 @@ model %>% compile(optimizer = 'rmsprop',
                   metrics = "accuracy")
 model
 
-callbacks <- list(callback_model_checkpoint("models/glove_embeddings_sequence_model2.keras",
+callbacks <- list(callback_model_checkpoint("models/glove_embeddings_sequence_model2",
                             save_best_only = TRUE))
 
 ```
@@ -1463,13 +1463,13 @@ model %>%
 ```
 
 ```{r}
-model <- load_model_tf("models/glove_embeddings_sequence_model2.keras")
+model <- load_model_tf("models/glove_embeddings_sequence_model2")
 cat(sprintf(
   "Test acc: %.3f\n", evaluate(model, int_test_ds)["accuracy"]))
 ```
 
 Przekonaliśmy się, że w tym konkretnym zadaniu wstępnie wytrenowane osadzenia
-nie są zbyt pomocne (dopasowanie na zbiorze testowym na poziomie 73,6%),
+nie są zbyt pomocne (dopasowanie na zbiorze testowym na poziomie 68,4%),
 ponieważ zbiór danych zawiera wystarczającą liczbę próbek, aby można było
 nauczyć się od podstaw wystarczająco wyspecjalizowanej przestrzeni osadzania.
 Jednak wykorzystanie wstępnie wytrenowanych osadzeń może być bardzo pomocne,
@@ -1942,7 +1942,7 @@ model %>% compile(optimizer = "rmsprop",
                   metrics = "accuracy")
 model
 
-callbacks = list(callback_model_checkpoint("models/transformer_encoder.keras",
+callbacks = list(callback_model_checkpoint("models/transformer_encoder",
                                            save_best_only = TRUE))
 ```
 
@@ -1958,7 +1958,8 @@ model %>% fit(
 ```
 
 ```{r}
-model <- load_model_tf("models/transformer_encoder.keras",
+#| eval: false
+model <- load_model_tf("models/transformer_encoder",
                        custom_objects = list(layer_transformer_encoder))
 
 sprintf("Test acc: %.3f", evaluate(model, int_test_ds)["accuracy"])
@@ -2095,7 +2096,7 @@ model <-
 model
 
 callbacks <- list(
-  callback_model_checkpoint("models/full_transformer_encoder.keras",
+  callback_model_checkpoint("models/full_transformer_encoder",
                             save_best_only = TRUE)
 )
 ```
@@ -2111,8 +2112,9 @@ model %>% fit(
 ```
 
 ```{r}
+#| eval: false
 model <- load_model_tf(
-  "models/full_transformer_encoder.keras",
+  "models/full_transformer_encoder",
   custom_objects = list(layer_transformer_encoder,
                         layer_positional_embedding))
 
@@ -2839,7 +2841,7 @@ transformer %>%
 transformer %>%
   fit(train_ds, epochs = 30, validation_data = val_ds)
 
-save_model_tf(transformer, filepath = "models/end_to_end_transformer.keras")
+save_model_tf(transformer, filepath = "models/end_to_end_transformer")
 ```
 
 Osiągamy dokładność 65,3%, czyli istotnie lepiej niż z modelu opartego na GRU.

@@ -759,6 +759,19 @@ model %>%
       callbacks = list(text_gen_callback))
 ```
 
+```{r}
+#| eval: false
+model <- load_model_tf("models/text_gen.keras",
+              custom_objects = list(
+    layer_positional_embedding,
+    layer_transformer_decoder
+  ))
+model %>%
+  fit(lm_dataset,
+      epochs = 1,
+      callbacks = list(text_gen_callback))
+```
+
 Oto kilka wybranych przykładów tego, co jesteśmy w stanie wygenerować po 200
 epokach treningu. Należy pamiętać, że interpunkcja nie jest częścią naszego
 słownictwa, więc żaden z wygenerowanych tekstów nie zawiera interpunkcji:

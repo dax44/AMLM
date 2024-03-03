@@ -1,10 +1,10 @@
 # Wprowadzenie
 
 Witam w świecie zaawansowanych metod uczenia maszynowego 🤖, prezentowanej w
-niniejszej publikacji. Książka ta skupia się na trzech głównych obszarach,
+niniejszej publikacji. Książka ta skupia się na czterech głównych obszarach,
 zaczynając od wielowymiarowych problemów predykcyjnych, przechodząc przez
-kompleksowe modele głębokich sieci neuronowych, a kończąc na zaawansowanych
-modelach językowych. Koncepcyjnie rozpoczniemy od omówienia *multiple target
+złożone modele głębokich sieci neuronowych oraz modele językowe, a kończąc na
+sieciach generatywnych. Koncepcyjnie rozpoczniemy od omówienia *multiple target
 regression and classification*, gdzie przedstawimy skomplikowane zadania
 predykcyjne wymagające jednoczesnej prognozy wielu zmiennych. Przeanalizujemy
 praktyczne zastosowania tych modeli w obszarach, takich jak nauki społeczne,
@@ -16,8 +16,8 @@ neuronowych (CNN) do rekurencyjnych sieci neuronowych (RNN), zwracając uwagę n
 ich zdolność do efektywnego przetwarzania obrazów, sekwencji danych i
 rozwiązania bardziej złożonych problemów. W ramach tego obszaru, przyjrzymy się
 również technikom transferu wiedzy, uczenia ze wzmocnieniem oraz generatywnym
-modelom, takim jak generatywne sieci przeciwdziedzinowe (GAN), które poszerzają
-granice możliwości maszynowego uczenia się.
+modelom, takim jak generatywne sieci (GAN), które poszerzają granice możliwości
+maszynowego uczenia się.
 
 ::: column-margin
 ![](images/vader.jpeg)

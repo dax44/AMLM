@@ -1,0 +1,62 @@
+---
+title: "Zadanie"
+format: html
+embed-resources: true
+execute: 
+  echo: true
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+**Cel:** Przewidywanie wieku uchowca na podstawie pomiarów fizycznych.
+
+**Opis:** Wiek uchowca jest określany poprzez przecięcie muszli przez stożek,
+zabarwienie jej i policzenie liczby pierścieni pod mikroskopem - jest to żmudne
+i czasochłonne zadanie. Inne pomiary, które są łatwiejsze do wykonania, są
+wykorzystywane do przewidywania wieku. Z oryginalnych danych usunięto przykłady
+z brakującymi wartościami (w większości brakowało przewidywanej wartości), a
+zakresy wartości ciągłych zostały przeskalowane do użytku z siecią ANN (poprzez
+podzielenie przez 200).
+
+![Przykładowe
+uchowce](https://mochiko.pl/wp-content/uploads/2020/03/abalone-2.jpg){fig-align="center"
+width="600"}
+
+**Zadanie:** Wykorzystując klasyczne modele uczenia maszynowego przygotuj model
+(bez sieci neuronowych), który pozwoli w najlepszy sposób określić wiek
+uchowca.
+
+| **Variable Name** | **Role** | **Type**    | **Description**             | **Units** | **Missing Values** |
+|-------------|-------------|-------------|-------------|-------------|-------------|
+| Sex               | Feature  | Categorical | M, F, and I (infant)        |           | no                 |
+| Length            | Feature  | Continuous  | Longest shell measurement   | mm        | no                 |
+| Diameter          | Feature  | Continuous  | perpendicular to length     | mm        | no                 |
+| Height            | Feature  | Continuous  | with meat in shell          | mm        | no                 |
+| Whole_weight      | Feature  | Continuous  | whole abalone               | grams     | no                 |
+| Shucked_weight    | Feature  | Continuous  | weight of meat              | grams     | no                 |
+| Viscera_weight    | Feature  | Continuous  | gut weight (after bleeding) | grams     | no                 |
+| Shell_weight      | Feature  | Continuous  | after being dried           | grams     | no                 |
+| Rings             | Target   | Integer     | +1.5 gives the age in years |           | no                 |
+
+Plik z danymi można pobrać ze strony
+<https://huggingface.co/datasets/mstz/abalone> ręcznie lub za pomocą pakietu
+`datasets` języka Python. Poniżej przykład jak można te dane pobrać i wysłać do
+R.
+
+```{python}
+from datasets import load_dataset
+import pandas as pd
+
+# Wczytanie zbioru danych abalone
+dataset = load_dataset("mstz/abalone", "abalone", split = "train")
+
+# Przekształcenie zbioru danych do ramki danych pandas
+df = pd.DataFrame(dataset)
+```
+
+```{r}
+library(reticulate)
+df = py$df
+head(df)
+```
